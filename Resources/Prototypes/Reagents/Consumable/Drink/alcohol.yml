@@ -239,13 +239,14 @@
       - !type:HealthChange # Goobstation - Dwarf buff
         conditions:
         - !type:ReagentThreshold
-          min: 3
+          min: 5 # Funky
         - !type:OrganType
           type: Dwarf
         damage:
-          groups:
-            Brute: -1
-            Burn: -1
+          groups: # Funky
+            Brute: -0.75
+          types:
+            Heat: -0.25
       - !type:ChemVomit
         probability: 0.04
         conditions:

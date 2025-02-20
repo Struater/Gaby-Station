@@ -90,6 +90,11 @@ trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
 trait-spanish-name = Spanish accent
 trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
+trait-russian-name = Russian accent
+trait-russian-desc = Niko, it's Roman! Let's go bowling!
+
+trait-species-restricted = Your species cannot take this trait.
+
 trait-dementia-name = Dementia
 trait-dementia-desc = I-... uh, what was this one about again? Oh thats right! You forget a lot sometimes
 

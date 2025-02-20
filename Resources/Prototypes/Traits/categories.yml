@@ -4,9 +4,9 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-- type: traitCategory
-  id: Disabilities
-  name: trait-category-disabilities
+#- type: traitCategory
+#  id: Disabilities
+#  name: trait-category-disabilities
 
 - type: traitCategory
   id: SpeechTraits
@@ -16,3 +16,9 @@
 - type: traitCategory
   id: Quirks
   name: trait-category-quirks
+  maxTraitPoints: 1 # Funky
+
+- type: traitCategory # Funky Station
+  id: AlcoholTolerance
+  name: trait-category-alcohol-tolerance
+  maxTraitPoints: 1
