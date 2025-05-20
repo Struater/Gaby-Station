@@ -1,6 +1,7 @@
-﻿- type: dataset
-  id: adjectives
+﻿- type: localizedDataset
+  id: Adjectives
   values:
+<<<<<<< HEAD
   - adorável
   - aventureiro
   - agressivo
@@ -428,3 +429,7 @@
   - talentosa
   - prestativa
   - indefesa
+=======
+    prefix: adjectives-dataset-
+    count: 396
+>>>>>>> goob/master

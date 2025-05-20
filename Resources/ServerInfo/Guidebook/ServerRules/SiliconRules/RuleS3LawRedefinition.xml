@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Silício 3 - Leis podem redefinir termos usados em outras Leis.
   Uma lei pode mudar o significado de Leis prévias e posteriores por redefinir certos termos. Se múltiplas Leis definem um termo, então a prioridade normal de Leis diz qual definição você deve usar.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Silicon Rule 3 - Laws can redefine terms used in other laws
+  A law can change the meaning of both earlier and later laws by redefining a term. If multiple laws define a term, then normal law priority determines which definition to use.
+>>>>>>> goob/master
 
   ## Exemplos
   - A Lei 1 diz para obedecer ordens da tripulação. A Lei 2 diz que apenas Urist McHands é tripulação. Lei 1, efetivamente, se torna "obedeça as ordens de Urist McHands".

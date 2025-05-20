@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Roleplay 7 - Não prolongue a rodada desnecessariamente.
   A intenção é que os rounds acabem eventualmente. Não segure um round por mais tempo do que deveria, impedindo que ele chegue a um fim natural. Se a maioria dos jogadores desejam que um round acabe, não impeça que ele acabe. Rechamar a Shuttle ou impedir que ela seja chamada pode contribuir para o prolongamento desnecessário, mas não é necessariamente prolongamento desnecessário. Sair voando da estação com o disco nuclear enquanto os Operativos Nucleares estão procurando-o é quase sempre prolongamento desnecessário. Sair da estação na Shuttle de Evacuação não é prolongamento desnecessário.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Roleplay Rule 7 - Do not stall the round
+  Rounds are intended to end eventually. Don't hold a round hostage by preventing it from coming to a natural end. If a majority of players in a round want the round to end, don't prevent it from ending. Recalling the shuttle or preventing it from being called can contribute to round stalling, but is not always round stalling. Leaving the station with the nuclear authentication disk while nuclear operatives are trying to get it is almost always considered round stalling. Leaving the station on the evacuation shuttle is not round stalling.
+>>>>>>> goob/master
 
   Rechamar a Shuttle antes do round atingir a marca dos 45 minutos pode não ser considerado prolongamento desnecessário, a menos que uma porção significativa da tripulação esteja morta ou uma porção significativa da estação (como estrutura) esteja danificada ou destruída. Com essas condições cumpridas, rechamar a Shuttle ser uma ação considerada prolongamento desnecessário é variável e o ahelp é recomendado.
 

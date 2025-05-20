@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra Básica 1 - Admins tem a palavra final.
   Essas regras não são perfeitas. As regras tentam apenas comunicar claramente o que a administração pretende que seja permitido ou proibido, mas provavelmente devem ter brechas e falhas que podem ser "exploradas". Não tente manipular a interpretação das regras para se encaixar nos seus objetivos pessoais ou degradar a experiência de outros jogadores. Se você está incerto(a) de algo, tome a opção mais restritiva para si até que você possa esclarecer as coisas com um(a) Admin.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Core Rule 1 - Admins have final say
+  These rules are not perfect. The rules attempt to clearly communicate what the admin team intends to be allowed and prohibited, but there are likely loopholes or other flaws that can be "lawyered". Don't attempt to manipulate the interpretation of the rules to suit your personal goals or to degrade the experience of other players. If you are unsure of something, follow the more restrictive option until you are able to ask an admin and get clarification.
+>>>>>>> goob/master
 
   Admins podem sobrepor / sobrescrever as regras se eles acharem que é de melhor interesse do round, servidor e / ou comunidade. Admins online podem fazer as interpretações finais das regras durante o round. Mesmo que você discorde de como um Admin interpreta uma regra, você ainda deve seguir a interpretação que lhe seja dita. Ações e interpretações de regras por parte dos Admins podem ser contestadas através de tickets de suporte no Discord. Admins que exercerem esse privilégio terão toda a responsabilidade de suas ações.
 </Document>

@@ -1,6 +1,7 @@
-- type: dataset
+- type: localizedDataset
   id: TraitorCorporations
   values:
+<<<<<<< HEAD
   - "Indústrias CyberSun"
   - "Saqueadores Gorlex"
   - "MI13"
@@ -10,3 +11,7 @@
   - "Corporação Donk" #TRAIDORES(!!)
   - "Corporação Waffle"
   - "Farmacêuticos Interdyne"
+=======
+    prefix: traitor-corporations-dataset-
+    count: 9
+>>>>>>> goob/master

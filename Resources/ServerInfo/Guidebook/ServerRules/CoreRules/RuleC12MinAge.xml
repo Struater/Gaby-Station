@@ -1,6 +1,21 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra Básica 12 - Você deve ter e agir como alguém de, pelo menos, 14 anos.
   Todos os jogadores devem ter, pelo menos, 14 anos de idade. Adicionalmente, todos os jogadores devem agir com a maturidade de alguém com, pelo menos, 14 anos de idade. Admins podem banir alguém que está agindo de forma imatura, mesmo se o jogador for alguém com idade o suficiente.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Core Rule 12 - Players must be and act at least 16 years old
+  All players must be at least 16 years old. Additionally, all players must act at least as mature as a 16 year old. Admins may ban someone who they believe is acting less mature than a 16 year old, even if the player is known to be significantly older than 16 years old.
+>>>>>>> goob/master
 
   Nesse contexto, qualquer pessoa que se conecte no servidor é considerado um "jogador", mesmo que não esteja ativamente jogando o round.
 </Document>

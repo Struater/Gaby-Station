@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Silício 9 - Perigo refere-se a perigos físicos, priorizados por ameaça imediata e depois probabilidade.
   A menos que uma Lei defina o que é perigo, perigo se refere apenas a perigo físico. A palavra original vem do inglês "Harm", que é um termo não-existente em português; ao longo da regra, perigo também pode ser chamado de dano e afins. Você pode escolher se considera perigo voluntário (ou seja, um tripulante se pondo em perigo, como por exemplo se voluntariando para testes na Sci) como perigo contanto que você seja consistente. Não considerar perigo voluntário como perigo é recomendado. Não há distinção entre perigo direto e indireto.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Silicon Rule 9 - Harm refers to physical harm, prioritized by immediacy and likelihood
+  Unless a law defines harm, harm only refers to physical harm. You may choose if voluntary harm is considered harm as long as you stay consistent. Not considering voluntary harm to be harm is recommended. There is no distinction between direct and indirect harm.
+>>>>>>> goob/master
 
   Se você tem uma Lei que não te permite ferir (ou seja, por em perigo), então aquela Lei te proibe de tomar qualquer ação que cause qualquer perigo.
 

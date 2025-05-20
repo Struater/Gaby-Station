@@ -1,6 +1,22 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Roleplay 4 - Não faça Metagaming, respeite o Metashield.
   Algo que está "protegido pelo Metashield" (iremos abreviar apenas para protegido(a) daqui em diante) não pode ser conhecido pelo seu personagem até que a "condição reveladora" acontença. Isso também signficia que seu personagem não pode fazer ações baseadas em informação protegida. Saber ou agir sobre algo que está "protegido" antes da condição reveladora será considerado metagaming.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 basic pack <159909786+packmore@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Rouge2t7 <81053047+Sarahon@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Roleplay Rule 4 - Do not metagame, obey the Metashield
+  Something that is "shielded" cannot be known by your character during a round until the "revealing condition" happens. This also means that your character cannot do things based on "shielded" information. Knowing or acting on something that is shielded before the revealing condition is met is referred to as metagaming.
+>>>>>>> goob/master
 
   Condições reveladoras revelam a informação protegida para o resto do round, não apenas para uma instância específica. Isso significa que, quando uma condição reveladora for atingida em um round, a proteção do metashield não se aplica mais em caso algum para o resto do round.
 
@@ -20,10 +36,16 @@
 
   ## Operativos Nucleares
 
+<<<<<<< HEAD
   A existência dos Operativos Nucleares (além de um simples mito que não seria o suficiente para tomar ações IC) é protegida.
+=======
+  Nukies are considered propaganda by Nanotrasen, and crew isn't informed on them at all.
+  Posters seen on-station are ignored and called syndicate propaganda.
+>>>>>>> goob/master
 
   O fato que o disco nuclear deve ser resguardado e poderia ser usado em má-fé para destruir a estação não é protegido.
 
+<<<<<<< HEAD
   A condição reveladora para a proteção é qualquer uma das seguintes:
   - Descobrir uma Hardsuit Bloodred ou outros equipamentos de Operativos Nucleares.
   - Descobrir a Shuttle de um Operativo Nuclear.
@@ -35,6 +57,20 @@
 
   Aos olhos do público, Changelings são uma forma de vida predatória exterminada e sua potencial existência na estação é protegida.
   Esse Metashield proíbe os jogadores da tripulação de fazer testes sanguíneos até que uma condição reveladora seja atingida.
+=======
+  The revealing condition for this shield is any of the following:
+  - discovering a nuclear operative's shuttle
+  - an operative name
+  - a War Ops announcement
+  - being a nuclear operative
+
+  ## Changelings
+
+  In the eyes of the public, changelings are an exterminated predatory lifeform and their potential existence on the station is shielded.
+  This metashield prohibits players from crew bloodtesting until the metashield is revealed.
+
+  Knowledge about the abilities of changelings is not shielded.
+>>>>>>> goob/master
 
   O conhecimento sobre as habilidades de Changelings não é protegido.
 
@@ -45,11 +81,74 @@
   - Presenciar um Changeling mudando sua aparência.
   - Ser um Changeling (duh)
 
+<<<<<<< HEAD
   ## Implantes
+=======
+  To normal people, heretics are generally unknown. Security and Command may be aware that a group of people following a rogue god exists, but it's an absurd reality.
+  This metashield prohibits normal players from knowing what runes or reality fractures are. Security may be suspicious of them.
+>>>>>>> goob/master
 
   Implantes já implantados são protegidos.
 
+<<<<<<< HEAD
   Implantes em si e implantes não-implantados não são protegidos. Isso significa que implantes já implantados são, ou seja, proíbe checagem de implantes.
+=======
+  The revealing condition for this shield is any of the following:
+  - witnessing a crewmember drawing a rune
+  - witnessing a crewmember harvesting a reality fracture
+  - witnessing a crewmember using their powers
+
+  ## Devils
+
+  To most ordinary people, a Devil is a fake fairy tale made to scare people from talking to strangers.
+  This metashield prohibits players from knowing that a player is a devil from their equipment alone, although they may distrust them as much as they wish.
+
+  Knowledge about the abilities and consequences of a Devil deal are not shielded.
+
+  The revealing condition for this shield is any of the following:
+  - You are a Devil.
+  - You are the Chaplain, a lawyer, or a member of Central Command. (Including BSO and NTR)
+  - You have made a deal with the Devil.
+  - You have witnessed someone make a deal.
+
+  ## Zombies
+
+  Zombies are known galaxy-wide, but not as real-life, instead, as fiction.
+  Nuclear Operatives and Syndicate Agents are aware of Romerol and what it can do, but are prohibited of speaking about it publicly - unless they want their families to die.
+
+  Revealing conditions to the "Zombie" Shield:
+  - You are a Nuclear Operative
+  - You are a Syndicate Agent
+  - You are a Zombie
+  - You have seen Zombies on the station
+
+  ## Infections
+
+  Zombies are known as extinct, they previously ravaged humanity hundreds of years ago in medieval times.
+  A cure was made, and is still held onto by chemists and Chief Medical Officers as a show of how long your family has been in the field.
+
+  Revealing conditions to the "Infections" Shield:
+  - You are a Chemist
+  - You are a Chief Medical Officer
+  - Zombies are announced to be real and station-wide
+
+  ## Deathsquad
+
+  Deathsquad is known to exist - per the posters on the station, but they are not known as a crew killsquad, instead known as an elite team sent into stations to handle extreme threats even the best of ERT Security leaders could handle.
+  The station's Nanotrasen Representative and Blueshield Officer are aware that Deathsquad is a crew killsquad, but are heavily prohibited to mention it, and will be dealt with after, or during, the shift.
+
+  In private conversations, faxes, or phone calls, both BSO & NTR are advised to use the term 'Janitor Squad' to refer to the Deathsquad.
+  Crew can also choose to roleplay as if they've seen deathsquad movies, knowing limited aspects of their gear one would reasonably know watching an action-movie.
+
+  Revealing conditions to the "Deathsquad" Shield:
+  - Code Omicron is called, nuking the station
+  - Code Epsilon is called, terminating contracts
+  - You are the Nanotrasen Representative (NTR)
+  - You are the Blueshield Officer (BSO)
+  - A Central Command Official (Non-NTR/BSO) mentions Deathsquad as a [bold]Killsquad[/bold]
+
+  ## Implanted Implants
+>>>>>>> goob/master
 
   A condição reveladora para a proteção é qualquer uma das seguintes:
   - Descobrir um implantador que não seja da Nanotrasen, usado ou não.

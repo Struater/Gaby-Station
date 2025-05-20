@@ -1,6 +1,7 @@
-- type: dataset
-  id: verbs
+- type: localizedDataset
+  id: Verbs
   values:
+<<<<<<< HEAD
   - aceitar
   - adicionar
   - admirar
@@ -202,3 +203,7 @@
 # pedi pro chat gpt, por que é muita coisa
 # ele reduziu mais da metade a lista, tem que adicionar o resto
 # todo: adicionar o resto
+=======
+    prefix: verbs-dataset-
+    count: 631
+>>>>>>> goob/master

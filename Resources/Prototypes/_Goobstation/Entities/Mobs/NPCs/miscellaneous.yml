@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - type: entity
   name: Skibidi Toilet
   id: MobSkibidiToilet
@@ -79,132 +80,41 @@
       speechVerb: SmallMob
       speechSounds: Squeak
     - type: OhioAccent
+=======
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Scruq445 <storchdamien@proton.me>
+# SPDX-FileCopyrightText: 2024 starch <starchpersonal@gmail.com>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Errant <35878406+Errant-4@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
+# SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
+# SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+>>>>>>> goob/master
 
 - type: entity
-  name: OSRS NPC
-  description: Reminiscent of an older time...
-  id: MobOSRS
-  parent: [MobRespirator, MobAtmosStandard, StripableInventoryBase, BaseSimpleMob, MobCombat, MobBloodstream, MobFlammable]
+  id: MobRevenantToken
+  parent: MobRevenant
+  name: revenant
+  description: A spooky ghostie.
   components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 4.5
-  - type: CombatMode
-  - type: Inventory
-    speciesId: human
-  - type: Deathgasp
-  - type: Stripping
-  - type: Hands
-  - type: ComplexInteraction
-  - type: Body
-    prototype: Human
-    requiredLegs: 0
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Effects/bite.ogg
-    angle: 30
-    animation: WeaponArcBite
-    damage:
-      types:
-        Blunt: 3
-        Piercing: 3
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: Puller
-    needsHands: false
-  - type: CanHostGuardian
-  - type: NPCRetaliation
-    attackMemoryLength: 10
-  - type: FactionException
-  - type: NpcFactionMember
-    factions:
-      - Passive
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: IdExaminable
-  - type: Hunger
-    thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
-      Overfed: 100
-      Okay: 50
-      Peckish: 25
-      Starving: 10
-      Dead: 0
-    baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
-  - type: Thirst
-    thresholds:
-      OverHydrated: 200
-      Okay: 150
-      Thirsty: 100
-      Parched: 50
-      Dead: 0
-    baseDecayRate: 0.04
-  - type: StatusEffects
-    allowed:
-      - Stun
-      - KnockedDown
-      - SlowedDown
-      - Stutter
-      - Electrocution
-      - ForcedSleep
-      - TemporaryBlindness
-      - Pacified
-      - StaminaModifier
-      - Flashed
-  - type: Bloodstream
-    bloodMaxVolume: 150
-  - type: Climbing
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      60: 0.7
-      80: 0.5
-  - type: Perishable
-  - type: MobPrice
-    price: 150
-  - type: FloatingVisuals
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-  - type: Sprite
-    scale: 0.18, 0.18
-    drawdepth: Mobs
-    sprite: _Goobstation/Mobs/Demons/osrs.rsi
-    layers:
-      - map: ["enum.DamageStateVisualLayers.Base", "Idle", "Walk", "Run"]
-        state: idle
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: idle
-      Critical:
-        Base: crit
-      Dead:
-        Base: dead
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
-  - type: SpriteMovement
-    walkLayers:
-      Walk:
-        state: walk
-    runLayers:
-      Run:
-        state: run
-    noMovementLayers:
-      Idle:
-        state: idle
-  - type: RandomMetadata
-    nameSegments:
-    - names_first_male
-  - type: Grammar
-    attributes:
-      gender: male
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-revenant-name-token
+    description: ghost-role-information-description-token-generic
+    rules: ghost-role-information-antagonist-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000
 
+<<<<<<< HEAD
 - type: entity
   name: Sportacus
   description: ding dong eat it up i gota go
@@ -376,3 +286,5 @@
   - type: Grammar
     attributes:
       gender: female
+=======
+>>>>>>> goob/master

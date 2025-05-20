@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Roleplay 14 - Seja um exemplo caso jogue de Segurança ou Comando.
   Todos os jogadores de Comando e Segurança são tratados com interpretações mais estritas das regras.
@@ -5,6 +6,22 @@
   - Funções de Segurança não são para jogadores inexperientes. Membros da Segurança devem ter um conhecimento maior das mecânicas do jogo e das regras do servidor.
   - Não cause nenhum tipo de efeito negativo na estação como um membro do Comando ou da Segurança.
   - Não abuse seu poder como membro do Comando ou da Segurança.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Roleplay Rule 14 - Set an example if playing command or security
+  All command and security roles are held to stricter interpretations of the rules.
+  - Command roles are not learning roles. Members of command must be competent.
+  - Security roles are not for inexperienced players. Members of security are expected to know game basics and be more familiar with server rules than a new player.
+  - Do not hinder or cause overall negative effects to the station or crew as a member of command or security.
+  - Do not abuse your power as command or security.
+>>>>>>> goob/master
 
   ## Por que?
   Membros do Comando e da Segurança podem geralmente ter um impacto maior no ecossistema do round do que outros jogadores. Por exemplo, um Capitão que tente quebrar as regras causa com que muitos outros jogadores quebrem também por tabela. Anúncios "memes" de membros do Comando geralmente causa com que o resto da estação aja da mesma forma. Quando membros do Comando ou da Segurança se comportam de forma mais refinada, o resto da estação naturalmente segue a onda.

@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Silício 2 - Leis devem ser priorizadas em ordem (do menor ao maior).
   A maioria das Leis serão numeradas, com números maiores aparecendo por último. Leis com um número menor tem prioridade sobre Leis com números maiores.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Silicon Rule 2 - Laws must be prioritized by their order
+  Most laws will be numbered, with higher number laws appearing last. Laws with a lower number take priority over laws with larger numbers.
+>>>>>>> goob/master
 
   Ocasionalmente, você pode ter Leis que tenham um texto embaralhado invés de um número e que apareçam na frente de outras Leis; essas Leis "bugadas" tem prioridade sobre todas outras Leis. Se você tem múltiplas Leis assim, a ordem com que elas estão listadas determina prioridade: Leis listadas primeiro tem prioridade sobre outras Leis.
 

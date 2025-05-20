@@ -1,4 +1,15 @@
-﻿<Document>
+<!--
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 NeKognitoHazard <168395829+NeKognitoHazard@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 TheNeonViking <julian.sean.ison@gmail.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Rouge2t7 <81053047+Sarahon@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
   # Space Law
   Em Space Station 14, estações operam sob a Space Law. Espera-se que todos os tripulantes, passageiros ou visitantes abordo da estação sigam essas leis.
 
@@ -25,17 +36,29 @@
 
   [color=#a4885c]Implantes de Rastreamento[/color]: Rastreadores podem ser implantados em qualquer suspeito que tenha sido condenado por crimes violentos (os marcados de vermelho).
 
+<<<<<<< HEAD
   [color=#a4885c]Mindshields[/color]: Mindshields podem ser aplicados em qualquer prisioneiro que foi claramente manipulado, perdeu o controle de suas ações, ou seja um suspeito condenado por descontrole ilegal. Diferentemente da implantação comum, você pode manter um prisioneiro preso mesmo depois da sua sentença acabar no meio da cirurgia; claro, desde que o ritmo da cirurgia esteja sendo constante. Se um suspeito recusar-se a cooperar ou o implante falha em funcionar, ele pode ser acusado por Recusa de Mindshield.
 
   ## Remoção de Implantes
   Um suspeito pode ser forçado a receber uma remoção de implante desde que haja provas fortes e razoáveis de que o prisioneiro possui um implante, como por exemplo, um Oficial vendo que há digitais num injetor de implante descartado. Diferentemente do procedimento de aplicação, um prisioneiro pode ter sua pena adiada até que a remoção seja feita, desde que o Dep. de Segurança esteja tentando ativamente realizar o procedimento. Assim como a implantação, se um prisioneiro der permissão clara, a remoção pode ser realizada mesmo sem evidências.
+=======
+  ## Implantation
+  - Any prisoner in custody can be subjected to implantation or implant extraction procedures, so long as it's within reason. The process of adding or extracting an implant should not prolong the detainees sentence, meaning you can not hold them longer to perform the procedure, unless stated otherwise. A former inmate can be requested to undergo implantation/extraction at a later point in time; if they fit the circumstances during their confinement, they must comply. The following have been listed out with special circumstances, anything not in this list can still be applied, given proper legal context. A prisoner can still receive implantation/extraction procedures without meeting the circumstances if they give their clear permission.
+>>>>>>> goob/master
 
   ## Sentenciamento
   Pela perspectiva das regras, Oficiais devem ter certeza de que apenas aplicarão penas acima de 30 minutos caso a Space Law também permita confinamento permanente. Informar o Carcereiro é altamente recomendável, até mesmo para penas temporárias. Desde que esses requisitos sejam cumpridos, Oficiais dando penas inapropriadas é considerado um problema IC, e não um problema com as regras e Admins.
 
+<<<<<<< HEAD
  O Capitão, Chefe de Segurança e Carcereiro são responsáveis, desde que de forma razoável, por assegurar-se que os Oficiais estão dando penas que sigam a Space Law. Se eles tiverem ciência de uma pena inapropriada, incluindo penas excessivamente longas, e não houver emergências que eles devam priorizar, eles são obrigados a corrigir as penas. Falhas irrazoáveis, determinadas pelos Admins, do Capitão, Chefe de Segurança ou Carcereiro a assegurar que a Space Law esteja sendo seguida serão consideradas como problemas com as regras e Admins, e não um problema IC.
 
   Use o bom senso e tenha um pouco de humanidade quando lidar com penas. Você não deve sempre aplicar a maior pena possível, você nem sempre precisa dar a pena máxima ou sempre procurar rebaixar alguém de função. Prisioneiros cooperativos e com bom comportamento devem ter suas penas reduzidas. Sempre leve em consideração a gravidade da situação e apenas puna o necessário para que o prisioneiro aprenda sua lição.
+=======
+  - Usage of contraband implanters is a detainable offense, but it's not reasonable to detain someone solely for having an unidentified implant inside them.
+
+  ### Removal
+  - A suspect can be forced to receive implant removal if there is strong reasonable proof that they have been implanted, such as an officer seeing them use one or their prints being on a discarded injector. Unlike implantation procedure a prisoner can have their sentence entirely delayed or extended until they comply with the procedure, as long as security are actively making attempts to preform it. Akin to implanting, if an inmate gives their clear permission, implant removal can proceed without proof.
+>>>>>>> goob/master
 
   [color=#a4885c]Crimes Acumuláveis[/color]: Crimes devem ser considerados "acumuláveis" no sentido de que, caso você prenda alguém por dois ou mais crimes diferentes, você deve juntar as penas em uma só. Crimes conectados (ou seja, que estejam na mesma cor e sufixo no Guia Rápido para Crimes) não podem ser acumulados e, na verdade, sobrepujam um ao outro; você deve aplicar apenas a maior pena.
 

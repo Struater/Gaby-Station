@@ -1,7 +1,25 @@
+<<<<<<< HEAD
 ﻿<Document>
   # Regra de Roleplay 17 - Regras do Representante da Nanotrasen.
     - Você deve representar os interesses da Nanotrasen; envie relatórios para a CentComm informando a situação da estação, e informe os Chefes de qualquer coisa que a CentComm ordene. Mantenha-se na sua função e evite fazer qualquer outra coisa além disso.
     - Você também deve ser um mentor e guiar os Chefes da estação, juntamente do Blueshield se necessário. Se você não sabe dar uma resposta, envie um ahelp perguntando.
     - Não abuse seu acesso extra com má-fé. Apenas use-o se precisar.
     - Não abuse do seu papel, e use o bom senso. Se você ter dúvidas ou preocupações, envie um ahelp para os Admins responderem ou tente perguntar no discord. Falha pode resultar em remoção da Whitelist, roleban de Comando ou até mesmo um banimento temporário.
+=======
+<!--
+SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+SPDX-FileCopyrightText: 2024 Kira Gbedan <161087999+Verbalase@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 basic pack <159909786+packmore@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Roleplay Rule 17 - Nanotrasen Representative Rules
+    - You are to represent NT, send reports back to them on the stations' situation, inform the heads of anything CentCom orders them to do. Stay on task and avoid doing anything else apart from this.
+    - You are to also guide the Station Heads, along with the Blueshield if needed. If you can't provide an answer, try ahelping for one.
+    - Do not abuse your extra access for malicious reasons. Only use it if you must.
+    - Use common sense and remember that you are also held up to a high standard of play. Failure to do so will lead to a roleban from command or gameban from the server entirely.
+>>>>>>> goob/master
 </Document>
