@@ -113,16 +113,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                             VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <!-- Top row -->
-                    <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public"
+                    <!-- <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public"
                                   SeparationOverride="4">
                         <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center"
                                HorizontalExpand="True" HorizontalAlignment="Center" />
-                    </BoxContainer>
+                    </BoxContainer> -->
                     <!-- Gold line -->
-                    <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" />
+                    <!-- <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" /> -->
                     <controls:HSpacer Spacing="10" />
                     <!-- Voting & misc button bar -->
-                    <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
+                    <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Center">
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
                                 StyleClasses="Square" />
                         <Button Name="BalanceButton" Access="Public" StyleClasses="Square"

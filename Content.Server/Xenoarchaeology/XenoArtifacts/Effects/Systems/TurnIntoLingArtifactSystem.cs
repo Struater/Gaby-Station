@@ -1,12 +1,12 @@
 using Content.Server.Antag;
-using Content.Server.GameTicking.Rules.Components;
+//using Content.Goobstation.Server.Changeling.GameTicking.Rules;
 using Content.Server.Roles;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Player;
 using Content.Shared._EinsteinEngines.Silicon.Components;
-using Content.Shared.Changeling;
+using Content.Goobstation.Common.Changeling;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
@@ -30,8 +30,10 @@ public sealed class TurnIntoLingArtifactSystem : EntitySystem
 
         var player = target.PlayerSession;
 
-        if (!HasComp<SiliconComponent>(args.Activator))
-            _antag.ForceMakeAntag<ChangelingRuleComponent>(player, "Changeling");
+        //TODO: Arrumar isso!!
+        /*if (!HasComp<SiliconComponent>(args.Activator))
+            _antag.ForceMakeAntag<ChangelingRuleComponent>(player, "Changeling"); */
+
     }
 }
 

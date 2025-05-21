@@ -195,7 +195,7 @@
     - EffectTurnIntoThief
     - EffectTurnIntoHeretic
     - EffectTurnIntoBlob
-    - EffectTurnIntoLing
+    #- EffectTurnIntoLing #TODO: Arrumar isso
     remainingUses: 1
     toReplace: d20Dice
   - type: PointLight

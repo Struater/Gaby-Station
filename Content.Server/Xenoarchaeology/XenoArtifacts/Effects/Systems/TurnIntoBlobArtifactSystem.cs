@@ -8,6 +8,7 @@ using Content.Shared._EinsteinEngines.Silicon.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Goobstation.Common.Blob;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
@@ -28,6 +29,6 @@ public sealed class TurnIntoBlobArtifactSystem : EntitySystem
 
         var player = target.PlayerSession;
 
-        EnsureComp<Shared._Goobstation.Blob.Components.BlobCarrierComponent>((EntityUid) args.Activator).HasMind = HasComp<ActorComponent>((EntityUid) args.Activator);
+        EnsureComp<BlobCarrierComponent>((EntityUid) args.Activator).HasMind = HasComp<ActorComponent>((EntityUid) args.Activator);
     }
 }

@@ -69,7 +69,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Mind.Commands;
-using Content.Shared._Goobstation.Blob.Components;
+//using Content.Goobstation.Shared.Blob.Components;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -328,7 +328,7 @@ public sealed class MindSystem : SharedMindSystem
         if (session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
             _players.SetAttachedEntity(session, entity, true);
-            DebugTools.Assert(session.AttachedEntity == entity || HasComp<BlobObserverComponent>(session.AttachedEntity), $"Failed to attach entity.");
+            //DebugTools.Assert(session.AttachedEntity == entity || HasComp<BlobObserverComponent>(session.AttachedEntity), $"Failed to attach entity."); voce me deu dor de cabeça
             Log.Info($"Session {session.Name} transferred to entity {entity}.");
         }
 

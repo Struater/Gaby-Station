@@ -5,7 +5,6 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Player;
-using Content.Server.Roles;
 using Content.Shared.Heretic;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -27,7 +26,7 @@ public sealed class TurnIntoHereticArtifactSystem : EntitySystem
 
         var player = target.PlayerSession;
 
-        if(HasComp<HereticComponent>(args.Activator))
+        if (HasComp<HereticComponent>(args.Activator))
             return;
 
         _antag.ForceMakeAntag<HereticRuleComponent>(player, "Heretic");

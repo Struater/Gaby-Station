@@ -77,7 +77,6 @@
   categories:
     -  UplinkDisruption
 
-<<<<<<< HEAD
 # skibidi no more D:
 #- type: listing
 #  id: UplinkBoxSkibidiRizz
@@ -89,7 +88,7 @@
 #  categories:
 #    - UplinkDisruption
 #  saleLimit: 1
-=======
+
 - type: listing
   id: UplinkSarinGasGrenade
   name: uplink-sarin-gas-grenade-name
