@@ -143,7 +143,7 @@
   - extended
   - shittersafari
   name: extended-title
-  showInVote: true
+  showInVote: false
   description: extended-description
   rules:
   - BasicStationEventScheduler

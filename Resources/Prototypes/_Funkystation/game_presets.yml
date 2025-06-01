@@ -59,6 +59,8 @@
   #- AntagStationEventScheduler
   - BasicRoundstartVariation
 
+# presets
+
 - type: gamePreset
   id: TheDrunkard
   alias:
