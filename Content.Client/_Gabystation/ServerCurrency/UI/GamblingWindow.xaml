@@ -1,0 +1,12 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    VerticalExpand="True" HorizontalExpand="True"
+    Title="Gambling"
+    SetSize="600 400" >
+    <BoxContainer>
+        <BoxContainer Orientation="Vertical" Margin="4">
+            <Label Text="Fortune Clown" Name="Logo" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
