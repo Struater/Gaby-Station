@@ -39,8 +39,6 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
 
             if (msg is GamblingEuiMsg.Warning warning)
                 {
-                    return;
-
                     _userInterface.Popup(warning.Message, warning.Tittle, false);
                     if (warning.Restart is not true)
                         return;

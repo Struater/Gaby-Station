@@ -27,8 +27,6 @@
                 <BoxContainer VerticalExpand="True" Visible="True" Orientation="Vertical" Margin="8">
 
                 <controls:HSpacer Spacing="5" />
-                <controls:HLine Color="{x:Static style:StyleNano.GabyTheme}" Thickness="2" Access="Public" />
-                <controls:HSpacer Spacing="5" />
 
                 <BoxContainer>
                     <Label Text="Deposit play money: " />
@@ -44,8 +42,11 @@
                 </BoxContainer>
 
                 <!-- Only to put the lobby footer in the bottom -->
-                <BoxContainer VerticalExpand="True" HorizontalExpand="true">
-                    <TextureRect Name="SelectedGameTexture" Stretch="KeepCentered"/>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="true" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextureRect Name="SelectedGameTexture" Stretch="KeepCentered" SetSize="210 210" />
+                    </BoxContainer>
+                    <RichTextLabel Text="[color=gray]Double: 3 colors, an random color will be selected." Name="SelectedGameInfo"/>
                 </BoxContainer>
 
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Center">

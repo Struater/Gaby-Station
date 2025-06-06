@@ -29,7 +29,7 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
             {
                 LobbyGameMode.AddItem(gameModes[i], 0);
             }
-            LobbyGameOption.AddItem("Red", 0);
+            LobbyGameOption.AddItem("Red (2x)", 0);
 
             _serverCur.BalanceChange += UpdatePlayerBalance;
 
@@ -50,8 +50,7 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
             if (currentState == GamblingStates.Game)
                 return;
 
-            var value = int.Parse((string) LobbyMoneyDeposit.Text);
-            if (value <= 0 || !_serverCur.CanAfford(value, out _))
+            if (!int.TryParse(LobbyMoneyDeposit.Text, out var value) || value <= 0 || !_serverCur.CanAfford(value, out _))
                 return;
 
             Lobby.Visible = false;
