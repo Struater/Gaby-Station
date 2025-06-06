@@ -10,7 +10,7 @@ namespace Content.Server._Gabystation.ServerCurrency.Commands
     {
         public string Command => "gamblingui";
 
-        public string Description => "Let's go gamble!";
+        public string Description => "Let's go gambling!";
 
         public string Help => $"{Command}";
 

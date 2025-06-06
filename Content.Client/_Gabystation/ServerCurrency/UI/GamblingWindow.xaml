@@ -55,7 +55,10 @@
 
         <!-- Game, where you gamble!!! -->
         <BoxContainer Visible="False" Orientation="Vertical" Name="Game">
-
+            <BoxContainer Name="Result" Visible="False" HorizontalAlignment="Center">
+                <Button Name="ResultRestartButton" Text="Restart" StyleClasses="ButtonBig" />
+                <RichTextLabel Text="" Name="ResultLabel"/>
+            </BoxContainer>
         </BoxContainer>
 
         <!-- Footer -->

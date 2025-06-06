@@ -12,19 +12,71 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
 
         [Dependency] private readonly ServerCurrencySystem _serverCur = default!;
 
+        public GamblingStates currentState = GamblingStates.Lobby;
+        public event Action<int, string>? OnPlay;
+
+        private readonly string[] gameModes = ["Double"]; // This is the only game mode at the moment
+
         public GamblingWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            LobbyGameMode.AddItem("Mines", 0); // This is the only game mode at the moment
+            for (int i = 0; i < gameModes.Length; i++) //TODO: Support to more gamemodes (will need a prototype)
+            {
+                LobbyGameMode.AddItem(gameModes[i], 0);
+            }
+
             _serverCur.BalanceChange += UpdatePlayerBalance;
+
+            LobbyPlayButton.OnPressed += _ => SetupPlayState();
+            ResultRestartButton.OnPressed += _ => SetupLobbyState();
         }
 
-        private void UpdatePlayerBalance()
+        public void UpdatePlayerBalance()
         {
             var balance = _serverCur.GetBalance();
             FooterCurrency.Text = _serverCur.Stringify(balance);
         }
+
+        public void SetupPlayState()
+        {
+            if (currentState == GamblingStates.Game)
+                return;
+
+            var value = int.Parse((string) LobbyMoneyDeposit.Text);
+            if (value <= 0 || !_serverCur.CanAfford(value, out _))
+                return;
+
+            Lobby.Visible = false;
+            Game.Visible = true;
+            Result.Visible = false;
+            ResultLabel.Text = "";
+            currentState = GamblingStates.Game;
+            OnPlay?.Invoke(value, "Red");
+        }
+
+        public void SetupLobbyState()
+        {
+            if (currentState == GamblingStates.Lobby)
+                return;
+
+            Lobby.Visible = true;
+            Game.Visible = false;
+            LobbyMoneyDeposit.Text = "0";
+            currentState = GamblingStates.Lobby;
+        }
+
+        public void ShowResult(bool won)
+        {
+            Result.Visible = true;
+            ResultLabel.Text = won ? "[color=green]You won!" : "[color=red]You lose!";
+        }
+    }
+
+    public enum GamblingStates
+    {
+        Lobby = 0,
+        Game = 1
     }
 }

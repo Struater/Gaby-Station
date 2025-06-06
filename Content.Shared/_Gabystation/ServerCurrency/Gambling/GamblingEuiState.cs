@@ -13,14 +13,31 @@ namespace Content.Shared._Gabystation.ServerCurrency.Gambling
         {
         }
 
-        /* exemplo de mensagem
         [Serializable, NetSerializable]
-        public sealed class DoAnnounce : EuiMessageBase
+        public sealed class Play : EuiMessageBase
         {
-            public bool CloseAfter;
-            public string Announcer = default!;
-            public string Announcement = default!;
-            public AdminAnnounceType AnnounceType;
-        }*/
+            //public ProtoId<GamblingGameModePrototype> GameMode;
+            public required int PlayAmount;
+            public required string PlayOption;
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class Restart : EuiMessageBase
+        {
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class Result : EuiMessageBase
+        {
+            public bool Won = false;
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class Warning : EuiMessageBase
+        {
+            public required string Tittle;
+            public required string Message;
+            public bool? Restart;
+        }
     }
 }
