@@ -38,10 +38,14 @@
                     <Label Text="Select game mode: " />
                     <OptionButton Name="LobbyGameMode" Access="Public" HorizontalExpand="True" StyleClasses="OpenRight"/>
                 </BoxContainer>
+                <BoxContainer>
+                    <Label Text="Select option: " />
+                    <OptionButton Name="LobbyGameOption" Access="Public" HorizontalExpand="True" StyleClasses="OpenRight"/>
+                </BoxContainer>
 
                 <!-- Only to put the lobby footer in the bottom -->
-                <BoxContainer VerticalExpand="True">
-                    <!-- Add gamemode texture -->
+                <BoxContainer VerticalExpand="True" HorizontalExpand="true">
+                    <TextureRect Name="SelectedGameTexture" Stretch="KeepCentered"/>
                 </BoxContainer>
 
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Center">
@@ -55,6 +59,18 @@
 
         <!-- Game, where you gamble!!! -->
         <BoxContainer Visible="False" Orientation="Vertical" Name="Game">
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
+                </PanelContainer.PanelOverride>
+                    <BoxContainer VerticalExpand="True" Name="GameContainer">
+                        <!-- Add here double 3 button to animation -->
+                    </BoxContainer>
+                <BoxContainer VerticalExpand="True" Visible="True" Orientation="Vertical" Margin="8">
+
+                </BoxContainer>
+            </PanelContainer>
+
             <BoxContainer Name="Result" Visible="False" HorizontalAlignment="Center">
                 <Button Name="ResultRestartButton" Text="Restart" StyleClasses="ButtonBig" />
                 <RichTextLabel Text="" Name="ResultLabel"/>
