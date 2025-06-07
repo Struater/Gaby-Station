@@ -3,6 +3,8 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.ResourceManagement;
 using Content.Client._durkcode.ServerCurrency;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Client._Gabystation.ServerCurrency.UI
 {
@@ -13,12 +15,13 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
         [Dependency] private readonly ServerCurrencySystem _serverCur = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
 
-        public GamblingStates currentState = GamblingStates.Lobby;
+        public GamblingStates CurrentState = GamblingStates.Lobby;
         public event Action<int, string>? OnPlay;
 
         private readonly string[] gameModes = ["Double"]; // This is the only game mode at the moment
         private string gameOption = "";
         private string selectedGame = "Double";
+        private bool playingAnim = false;
 
         public GamblingWindow()
         {
@@ -30,11 +33,13 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
                 LobbyGameMode.AddItem(gameModes[i], 0);
             }
             LobbyGameOption.AddItem("Red (2x)", 0);
+            LobbyGameOption.AddItem("Black (2x)", 0);
+            LobbyGameOption.AddItem("White (10x)", 0);
 
             _serverCur.BalanceChange += UpdatePlayerBalance;
 
             LobbyPlayButton.OnPressed += _ => SetupPlayState();
-            ResultRestartButton.OnPressed += _ => SetupLobbyState();
+            ResultRestartButton.OnPressed += _ => HandleRestartButton();
 
             UpdateGamePreview();
         }
@@ -47,30 +52,43 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
 
         public void SetupPlayState()
         {
-            if (currentState == GamblingStates.Game)
+            if (!int.TryParse(LobbyMoneyDeposit.Text, out var value) || value <= 0)
                 return;
 
-            if (!int.TryParse(LobbyMoneyDeposit.Text, out var value) || value <= 0 || !_serverCur.CanAfford(value, out _))
-                return;
+            // Get selected option
+            gameOption = LobbyGameOption.SelectedId switch
+            {
+                0 => "Red",
+                1 => "Black",
+                2 => "White",
+                _ => "Red"
+            };
 
             Lobby.Visible = false;
             Game.Visible = true;
             Result.Visible = false;
             ResultLabel.Text = "";
-            currentState = GamblingStates.Game;
-            OnPlay?.Invoke(value, "Red");
+            CurrentState = GamblingStates.Game;
+
+            // Começa animação antes de enviar para o servidor
+            StartRollAnimation(gameOption, () =>
+            {
+                // Depois que a animação termina, envia pro servidor
+                OnPlay?.Invoke(value, gameOption);
+            });
         }
 
         public void SetupLobbyState()
         {
-            if (currentState == GamblingStates.Lobby)
+            if (CurrentState == GamblingStates.Lobby)
                 return;
 
             Lobby.Visible = true;
             Game.Visible = false;
-            LobbyMoneyDeposit.Text = "0";
+            playingAnim = false;
+            //LobbyMoneyDeposit.Text = "0";
             gameOption = "";
-            currentState = GamblingStates.Lobby;
+            CurrentState = GamblingStates.Lobby;
         }
 
         public void ShowResult(bool won)
@@ -84,6 +102,51 @@ namespace Content.Client._Gabystation.ServerCurrency.UI
             var selectedTexture = _resCache.GetResource<TextureResource>($"/Textures/_Gabystation/Textures/Gambling/{selectedGame}.png");
             SelectedGameTexture.Texture = selectedTexture;
         }
+
+        private void HandleRestartButton()
+        {
+            if (CurrentState != GamblingStates.Game || !Result.Visible)
+                return;
+
+            SetupLobbyState();
+        }
+
+        public void StartRollAnimation(string selectedOption, Action onFinished)
+        {
+            // Inicia efeito visual (loop de 3 quadrados mudando de cor aleatória)
+            playingAnim = true;
+
+            var random = IoCManager.Resolve<IRobustRandom>();
+            var availableColors = new[] { "Red", "Black", "White" };
+
+            var ticks = 0;
+            var maxTicks = 30;
+            var timer = new Timer(100, true); // 100ms por tick
+
+            timer.OnTick += _ =>
+            {
+                ticks++;
+
+                // Muda as cores aleatoriamente nos quadrados
+                for (int i = 0; i < 3; i++)
+                {
+                    var color = availableColors[random.Next(availableColors.Length)];
+                    SetBoxColor(i, color);
+                }
+
+                if (ticks >= maxTicks)
+                {
+                    timer.Stop();
+                    playingAnim = false;
+
+                    // Terminou animação → avisa servidor
+                    onFinished.Invoke();
+                }
+            };
+
+            timer.Start();
+        }
+
     }
 
     public enum GamblingStates

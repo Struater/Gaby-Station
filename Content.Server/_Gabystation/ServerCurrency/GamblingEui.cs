@@ -100,7 +100,7 @@ namespace Content.Server._Gabystation.ServerCurrence
                 // Pode mandar mensagem pro jogador aqui
                 _sawmill.Info($"{Player.Name} gambled {amount} in {option} and won {winnings}!");
 
-                SendMessage(new GamblingEuiMsg.Restart());
+                SendMessage(new GamblingEuiMsg.Result() {Won = true});
 
             }
             else
@@ -108,7 +108,7 @@ namespace Content.Server._Gabystation.ServerCurrence
                 // player lost
                 _sawmill.Info($"{Player.Name} gambled {amount} in {option} and lose.");
 
-                SendMessage(new GamblingEuiMsg.Restart());
+                SendMessage(new GamblingEuiMsg.Result() {Won = false});
 
             }
 
