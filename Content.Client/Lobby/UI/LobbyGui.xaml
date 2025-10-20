@@ -43,7 +43,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <!-- Background -->
     <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background"
                  Stretch="KeepAspectCovered" />
-    <BoxContainer Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal"
+    <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical"
+                  Margin="10 10 10 10">
+        <BoxContainer Align="Center">
+            <Label Access="Public" StyleClasses="LabelHeading" VAlign="Center" Text="MUDAMOS DE IP"
+                            HorizontalExpand="True" HorizontalAlignment="Center" />
+            <RichTextLabel Text="Mudamos de servidor, para continuar jogando, aperte no botão abaixo para ser redirecionado.
+                            [bold][color=red]Lembre-se de favoritar o novo servidor no launcher do jogo.[/bold][/color]"/>
+            <Button Name="RedialButton" Access="Public" Text="Redirecionar" StyleClasses="OpenBoth" />
+        </BoxContainer>
+    </BoxContainer>
+    <BoxContainer Visible="False" Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal"
                   Margin="10 10 10 10" SeparationOverride="2">
         <SplitContainer State="Auto" ResizeMode="NotResizable" HorizontalExpand="True">
             <!-- LHS Controls -->
@@ -171,7 +181,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             </PanelContainer>
         </SplitContainer>
         <PanelContainer Name="ExpandPanel"
-                        StyleClasses="AngleRect" 
+                        StyleClasses="AngleRect"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="0 2 2 0"

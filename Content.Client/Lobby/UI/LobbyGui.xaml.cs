@@ -58,6 +58,9 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.ResourceManagement;
+using Robust.Client;
+using Robust.Shared.Configuration;
+using Content.Shared._Gabystation.CCVar;
 
 namespace Content.Client.Lobby.UI
 {
@@ -66,6 +69,8 @@ namespace Content.Client.Lobby.UI
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
+        [Dependency] private readonly IGameController _gameController = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public LobbyGui()
         {
@@ -92,6 +97,8 @@ namespace Content.Client.Lobby.UI
 
             CollapseButton.OnPressed += _ => TogglePanel(false);
             ExpandButton.OnPressed += _ => TogglePanel(true);
+
+            RedialButton.OnPressed += _ => _gameController.Redial(_cfg.GetCVar(GabyCVars.RedialAddress), "Mudando de servidor...");
 
             ShowMOTD.OnPressed += _ =>
             {

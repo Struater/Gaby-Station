@@ -14,6 +14,9 @@ namespace Content.Shared._Gabystation.CCVar;
 [CVarDefs]
 public sealed partial class GabyCVars
 {
+    public static readonly CVarDef<string> RedialAddress =
+        CVarDef.Create("gaby.redial_address", "ss14://31.97.95.89:1212", CVar.SERVER | CVar.REPLICATED);
+
     /// <summary>
     /// Discord Webhooks
     /// </summary>
