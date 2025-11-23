@@ -285,3 +285,24 @@ accent-cowboy-replacement-95 = nervoso
 
 accent-cowboy-words-96 = wow
 accent-cowboy-replacement-96 = oxi
+
+accent-cowboy-words-96 = oxe
+accent-cowboy-replacement-96 = oxente
+
+accent-cowboy-words-97 = oxi
+accent-cowboy-replacement-97 = oxente
+
+accent-cowboy-words-98 = bingle
+accent-cowboy-replacement-98 = criatura azul
+
+accent-cowboy-words-99 = bingles
+accent-cowboy-replacement-99 = criaturas azuis
+
+accent-cowboy-words-100 = você
+accent-cowboy-replacement-100 = ocê
+
+accent-cowboy-words-101 = voce
+accent-cowboy-replacement-101 = ocê
+
+accent-cowboy-words-102 = vc
+accent-cowboy-replacement-102 = ocê
