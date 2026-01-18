@@ -67,3 +67,10 @@
       - MindRoleThief
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
+
+- type: entity
+  id: Terminator
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: TerminatorRule        
