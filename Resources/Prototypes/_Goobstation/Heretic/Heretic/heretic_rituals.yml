@@ -1,27 +1,11 @@
-# SPDX-FileCopyrightText: 2024 Armok <155400926+ARMOKS@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
-# SPDX-FileCopyrightText: 2025 Aidenkrz <aiden@djkraz.com>
-# SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
-# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-# SPDX-FileCopyrightText: 2025 LuciferEOS <stepanteliatnik2022@gmail.com>
-# SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-# SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
-# SPDX-FileCopyrightText: 2025 Spatison <137375981+Spatison@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 username <113782077+whateverusername0@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 whateverusername0 <whateveremail>
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-### basic
-# Heartbeat of the Mansus (sacrifice)
-- type: hereticRitual
-  id: Sacrifice
-  locName: heretic-ritual-basic-sacrifice
-  locDesc: heretic-ritual-basic-sacrifice-desc
-  icon:
+# TODO: reduce yaml bloat somehow
+
+- type: entity
+  id: RitualSacrifice
+  name: Sacrifice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   customBehaviors:
@@ -346,15 +330,38 @@
   outputEvent: !type:EventHereticAscension
 
 ### side knowledge
-#- type: hereticRitual
-#  id: RitualOfKnowledge
-#  locName: knowledge-path-side-knowledge-name
-#  locDesc: knowledge-path-side-knowledge-desc
-#  icon:
-#    sprite: _Goobstation/Heretic/book.rsi
-#    state: icon
-#  customBehaviors:
-#  - !type:RitualKnowledgeBehavior
+- type: entity
+  id: RitualKnowledge
+  name: Ritual of Knowledge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _Goobstation/Heretic/book.rsi
+    state: icon
+  - type: HereticRitual
+    effects:
+    - !type:LookupRitualEffect
+      applyOn: Platform
+      result: Look
+    - !type:EffectsRitualEffect
+      applyOn: Delete
+      effects:
+      - !type:Delete
+      conditions:
+      - !type:FilterKnowledgeTagsCondition
+        applyOn: Look
+        result: Delete
+    - !type:RemoveRitualsEffect
+      applyOn: Mind
+      ritualTags:
+      - RitualKnowledge
+    - !type:UpdateKnowledgeEffect
+      applyOn: Mind
+      amount: 4
+  - type: HereticKnowledgeRitual
+  - type: Tag
+    tags:
+    - RitualKnowledge
 
 ## stage 3
 - type: hereticRitual
@@ -433,6 +440,60 @@
   output:
     MobGhoulFireShark: 3
   limit: 15
+
+## stage 6
+- type: entity
+  id: RitualPhylacteryOfDamnation
+  name: Phylactery of Damnation
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+  sprite: _Goobstation/Heretic/Entities/phylactery.rsi
+    state: icon
+
+- type: HereticRitual
+  effects:
+    - !type:LookupRitualEffect
+      applyOn: Platform
+      result: Look
+    - !type:SaveResultRitualEffect
+      applyOn: Look
+      result: Puddles
+      individualConditions:
+      - !type:WhitelistCondition
+        whitelist:
+          components:
+          - Puddle
+      - !type:ReagentsCondition
+    - !type:SplitIngredientsRitualEffect
+      applyOn: Split
+      conditions:
+      - !type:InputCountCondition
+        applyOn: Puddles
+        result: Delete2
+        min: 1
+        cancelLoc: heretic-ritual-fail-reagent-blood
+      - !type:ProcessIngredientsCondition
+        applyOn: Look
+        deleteEntitiesKey: Delete
+        splitEntitiesKey: Split
+        ingredients:
+        - whitelist:
+            tags:
+            - GlassBeaker
+          name: heretic-ritual-ingredient-beaker
+    - !type:EffectsRitualEffect
+      applyOn: Delete
+      effects:
+      - !type:Delete
+    - !type:EffectsRitualEffect
+      applyOn: Delete2
+      effects:
+      - !type:Delete
+    - !type:SpawnRitualEffect
+      applyOn: Platform
+      output:
+        HereticPhylactery: 1
 
 ## stage 6
 

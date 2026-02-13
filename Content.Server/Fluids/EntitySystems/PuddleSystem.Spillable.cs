@@ -107,7 +107,7 @@ public sealed partial class PuddleSystem
         if (!entity.Comp.SpillWhenThrown)
             return;
 
-        if (args.User != null)
+        if (TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, out _, out var solution, user: args.User) && args.User != null) // Goob
         {
             // Adventure start
             if (_nonspillthrower.GetSpillProofThrow(args.User.Value))
