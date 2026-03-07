@@ -2181,3 +2181,29 @@ Entries:
         agora.
   id: 262
   time: '2026-03-07T15:11:10.0000000+00:00'
+- author: Lucasalemao10
+  changes:
+    - type: Tweak
+      message: Shadowkins agora não são mais vulneraveis ao flash
+  id: 263
+  time: '2026-03-07T15:25:57.0000000+00:00'
+- author: Struater
+  changes:
+    - type: Add
+      message: >-
+        Novas Músicas na Jukebox, Vermilion, Pirata Oficial, Dois Navegantes e
+        Leave me Alone
+  id: 264
+  time: '2026-03-07T15:45:52.0000000+00:00'
+- author: Kyoth25f
+  changes:
+    - type: Add
+      message: Adicionadas as mudanças do Goob até 07/03 (confira a aba do Goob)!
+  id: 265
+  time: '2026-03-07T16:33:00.0000000+00:00'
+- author: SrKolobanov
+  changes:
+    - type: Fix
+      message: Chapéus e boinas voltam a ter seus valores de proteção antigos.
+  id: 266
+  time: '2026-03-07T16:41:56.0000000+00:00'
