@@ -31,7 +31,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Damage;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -125,13 +125,6 @@ public sealed partial class MeleeWeaponComponent : Component
     [DataField, AutoNetworkedField]
     public float Range = 1.5f;
 
-    // goob edit - stunmeta
-    /// <summary>
-    ///     Applies stamina damage on each successful wideswing hit to the attacker.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float HeavyStaminaCost = 5f;
-
     /// <summary>
     /// Total width of the angle for wide attacks.
     /// </summary>
@@ -139,32 +132,10 @@ public sealed partial class MeleeWeaponComponent : Component
     public Angle Angle = Angle.FromDegrees(60);
 
     [DataField, AutoNetworkedField]
-    public EntProtoId Animation = "WeaponArcThrust"; // Goob Edit
-
-    [DataField, AutoNetworkedField]
-    public EntProtoId MissAnimation = "WeaponArcPunch"; // Goob Edit
-
-    [DataField, AutoNetworkedField]
-    public bool FlipAnimation = true; // Goob Edit
+    public EntProtoId Animation = "WeaponArcThrust";
 
     [DataField, AutoNetworkedField]
     public EntProtoId WideAnimation = "WeaponArcSlash";
-
-    // WD EDIT START
-
-    [DataField, AutoNetworkedField]
-    public EntProtoId DisarmAnimation = "WeaponArcDisarm";
-
-    [DataField, AutoNetworkedField]
-    public bool CanHeavyAttack = true;
-
-    /// <summary>
-    /// Rotation of the animation.
-    /// 0 degrees means the top faces the attacker.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Angle AnimationRotation = Angle.Zero;
-    // WD EDIT END
 
     /// <summary>
     /// Rotation of the animation.
@@ -173,9 +144,26 @@ public sealed partial class MeleeWeaponComponent : Component
     [DataField, AutoNetworkedField]
     public Angle WideAnimationRotation = Angle.Zero;
 
+    /// <summary>
+    /// Attack animation direction.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool SwingLeft;
 
+    /// <summary>
+    /// Change <see cref="SwingLeft"/> after every attack. Allows each attack to take turns being either left or right.
+    /// Thats looks cool visually
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SwingBeverage = true;
+
+    /// <summary>
+    /// How far away from the player the animation should be played.
+    /// We don't connect it with attack range, because different weapons have different sprites,
+    /// and this value should be adjusted manually for every weapon ideally
+    /// </summary>
+    [DataField]
+    public float AnimationOffset = 1f;
 
     // Sounds
 
@@ -211,30 +199,6 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool MustBeEquippedToUse = false;
-
-    // Shitmed Change Start
-
-    /// <summary>
-    ///     Shitmed Change: Part damage is multiplied by this amount for single-target attacks
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float ClickPartDamageMultiplier = 1.00f;
-
-    /// <summary>
-    ///     Shitmed Change: Part damage is multiplied by this amount for heavy swings
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float HeavyPartDamageMultiplier = 1.00f;
-
-    // Shitmed Change End
-
-    // Goobstation
-    [DataField, AutoNetworkedField]
-    public bool CanWideSwing = true;
-
-    // Goobstation
-    [DataField, AutoNetworkedField]
-    public float HeavyAttackWoundMultiplier = 0.5f;
 }
 
 /// <summary>
