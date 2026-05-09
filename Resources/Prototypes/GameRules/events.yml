@@ -868,7 +868,7 @@
     earliestStart: 35
     weight: 6.0 # Goobstation - was 5.5
     minimumPlayers: 20 # Dumontstation was 50 # Goobstation - was 20
-    duration: 720 # Goobstation - required for custom nuke music. 720s to ensure loneop can hear the music and still have space for other midrounds incase of failure
+    duration: null # Dumontstation - alterado para o lone conseguir declarar guerra
     maxOccurrences: 1 # Gabystation - loneops apenas uma vez por round
     chaos: # Goobstation
       Hostile: 200
