@@ -82,6 +82,13 @@ using Timer = Robust.Shared.Timing.Timer;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
+// Dumont changes start
+using System.Numerics;
+using Content.Shared.Parallax.Biomes;
+using Content.Shared.Procedural;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
+// Dumont end
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -92,6 +99,12 @@ public sealed partial class EmergencyShuttleSystem
     /*
      * Handles the emergency shuttle's console and early launching.
      */
+
+    // Dumont changes start
+    private EntityUid? _evacuationPlanetMap;
+    private EntityCoordinates? _evacuationLandingZone;
+    private const float PodSpreadRadius = 25f;
+    // Dumont end
 
     /// <summary>
     /// Has the emergency shuttle arrived?
@@ -267,22 +280,20 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         var podLaunchQuery = EntityQueryEnumerator<EscapePodComponent, ShuttleComponent>();
+        var timeDelay = 0; // Dumont
 
         while (podLaunchQuery.MoveNext(out var uid, out var pod, out var shuttle))
         {
-            var stationUid = _station.GetOwningStation(uid);
-
-            if (!TryComp<StationCentcommComponent>(stationUid, out var centcomm) ||
-                Deleted(centcomm.Entity) ||
-                pod.LaunchTime == null ||
+            // Dumont changes start
+            if (pod.LaunchTime == null ||
                 pod.LaunchTime > _timing.CurTime)
             {
                 continue;
             }
 
-            // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLToDock(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime);
-            RemCompDeferred<EscapePodComponent>(uid);
+            LaunchEscapePod(uid, shuttle, TransitTime + 1 + timeDelay);
+            timeDelay++;
+            // Dumont end
         }
 
         // Departed
@@ -419,6 +430,11 @@ public sealed partial class EmergencyShuttleSystem
         TransitTime = MinimumTransitTime + (MaximumTransitTime - MinimumTransitTime) * _random.NextFloat();
         // Round to nearest 10
         TransitTime = MathF.Round(TransitTime / 10f) * 10f;
+
+        // Dumont changes start
+        _evacuationPlanetMap = null;
+        _evacuationLandingZone = null;
+        // Dumont end
     }
 
     private void UpdateAllEmergencyConsoles()
@@ -517,4 +533,143 @@ public sealed partial class EmergencyShuttleSystem
         _roundEndCancelToken = null;
         return true;
     }
+    // Dumont changes start
+    public void LaunchEscapePod(EntityUid uid, ShuttleComponent shuttle, float travelTime)
+    {
+        if (_evacuationPlanetMap == null || _evacuationLandingZone == null)
+            SetupEvacuationPlanet();
+
+        if (_evacuationPlanetMap == null || _evacuationLandingZone is not { } evacuationLandingZone)
+        {
+            Log.Error($"Evacuation pod {ToPrettyString(uid)} failed to setup evacuation planet destination.");
+            return;
+        }
+
+        var angle = _random.NextAngle();
+        var distance = _random.NextFloat(0, PodSpreadRadius);
+        var offset = angle.ToVec() * distance;
+        var landingCoords = evacuationLandingZone.Offset(offset);
+
+        var rotations = new[]
+        {
+            Angle.Zero,
+            Angle.FromDegrees(90),
+            Angle.FromDegrees(180),
+            Angle.FromDegrees(270)
+        };
+        var podRotation = _random.Pick(rotations);
+
+        _shuttle.FTLToCoordinates(
+            uid,
+            shuttle,
+            landingCoords,
+            podRotation,
+            startupTime: 0f,
+            hyperspaceTime: travelTime);
+
+        RemCompDeferred<EscapePodComponent>(uid);
+    }
+
+    /// <summary>
+    /// Creates the evacuation planet for escape pods to land on with ores and ruins.
+    /// All pods will land on the same planet with random positions and rotations.
+    /// </summary>
+    private void SetupEvacuationPlanet()
+    {
+        try
+        {
+            var biomeOptions = new[]
+            {
+                "Grasslands",
+                "Snow",
+                "Caves"
+            };
+
+            var selectedBiome = _random.Pick(biomeOptions);
+
+            if (!_prototype.TryIndex<BiomeTemplatePrototype>(selectedBiome, out var template))
+            {
+                Log.Error($"Failed to load biome template: {selectedBiome}");
+                return;
+            }
+
+            _evacuationPlanetMap = _mapSystem.CreateMap(out var mapId, runMapInit: false);
+
+            _biomes.EnsurePlanet(_evacuationPlanetMap.Value, template);
+
+            if (TryComp(_evacuationPlanetMap.Value, out BiomeComponent? biomeComp))
+            {
+                var oreMarkers = new[]
+                {
+                    "OreIron",
+                    "OreCoal",
+                    "OreQuartz",
+                    "OreSalt",
+                    "OreGold",
+                    "OreSilver",
+                    "OrePlasma",
+                    "OreUranium",
+                    "OreDiamond",
+                    "OreArtifactFragment"
+                };
+
+                foreach (var oreId in oreMarkers)
+                {
+                    _biomes.AddMarkerLayer(_evacuationPlanetMap.Value, biomeComp, oreId);
+                }
+            }
+
+            if (!TryComp<MapGridComponent>(_evacuationPlanetMap.Value, out var grid))
+                return;
+
+            var dungeonConfigs = new[]
+            {
+                "Experiment",
+                "SovietDungeonWeh",
+                "Mineshaft"
+            };
+
+            var numRuins = _random.Next(2, dungeonConfigs.Length + 1);
+            var selectedConfigs = _random.GetItems(dungeonConfigs, numRuins, allowDuplicates: false);
+            var seed = _random.Next();
+            var offsetDistance = 50f;
+
+            foreach (var configId in selectedConfigs)
+            {
+                if (!_prototype.TryIndex<DungeonConfigPrototype>(configId, out var dungeonProto))
+                {
+                    Log.Warning($"Could not load dungeon config {configId}");
+                    continue;
+                }
+
+                var angle = _random.NextAngle();
+                var offset = angle.ToVec() * offsetDistance;
+                var offsetPos = (Vector2i) (Vector2.Zero + offset);
+
+                try
+                {
+                    _dungeon.GenerateDungeon(dungeonProto, _evacuationPlanetMap.Value, grid, offsetPos, seed++);
+                }
+                catch (Exception e)
+                {
+                    Log.Warning($"Error generating ruin {configId}: {e.Message}");
+                }
+            }
+
+            _evacuationLandingZone = new EntityCoordinates(_evacuationPlanetMap.Value, Vector2.Zero);
+
+            _mapSystem.InitializeMap(mapId);
+
+            _metaData.SetEntityName(_evacuationPlanetMap.Value, Loc.GetString("evacuation-planet-name"));
+
+            Log.Info($"Created evacuation planet with {selectedBiome} biome and {numRuins} ruins");
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Failed to setup evacuation planet: {ex}");
+            _evacuationPlanetMap = null;
+            _evacuationLandingZone = null;
+        }
+    }
+    // Dumont end
 }
