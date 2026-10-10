@@ -26,7 +26,8 @@
   - type: XenomorphsRule
     xenomorphInfestationSound:
       collection: xeno_start #Goobstation
-      volume: -2
+      params: # Dumont
+        volume: -16
   - type: AntagObjectives
     objectives:
     - XenomorphSurviveObjective
