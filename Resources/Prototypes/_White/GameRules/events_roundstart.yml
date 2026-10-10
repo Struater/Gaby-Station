@@ -4,15 +4,19 @@
   components:
   - type: GameRule
     chaosScore: 2500 # Goobstation - 1.5x blob
-    minPlayers: 30
+    minPlayers: 40 # Dumont
   - type: AntagObjectives
     objectives:
     - XenomorphSurviveObjective
   - type: XenomorphsRule # Goobstation - Required for Evolution Logic
+    minTimeToAnnouncement: 900 # Dumont
+    maxTimeToAnnouncement: 900 # Dumont
     xenomorphInfestationSound:
       collection: xeno_start
-      volume: -2
-  - type: VentSpawnRule
+      params: # Dumont
+        volume: -16
+  - type: MaintsSpawnRule # Dumont
+    fallbackToVents: true
   - type: AntagSpawner
     prototype: MobXenomorphLarva
   - type: AntagSelection
@@ -21,9 +25,8 @@
     definitions:
     - prefRoles: [ XenomorphsInfestationRoundstart ]
       spawnerPrototype: SpawnPointGhostXenomorph
-      min: 2
+      min: 4 # Dumont
       max: 4
-      playerRatio: 15
       pickPlayer: true
       mindRoles:
       - MindRoleXenomorph
