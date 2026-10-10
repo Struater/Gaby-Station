@@ -16,6 +16,7 @@
       params: # Dumont
         volume: -16
   - type: MaintsSpawnRule # Dumont
+    fallbackToVents: true
   - type: AntagSpawner
     prototype: MobXenomorphLarva
   - type: AntagSelection

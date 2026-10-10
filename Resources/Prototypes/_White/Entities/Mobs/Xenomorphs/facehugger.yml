@@ -137,8 +137,6 @@
     rules: ghost-role-information-rules-default-xeno
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    raffle:
-      settings: insta
   - type: GhostTakeoverAvailable
   - type: TypingIndicator
     proto: alien

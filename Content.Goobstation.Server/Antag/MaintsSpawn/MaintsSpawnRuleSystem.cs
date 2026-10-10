@@ -43,6 +43,16 @@ public sealed class MaintsSpawnRule : StationEventSystem<MaintsSpawnRuleComponen
             validLocations.Add(_transform.GetMapCoordinates(transform));
         }
 
+        if (validLocations.Count == 0 && ent.Comp.FallbackToVents)
+        {
+            var vents = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
+            while (vents.MoveNext(out _, out _, out var transform))
+            {
+                if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
+                    validLocations.Add(_transform.GetMapCoordinates(transform));
+            }
+        }
+
         if (validLocations.Count == 0)
         {
             ForceEndSelf(ent.Owner, gameRule);
