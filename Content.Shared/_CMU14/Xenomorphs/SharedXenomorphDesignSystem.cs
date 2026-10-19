@@ -4,9 +4,9 @@ using Robust.Shared.Map;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphDesignSystem : EntitySystem
+public sealed partial class SharedXenomorphDesignSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     public void Modifiers(EntityUid user, EntityCoordinates coordinates, out float time, out float cost)
     {

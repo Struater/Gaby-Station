@@ -44,18 +44,18 @@ public sealed partial class XenomorphBoilerGasExposureComponent : Component
 
 public sealed partial class XenomorphBoilerSystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
-    [Dependency] private readonly SharedDrunkSystem _drunk = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
-    [Dependency] private readonly SharedStutteringSystem _stutter = default!;
-    [Dependency] private readonly SharedInternalsSystem _internals = default!;
-    [Dependency] private readonly BlurryVisionSystem _blur = default!;
-    [Dependency] private readonly MovementModStatusSystem _slow = default!;
-    [Dependency] private readonly Content.Shared.StatusEffectNew.StatusEffectsSystem _status = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private SharedDrunkSystem _drunk = default!;
+    [Dependency] private SharedJitteringSystem _jitter = default!;
+    [Dependency] private SharedStutteringSystem _stutter = default!;
+    [Dependency] private SharedInternalsSystem _internals = default!;
+    [Dependency] private BlurryVisionSystem _blur = default!;
+    [Dependency] private MovementModStatusSystem _slow = default!;
+    [Dependency] private Content.Shared.StatusEffectNew.StatusEffectsSystem _status = default!;
     private readonly HashSet<Entity<MobStateComponent>> _victims = new();
 
     private void InitializeGas()

@@ -17,17 +17,17 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphWallNestSystem : EntitySystem
+public sealed partial class XenomorphWallNestSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private TagSystem _tags = default!;
 
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
     private static readonly EntProtoId Nest = "DumontXenomorphWallNest";

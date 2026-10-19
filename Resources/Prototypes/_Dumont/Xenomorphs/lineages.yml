@@ -99,6 +99,7 @@
   species:
   - Feroxi
   - Yowie
+  - Harpy
   evolutions:
     Larva:
     - MobXenomorphCMUDefender

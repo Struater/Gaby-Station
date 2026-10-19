@@ -4,9 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphSpitterSystem : EntitySystem
+public sealed partial class SharedXenomorphSpitterSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphSpitterComponent, RefreshMovementSpeedModifiersEvent>(OnSpeed);

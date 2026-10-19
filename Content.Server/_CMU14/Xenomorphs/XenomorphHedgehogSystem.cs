@@ -30,7 +30,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphShardVolley
+public sealed partial class XenomorphShardVolley
 {
     public readonly Dictionary<EntityUid, int> Hits = new();
 }
@@ -44,23 +44,23 @@ public sealed partial class XenomorphShardProjectileComponent : Component
     public int HitLimit;
 }
 
-public sealed class XenomorphHedgehogSystem : EntitySystem
+public sealed partial class XenomorphHedgehogSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedGunSystem _guns = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly MovementModStatusSystem _slow = default!;
-    [Dependency] private readonly XenomorphArmorSystem _armor = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedGunSystem _guns = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementModStatusSystem _slow = default!;
+    [Dependency] private XenomorphArmorSystem _armor = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

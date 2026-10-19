@@ -34,26 +34,26 @@ namespace Content.Server._CMU14.Xenomorphs;
 
 public sealed partial class XenomorphValkyrieSystem : EntitySystem
 {
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly Content.Shared.Interaction.SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly FlammableSystem _fire = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly MovementModStatusSystem _slow = default!;
-    [Dependency] private readonly XenomorphArmorSystem _armor = default!;
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private Content.Shared.Interaction.SharedInteractionSystem _interaction = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private FlammableSystem _fire = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementModStatusSystem _slow = default!;
+    [Dependency] private XenomorphArmorSystem _armor = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private StandingStateSystem _standing = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedJitteringSystem _jitter = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private readonly HashSet<Entity<XenomorphComponent>> _allies = new();
 
     public override void Initialize()

@@ -7,9 +7,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphEggSupportVisualizerSystem : EntitySystem
+public sealed partial class XenomorphEggSupportVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

@@ -11,13 +11,13 @@ using Robust.Shared.Maths;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class XenomorphLongRangeSightSystem : EntitySystem
+public sealed partial class XenomorphLongRangeSightSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedContentEyeSystem _eye = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedContentEyeSystem _eye = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
 
     public override void Initialize()
     {

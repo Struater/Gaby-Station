@@ -17,18 +17,18 @@ using Robust.Shared.Map;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphBileSystem : EntitySystem
+public sealed partial class XenomorphBileSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly FlammableSystem _fire = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private FlammableSystem _fire = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     private readonly HashSet<Entity<FlammableComponent>> _nearby = new();
     private readonly HashSet<EntityUid> _targets = new();
     private readonly List<EntityCoordinates> _tiles = new();

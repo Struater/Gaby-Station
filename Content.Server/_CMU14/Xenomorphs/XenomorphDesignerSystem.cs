@@ -44,19 +44,19 @@ public sealed partial class XenomorphThickResinComponent : Component;
 
 public sealed partial class XenomorphDesignerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -140,7 +140,7 @@ public sealed partial class XenomorphDesignerSystem : EntitySystem
         }
         ent.Comp.Count = ent.Comp.Nodes.Count;
         Dirty(ent);
-        Sound(coordinates);
+        PlayBuildSound(coordinates);
         args.Handled = true;
     }
 
@@ -168,16 +168,16 @@ public sealed partial class XenomorphDesignerSystem : EntitySystem
         var node = Nodes(Snap(args.Target)).FirstOrDefault(n => n.Comp.Designer == ent.Owner);
         if (node.Owner == EntityUid.Invalid || !_plasma.ChangePlasmaAmount(ent, -25)) return;
         QueueDel(node);
-        Sound(Transform(node).Coordinates);
+        PlayBuildSound(Transform(node).Coordinates);
         args.Handled = true;
     }
 
-    private void Sound(EntityCoordinates coordinates)
+    public void PlayBuildSound(EntityCoordinates coordinates)
         => _audio.PlayPvs(new SoundPathSpecifier("/Audio/_RMC14/Xeno/alien_resin_build1.ogg", AudioParams.Default.WithVolume(-8)), coordinates);
 
-    private EntityUid Effect(EntityCoordinates coordinates, bool door, bool thick, float duration)
+    public EntityUid CreateBuildEffect(EntityCoordinates coordinates, bool door, bool thick, float duration, bool membrane = false)
     {
-        var effect = Spawn($"DumontXenomorphDesignBuild{(door ? "Door" : "Wall")}{(thick ? "Thick" : "")}", coordinates);
+        var effect = Spawn($"DumontXenomorphDesignBuild{(door ? "Door" : membrane ? "Membrane" : "Wall")}{(thick ? "Thick" : "")}", coordinates);
         var visual = Comp<XenomorphResinBuildVisualComponent>(effect);
         visual.Duration = duration;
         visual.End = _timing.CurTime + TimeSpan.FromSeconds(duration);
@@ -198,14 +198,14 @@ public sealed partial class XenomorphDesignerSystem : EntitySystem
         build.User = user;
         build.Thick = thick;
         build.End = _timing.CurTime + TimeSpan.FromSeconds(4);
-        build.Effect = Effect(Transform(ent).Coordinates, ent.Comp.Door, thick, 4);
+        build.Effect = CreateBuildEffect(Transform(ent).Coordinates, ent.Comp.Door, thick, 4);
         var direction = _transform.GetWorldPosition(ent) - _transform.GetWorldPosition(user);
         if (direction.LengthSquared() > .001f)
         {
             var local = (-_transform.GetWorldRotation(user)).RotateVec(Vector2.Normalize(direction));
             _melee.DoLunge(user, user, user, Angle.Zero, local, "WeaponArcThrust", Angle.Zero, false, predicted: false);
         }
-        Sound(Transform(ent).Coordinates);
+        PlayBuildSound(Transform(ent).Coordinates);
         args.Handled = true;
     }
 

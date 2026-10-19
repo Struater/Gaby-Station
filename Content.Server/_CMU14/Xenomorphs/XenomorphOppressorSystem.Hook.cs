@@ -21,7 +21,7 @@ public sealed partial class XenomorphOppressorHookProjectileComponent : Componen
 
 public sealed partial class XenomorphOppressorSystem
 {
-    [Dependency] private readonly SharedGunSystem _guns = default!;
+    [Dependency] private SharedGunSystem _guns = default!;
 
     private void InitializeHook()
     {

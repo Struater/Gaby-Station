@@ -20,8 +20,8 @@ namespace Content.Server._CMU14.Xenomorphs;
 
 public sealed partial class XenomorphToxicSystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private StandingStateSystem _standing = default!;
     private void InitializeIntoxication()
     {
         SubscribeLocalEvent<XenomorphIntoxicatedComponent, ComponentRemove>(OnIntoxicatedRemoved);

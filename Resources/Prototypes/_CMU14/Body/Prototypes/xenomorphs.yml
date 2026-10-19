@@ -512,7 +512,6 @@
         brain: OrganXenomorphBrain
         eyes: OrganXenomorphEyes
         hive_node: OrganXenomorphHiveNode
-        resin_spinner: OrganXenomorphCMUResinSpinner
     chest:
       part: ChestXenomorph
       connections:
@@ -568,7 +567,6 @@
         brain: OrganXenomorphBrain
         eyes: OrganXenomorphEyes
         hive_node: OrganXenomorphHiveNode
-        resin_spinner: OrganXenomorphCMUResinSpinner
         acid_gland: OrganXenomorphCMUAcidGland
     chest:
       part: ChestXenomorph
@@ -1022,7 +1020,6 @@
         brain: OrganXenomorphBrain
         eyes: OrganXenomorphEyes
         hive_node: OrganXenomorphHiveNode
-        resin_spinner: OrganXenomorphCMUResinSpinner
         acid_gland: OrganXenomorphCMUAcidGland
     chest:
       part: ChestXenomorph
@@ -1079,7 +1076,6 @@
         brain: OrganXenomorphBrain
         eyes: OrganXenomorphEyes
         hive_node: OrganXenomorphHiveNode
-        resin_spinner: OrganXenomorphCMUResinSpinner
     chest:
       part: ChestXenomorph
       connections:
@@ -1355,7 +1351,6 @@
         brain: OrganXenomorphBrain
         eyes: OrganXenomorphEyes
         hive_node: OrganXenomorphHiveNode
-        resin_spinner: OrganXenomorphCMUResinSpinner
     chest:
       part: ChestXenomorph
       connections:

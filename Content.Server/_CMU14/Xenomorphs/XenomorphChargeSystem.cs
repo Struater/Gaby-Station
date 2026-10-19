@@ -23,19 +23,19 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphChargeSystem : SharedXenomorphChargeSystem
+public sealed partial class XenomorphChargeSystem : SharedXenomorphChargeSystem
 {
-    [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly MovementModStatusSystem _slow = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedStutteringSystem _stuttering = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private MovementModStatusSystem _slow = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private readonly HashSet<(EntityUid Charger, EntityUid Target)> _hits = new();
     private readonly Dictionary<EntityUid, TimeSpan> _recentHits = new();
     private static readonly SoundSpecifier Impact = new SoundCollectionSpecifier("Punch");

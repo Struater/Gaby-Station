@@ -3,9 +3,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphActionAreaSystem : EntitySystem
+public sealed partial class XenomorphActionAreaSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
 
     public override void Initialize()
     {

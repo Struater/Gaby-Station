@@ -34,9 +34,9 @@ public sealed partial class XenomorphAcidBallDoAfterEvent : SimpleDoAfterEvent
     [DataField] public NetCoordinates Coordinates;
 }
 
-public sealed class SharedXenomorphPraetorianSystem : EntitySystem
+public sealed partial class SharedXenomorphPraetorianSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphPraetorianComponent, UpdateCanMoveEvent>(OnMove);

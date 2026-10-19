@@ -8,11 +8,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphDesignerVisualizerSystem : EntitySystem
+public sealed partial class XenomorphDesignerVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprites = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprites = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void FrameUpdate(float frameTime)
     {

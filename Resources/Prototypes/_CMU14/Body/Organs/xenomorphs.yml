@@ -470,10 +470,13 @@
   parent: OrganXenomorphResinSpinner
   id: OrganXenomorphCMUResinSpinner
   components:
+  - type: Organ
+    onAdd:
+    - type: XenomorphConstruction
   - type: OrganActions
     actions:
-    - ActionXenomorphBuildResinWall
-    - ActionXenomorphBuildResinDoor
+    - ActionXenomorphChooseResin
+    - ActionXenomorphSecreteResin
 
 - type: entity
   parent: OrganXenomorphAcidGland
@@ -495,5 +498,7 @@
   parent: OrganXenomorphCMUResinSpinner
   id: OrganXenomorphCMURemoteResinSpinner
   components:
+  - type: Organ
+    onAdd: []
   - type: OrganActions
     actions: []

@@ -15,17 +15,17 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class XenomorphFortifySystem : EntitySystem
+public sealed partial class XenomorphFortifySystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly XenomorphArmorSystem _armor = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private XenomorphArmorSystem _armor = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private INetManager _net = default!;
     private const string FixtureId = "xenomorph-fortify";
 
     public override void Initialize()

@@ -243,6 +243,15 @@
     },
     {
       "name": "headbite"
+    },
+    {
+      "name": "secrete_resin"
+    },
+    {
+      "name": "evolve"
+    },
+    {
+      "name": "place_resin"
     }
   ]
 }

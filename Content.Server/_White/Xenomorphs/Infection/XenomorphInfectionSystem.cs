@@ -12,18 +12,18 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._White.Xenomorphs.Infection;
 
-public sealed class XenomorphInfectionSystem : EntitySystem
+public sealed partial class XenomorphInfectionSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedEntityEffectSystem _effect = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedEntityEffectSystem _effect = default!;
 
-    [Dependency] private readonly XenomorphLineageSystem _lineage = default!;
+    [Dependency] private XenomorphLineageSystem _lineage = default!;
 
     // Dumont start
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
     // Dumont end
 
     public override void Initialize()
@@ -102,7 +102,7 @@ public sealed class XenomorphInfectionSystem : EntitySystem
                 continue;
             }
 
-            var larva = Spawn(infection.LarvaPrototype);
+            var larva = Spawn(infection.LarvaPrototype, Transform(infection.Infected.Value).Coordinates);
             EnsureComp<XenomorphLineageComponent>(larva).Lineage = infection.Lineage;
 
             var larvaComponent = EnsureComp<XenomorphLarvaComponent>(larva);
@@ -120,7 +120,13 @@ public sealed class XenomorphInfectionSystem : EntitySystem
 
             // Dumont start
             if (infection.SourceMindId is { } mindId && HasComp<MindComponent>(mindId))
+            {
                 _mind.TransferTo(mindId, larva);
+                _mind.UnVisit(mindId);
+                var mind = Comp<MindComponent>(mindId);
+                mind.OriginalOwnedEntity = GetNetEntity(larva);
+                Dirty(mindId, mind);
+            }
             // Dumont end
 
             QueueDel(uid);

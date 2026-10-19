@@ -7,9 +7,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphHeatshieldSystem : EntitySystem
+public sealed partial class SharedXenomorphHeatshieldSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
 
     public override void Initialize()
     {

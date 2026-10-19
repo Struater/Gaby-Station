@@ -14,13 +14,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphHudOverlay : Overlay
+public sealed partial class XenomorphHudOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _players = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IResourceCache _resources = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPlayerManager _players = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IResourceCache _resources = default!;
     private static readonly ResPath Rsi = new("/Textures/_RMC14/Interface/xeno_hud.rsi");
     private static readonly ProtoId<ShaderPrototype> Shader = "unshaded";
     private readonly XenomorphHudSystem _hud;

@@ -37,7 +37,7 @@ public sealed partial class XenomorphNeuroHallucinationsComponent : Component
     public readonly List<EntityUid> Audio = new();
 }
 
-public sealed class XenomorphNeuroHallucinationSequence
+public sealed partial class XenomorphNeuroHallucinationSequence
 {
     public XenomorphNeuroHallucination Kind;
     public int Stage;
@@ -45,19 +45,19 @@ public sealed class XenomorphNeuroHallucinationSequence
     public EntityCoordinates Position;
 }
 
-public sealed class XenomorphNeuroHallucinationSystem : EntitySystem
+public sealed partial class XenomorphNeuroHallucinationSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ISharedPlayerManager _players = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ISharedPlayerManager _players = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
 
     private static readonly (XenomorphNeuroHallucination Kind, float Weight)[] Hallucinations =
     {

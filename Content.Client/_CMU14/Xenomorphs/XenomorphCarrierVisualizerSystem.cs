@@ -6,10 +6,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphCarrierVisualizerSystem : EntitySystem
+public sealed partial class XenomorphCarrierVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
 
     public override void FrameUpdate(float frameTime)
     {

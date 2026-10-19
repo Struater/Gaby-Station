@@ -17,8 +17,8 @@ namespace Content.Server._CMU14.Xenomorphs;
 
 public sealed partial class XenomorphOppressorSystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private TurfSystem _turf = default!;
     private readonly HashSet<EntityUid> _areaTargets = new();
 
     private void OnAbduct(Entity<XenomorphOppressorComponent> ent, ref XenomorphAbductActionEvent args)
@@ -57,7 +57,7 @@ public sealed partial class XenomorphOppressorSystem
             foreach (var tile in _map.GetTilesIntersecting(gridUid, grid, rotated))
             {
                 var point = _turf.GetTileCenter(tile);
-                if (!_interaction.InRangeUnobstructed(ent.Owner, point, 6, collisionMask: CollisionGroup.MobMask)) continue;
+                if (!_interaction.InRangeUnobstructed(ent.Owner, point, 6, collisionMask: CollisionGroup.Impassable)) continue;
                 var effect = bounds.Encloses(Box2.CenteredAround(point.Position, Vector2.One)) ? "DumontXenomorphLashTelegraph" : "DumontXenomorphLashEdgeTelegraph";
                 ent.Comp.Telegraphs.Add(Spawn(effect, point));
             }
@@ -151,7 +151,7 @@ public sealed partial class XenomorphOppressorSystem
             _lookup.GetEntitiesIntersecting(grid.Value, area.Value, _areaTargets, LookupFlags.Dynamic | LookupFlags.Static);
             foreach (var target in _areaTargets)
             {
-                if (!Victim(target) || !_interaction.InRangeUnobstructed(ent.Owner, target, 6, collisionMask: CollisionGroup.MobMask)) continue;
+                if (!Victim(target) || !_interaction.InRangeUnobstructed(ent.Owner, target, 6, collisionMask: CollisionGroup.Impassable)) continue;
                 _stun.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(1));
                 Slow(target, 2.5);
                 Throw(ent, target, 3);

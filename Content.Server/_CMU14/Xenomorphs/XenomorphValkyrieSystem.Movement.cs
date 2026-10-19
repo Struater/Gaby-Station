@@ -30,13 +30,13 @@ public sealed partial class XenomorphRetrievedComponent : Component
 
 public sealed partial class XenomorphValkyrieSystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private TagSystem _tags = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
     private readonly HashSet<EntityUid> _hits = new();
 
     private void InitializeMovement()
@@ -67,7 +67,7 @@ public sealed partial class XenomorphValkyrieSystem
         _lookup.GetEntitiesIntersecting(gridUid, rotated, _hits);
         foreach (var uid in _hits)
         {
-            if (!_interaction.InRangeUnobstructed(ent.Owner, uid, 6, collisionMask: CollisionGroup.MobMask)) continue;
+            if (!_interaction.InRangeUnobstructed(ent.Owner, uid, 6, collisionMask: CollisionGroup.Impassable)) continue;
             if (_tags.HasTag(uid, "Grenade"))
             {
                 _pulling.StopAllPulls(uid);

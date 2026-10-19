@@ -19,19 +19,19 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphResinWhispererSystem : EntitySystem
+public sealed partial class XenomorphResinWhispererSystem : EntitySystem
 {
-    [Dependency] private readonly SharedXenomorphDesignSystem _design = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly AnchorableSystem _anchorable = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedDoorSystem _doors = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedXenomorphDesignSystem _design = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private AnchorableSystem _anchorable = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedDoorSystem _doors = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

@@ -31,15 +31,15 @@ public sealed partial class XenomorphSecondImpaleComponent : Component
 
 public sealed partial class XenomorphDancerSystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly MovementModStatusSystem _slow = default!;
-    [Dependency] private readonly SharedStutteringSystem _stutter = default!;
-    [Dependency] private readonly XenomorphRageSystem _rage = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private MovementModStatusSystem _slow = default!;
+    [Dependency] private SharedStutteringSystem _stutter = default!;
+    [Dependency] private XenomorphRageSystem _rage = default!;
     private readonly List<EntityUid> _yellowTargets = new();
 
     private void InitializeCombat()
@@ -150,7 +150,15 @@ public sealed partial class XenomorphDancerSystem
     {
         if (args.Handled || !Ready(ent)) return;
         _actions.SetUseDelay(args.Action.Owner, TimeSpan.FromSeconds(13));
-        if (args.Entity is not { } target || !Victim(target) || !_interaction.InRangeUnobstructed(ent.Owner, target, range: 2))
+        var selected = args.Entity;
+        if (selected == null)
+        {
+            _nearby.Clear();
+            _lookup.GetEntitiesInRange(args.Target, .5f, _nearby);
+            foreach (var mob in _nearby)
+                if (Victim(mob)) { selected = mob.Owner; break; }
+        }
+        if (selected is not { } target || !Victim(target) || !_interaction.InRangeUnobstructed(ent.Owner, target, range: 2))
         {
             _actions.SetCooldown(args.Action.Owner, TimeSpan.FromSeconds(1));
             Lunge(ent, args.Target);

@@ -6,11 +6,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphRageSystem : EntitySystem
+public sealed partial class SharedXenomorphRageSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
 
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

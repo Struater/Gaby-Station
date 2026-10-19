@@ -156,7 +156,7 @@ ent-ActionXenomorphTailSlam = Pancada de cauda
     .desc = Atinja o primeiro inimigo na direção da cauda, a até 2,5 metros. Recarga de 10 segundos ao acertar ou 1 segundo ao errar. Não custa plasma.
 
 ent-ActionXenomorphCrusherCharge = Investida (20)
-    .desc = Após 1,2 segundo de preparação, avance até 5 metros. Cause 65 de dano, derrube e arremesse o alvo. Desacelera inimigos próximos ao impacto. Recarga: 14 segundos.
+    .desc = Após 1,2 segundo de preparação, avance até 5 metros. Cause 65 de dano, derrube e arremesse o alvo. Desacelera inimigos próximos ao impacto. Recarga: 42 segundos.
 ent-ActionXenomorphCrusherSoak = Absorver dano (20)
     .desc = Receba 240 de dano em até 6 segundos para recuperar 120 de vida e reiniciar a recarga da cauda. Recarga: 17 segundos.
 ent-ActionXenomorphCrusherShield = Escudo defensivo (50)
@@ -603,3 +603,17 @@ ent-DumontXenomorphReflectiveResinWallUnstable = parede refletora instável
     .desc = Resina endurecida que pode refletir disparos. Logo desabará.
 ent-DumontXenomorphDesignResidue = resina pegajosa fraca
 ent-DumontXenomorphDesignResidueThick = resina pegajosa
+
+ent-ActionXenomorphChooseResin = Escolher estrutura
+    .desc = Escolha qual estrutura de resina deseja secretar.
+ent-ActionXenomorphSecreteResin = Secretar resina
+    .desc = Construa a estrutura escolhida sobre a resina. O plasma é consumido ao concluir.
+
+ent-DumontXenomorphFastResin = resina veloz
+    .desc = Uma camada lisa de resina que acelera os xenomorfos.
+ent-DumontXenomorphResinSpikes = espinhos de resina
+    .desc = Espinhos afiados que ferem quem os pisa.
+ent-DumontXenomorphResinMembraneThick = membrana de resina espessa
+
+ent-DumontXenomorphReflectiveResinWall = parede de resina refletora
+    .desc = Uma parede de resina endurecida capaz de refletir disparos.

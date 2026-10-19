@@ -6,9 +6,9 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphVanguardSystem : EntitySystem
+public sealed partial class SharedXenomorphVanguardSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {

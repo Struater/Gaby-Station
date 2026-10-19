@@ -11,11 +11,11 @@ using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphLifestealSystem : EntitySystem
+public sealed partial class XenomorphLifestealSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
     private readonly HashSet<Entity<MobStateComponent>> _targets = new();
 
     public override void Initialize()

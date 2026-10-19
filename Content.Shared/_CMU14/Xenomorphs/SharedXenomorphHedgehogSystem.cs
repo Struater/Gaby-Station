@@ -5,10 +5,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphHedgehogSystem : EntitySystem
+public sealed partial class SharedXenomorphHedgehogSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

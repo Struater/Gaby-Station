@@ -30,24 +30,24 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphCrusherSystem : EntitySystem
+public sealed partial class XenomorphCrusherSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly MovementModStatusSystem _slow = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly ThrownItemSystem _thrown = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _flash = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private MovementModStatusSystem _slow = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private ThrownItemSystem _thrown = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedColorFlashEffectSystem _flash = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -183,15 +183,22 @@ public sealed class XenomorphCrusherSystem : EntitySystem
         args.Handled = true;
         var travelled = (_transform.GetMapCoordinates(ent).Position - ent.Comp.ChargeOrigin).Length();
         var direction = ent.Comp.ChargeDirection;
-        _thrown.StopThrow(ent, args.Component);
         var mob = HasComp<MobStateComponent>(args.Target);
         var damage = new DamageSpecifier { DamageDict = { ["Blunt"] = FixedPoint2.New(ent.Comp.ChargeDamage) } };
         if (!mob)
             damage.DamageDict["Structural"] = FixedPoint2.New(ent.Comp.StructuralDamage);
         _damage.TryChangeDamage(args.Target, damage, origin: ent);
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/_RMC14/Xeno/alien_claw_block.ogg"), ent);
-        if (!mob)
+        if (!mob && (TerminatingOrDeleted(args.Target) || EntityManager.IsQueuedForDeletion(args.Target)
+            || !TryComp<PhysicsComponent>(args.Target, out var obstacle) || !obstacle.CanCollide))
+        {
+            if (TryComp<PhysicsComponent>(args.Target, out var destroyed) && EntityManager.IsQueuedForDeletion(args.Target))
+                _physics.SetCanCollide(args.Target, false, body: destroyed);
+            _physics.SetLinearVelocity(ent, direction * 30);
             return;
+        }
+        _thrown.StopThrow(ent, args.Component);
+        if (!mob) return;
         _stun.TryUpdateParalyzeDuration(args.Target, TimeSpan.FromSeconds(2));
         if (!Transform(args.Target).Anchored)
             _throwing.TryThrow(args.Target, direction * (5 + Math.Clamp(travelled / ent.Comp.ChargeRange, 0, 1) * 5),

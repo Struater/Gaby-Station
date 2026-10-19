@@ -9,14 +9,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphTailTetherSystem : EntitySystem
+public sealed partial class XenomorphTailTetherSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
     public override void Initialize() => _overlays.AddOverlay(new XenomorphTailTetherOverlay(EntityManager));
     public override void Shutdown() => _overlays.RemoveOverlay<XenomorphTailTetherOverlay>();
 }
 
-public sealed class XenomorphTailTetherOverlay : Overlay
+public sealed partial class XenomorphTailTetherOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     private readonly IEntityManager _entities;

@@ -35,11 +35,9 @@
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         mask:
-        - SlipLayer
+        - ItemMask
         layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
+        - SlipLayer
         hard: false
   - type: Destructible
     thresholds:

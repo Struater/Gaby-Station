@@ -371,7 +371,7 @@
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: ready_charge }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: ready_charge }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
-    useDelay: 14
+    useDelay: 42
   - type: TargetAction
     range: 15
     checkCanAccess: false
@@ -1145,6 +1145,9 @@
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: corrosive_acid }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: corrosive_acid }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+
+  - type: PlasmaCostAction
+    shouldChangePlasma: false
 
 - type: entity
   parent: ActionCombatModeToggleXenomorph
@@ -1937,3 +1940,31 @@
     event: !type:XenomorphDesignSurgeActionEvent
   - type: XenomorphActionArea
     range: 7
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphChooseResin
+  components:
+  - type: Action
+    raiseOnUser: true
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: place_resin }
+  - type: InstantAction
+    event: !type:XenomorphChooseResinActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphSecreteResin
+  components:
+  - type: Action
+    raiseOnUser: true
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: secrete_resin }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: secrete_resin }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+  - type: TargetAction
+    range: 11
+    checkCanAccess: false
+  - type: EntityTargetAction
+  - type: WorldTargetAction
+    event: !type:XenomorphSecreteResinActionEvent

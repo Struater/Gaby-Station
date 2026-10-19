@@ -18,11 +18,11 @@ namespace Content.Server._CMU14.Xenomorphs;
 
 public sealed partial class XenomorphFruitSystem
 {
-    [Dependency] private readonly XenomorphVanguardSystem _vanguard = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly MobThresholdSystem _thresholds = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private XenomorphVanguardSystem _vanguard = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MobThresholdSystem _thresholds = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     private void OnChoose(Entity<XenomorphFruitPlanterComponent> ent, ref XenomorphChooseFruitActionEvent args)
     {

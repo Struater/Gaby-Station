@@ -79,9 +79,9 @@ public sealed partial class XenomorphScreechOverlay : Overlay, IEntityEventSubsc
     }
 }
 
-public sealed class XenomorphScreechVisualSystem : EntitySystem
+public sealed partial class XenomorphScreechVisualSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
     public override void Initialize() => _overlays.AddOverlay(new XenomorphScreechOverlay());
     public override void Shutdown() => _overlays.RemoveOverlay<XenomorphScreechOverlay>();
 }

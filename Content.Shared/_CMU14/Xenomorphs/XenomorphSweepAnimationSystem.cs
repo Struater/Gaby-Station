@@ -5,12 +5,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class XenomorphSweepAnimationSystem : EntitySystem
+public sealed partial class XenomorphSweepAnimationSystem : EntitySystem
 {
-    [Dependency] private readonly RotateToFaceSystem _rotate = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private RotateToFaceSystem _rotate = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Update(float frameTime)
     {

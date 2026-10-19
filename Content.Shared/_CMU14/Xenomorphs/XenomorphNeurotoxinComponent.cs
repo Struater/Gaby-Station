@@ -15,10 +15,10 @@ public sealed partial class XenomorphNeurotoxinComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextHallucination;
 }
 
-public sealed class XenomorphNeurotoxinVisualSystem : EntitySystem
+public sealed partial class XenomorphNeurotoxinVisualSystem : EntitySystem
 {
-    [Dependency] private readonly BlurryVisionSystem _blur = default!;
-    [Dependency] private readonly Robust.Shared.Timing.IGameTiming _timing = default!;
+    [Dependency] private BlurryVisionSystem _blur = default!;
+    [Dependency] private Robust.Shared.Timing.IGameTiming _timing = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphNeurotoxinComponent, GetBlurEvent>(OnBlur);

@@ -20,19 +20,19 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphStompSystem : EntitySystem
+public sealed partial class XenomorphStompSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MovementModStatusSystem _movement = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MovementModStatusSystem _movement = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     private static readonly EntProtoId Slowdown = "XenomorphStompSlowdown";
     private readonly HashSet<Entity<MobStateComponent>> _targets = new();

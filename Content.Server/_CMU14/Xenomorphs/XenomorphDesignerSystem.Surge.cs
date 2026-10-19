@@ -42,8 +42,8 @@ public sealed partial class XenomorphReflectedProjectileComponent : Component
 
 public sealed partial class XenomorphDesignerSystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private bool CanThicken(EntityUid user, EntityUid target)
         => Ready(user) && Exists(target) && !HasComp<XenomorphWeedboundComponent>(target)
@@ -70,7 +70,7 @@ public sealed partial class XenomorphDesignerSystem
         Del(target);
         var thickened = Spawn(door ? "DumontXenomorphResinDoorThick" : "DumontXenomorphResinWallThick", coordinates);
         _transform.SetLocalRotation(thickened, rotation);
-        Sound(coordinates);
+        PlayBuildSound(coordinates);
         args.Handled = true;
     }
 
@@ -94,7 +94,7 @@ public sealed partial class XenomorphDesignerSystem
         surge.Next = _timing.CurTime + TimeSpan.FromSeconds(30);
         surge.Action = args.Action.Owner;
         surge.Nodes.AddRange(nodes);
-        foreach (var node in nodes) surge.Effects.Add(Effect(Transform(node).Coordinates, false, true, 1));
+        foreach (var node in nodes) surge.Effects.Add(CreateBuildEffect(Transform(node).Coordinates, false, true, 1));
         _actions.SetToggled(args.Action.Owner, true);
         args.Handled = true;
     }

@@ -39,21 +39,21 @@ public sealed partial class XenomorphHealerRebirthComponent : Component
 
 public sealed partial class XenomorphHealerSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly MobThresholdSystem _thresholds = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly Content.Shared.Interaction.SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
-    [Dependency] private readonly FlammableSystem _fire = default!;
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private MobThresholdSystem _thresholds = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private Content.Shared.Interaction.SharedInteractionSystem _interaction = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private SharedBodySystem _body = default!;
+    [Dependency] private FlammableSystem _fire = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private StandingStateSystem _standing = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

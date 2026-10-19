@@ -8,11 +8,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphFruitVisualizerSystem : EntitySystem
+public sealed partial class XenomorphFruitVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
     private const string AuraId = "DumontXenomorphFruit";
     private static readonly ProtoId<ShaderPrototype> Aura = "DumontXenomorphAura";
 

@@ -13,11 +13,11 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphVisualizerSystem : VisualizerSystem<XenomorphRestComponent>
+public sealed partial class XenomorphVisualizerSystem : VisualizerSystem<XenomorphRestComponent>
 {
-    [Dependency] private readonly Robust.Client.Player.IPlayerManager _player = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly Robust.Shared.Timing.IGameTiming _timing = default!;
+    [Dependency] private Robust.Client.Player.IPlayerManager _player = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private Robust.Shared.Timing.IGameTiming _timing = default!;
 
     public override void FrameUpdate(float frameTime)
     {
@@ -49,7 +49,7 @@ public sealed class XenomorphVisualizerSystem : VisualizerSystem<XenomorphRestCo
                 state = "shield";
             else if (HasComp<ThrownItemComponent>(uid) && rsi.TryGetState("thrown", out _))
                 state = "thrown";
-            else if (((TryComp<XenomorphChargeComponent>(uid, out var charge) && charge.Active && charge.Stage > 0)
+            else if (((TryComp<XenomorphChargeComponent>(uid, out var charge) && charge.Active)
                 || (TryComp<PhysicsComponent>(uid, out var physics) && physics.LinearVelocity.LengthSquared() > 0.01f)
                 || (TryComp<InputMoverComponent>(uid, out var input) && (input.HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None))
                 && rsi.TryGetState("running", out _))
@@ -80,7 +80,7 @@ public sealed class XenomorphVisualizerSystem : VisualizerSystem<XenomorphRestCo
         SpriteSystem.LayerSetRsi((uid, sprite), acidLayer, path);
         SpriteSystem.LayerSetRsiState((uid, sprite), acidLayer, rest.Resting ? "acid_rest" : !_mobs.IsAlive(uid) ? "acid_downed" : "acid");
         SpriteSystem.LayerSetVisible((uid, sprite), acidLayer, acider.GeneratingUntil > _timing.CurTime && !_mobs.IsDead(uid));
-        SpriteSystem.SetDrawDepth((uid, sprite), (int)(acider.Hiding ? Content.Shared.DrawDepth.DrawDepth.Walls
+        SpriteSystem.SetDrawDepth((uid, sprite), (int)(acider.Hiding ? Content.Shared.DrawDepth.DrawDepth.FloorObjects
             : _mobs.IsDead(uid) ? Content.Shared.DrawDepth.DrawDepth.DeadMobs : Content.Shared.DrawDepth.DrawDepth.Mobs));
     }
 

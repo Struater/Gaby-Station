@@ -26,23 +26,23 @@ public sealed partial class XenomorphTrapAcidComponent : Component
     public HashSet<EntityUid> Chain = new();
 }
 
-public sealed class XenomorphAcidTrapSystem : EntitySystem
+public sealed partial class XenomorphAcidTrapSystem : EntitySystem
 {
-    [Dependency] private readonly XenomorphAciderSystem _acider = default!;
-    [Dependency] private readonly XenomorphSpitterSystem _spitter = default!;
-    [Dependency] private readonly FlammableSystem _fire = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private XenomorphAciderSystem _acider = default!;
+    [Dependency] private XenomorphSpitterSystem _spitter = default!;
+    [Dependency] private FlammableSystem _fire = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {

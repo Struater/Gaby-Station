@@ -13,14 +13,14 @@ using Content.Shared.Popups;
 
 namespace Content.Server._White.Xenomorphs.Queen;
 
-public sealed class XenomorphQueenSystem : EntitySystem
+public sealed partial class XenomorphQueenSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly XenomorphEvolutionSystem _xenomorphEvolution = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private XenomorphEvolutionSystem _xenomorphEvolution = default!;
 
-    [Dependency] private readonly MobStateSystem _mobState = default!; // Dumont
+    [Dependency] private MobStateSystem _mobState = default!; // Dumont
 
     public override void Initialize()
     {

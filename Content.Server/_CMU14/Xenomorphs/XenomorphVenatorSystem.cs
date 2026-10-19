@@ -43,26 +43,26 @@ public sealed partial class XenomorphVenatorPoolComponent : Component
     public readonly HashSet<EntityUid> Hit = new();
 }
 
-public sealed class XenomorphVenatorSystem : EntitySystem
+public sealed partial class XenomorphVenatorSystem : EntitySystem
 {
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedGunSystem _guns = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly XenomorphArmorSystem _armor = default!;
-    [Dependency] private readonly XenomorphSpitterSystem _spitter = default!;
-    [Dependency] private readonly XenomorphPraetorianSystem _praetorian = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly FlammableSystem _fire = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedGunSystem _guns = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private XenomorphArmorSystem _armor = default!;
+    [Dependency] private XenomorphSpitterSystem _spitter = default!;
+    [Dependency] private XenomorphPraetorianSystem _praetorian = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private FlammableSystem _fire = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
     private readonly HashSet<Entity<MobStateComponent>> _victims = new();
     private static readonly Vector2[] Cross = { new(-1, 0), new(1, 0), new(0, -1), new(0, 1) };
     private static readonly Vector2[] Diagonal = { new(-1, -1), new(-1, 1), new(1, -1), new(1, 1) };

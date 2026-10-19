@@ -4,9 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphTantrumSystem : EntitySystem
+public sealed partial class SharedXenomorphTantrumSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphTantrumComponent, RefreshMovementSpeedModifiersEvent>(OnSpeed);

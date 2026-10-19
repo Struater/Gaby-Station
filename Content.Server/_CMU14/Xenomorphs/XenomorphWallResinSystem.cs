@@ -8,10 +8,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphWallResinSystem : EntitySystem
+public sealed partial class XenomorphWallResinSystem : EntitySystem
 {
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private TagSystem _tags = default!;
 
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
     private static readonly EntProtoId WallWeeds = "DumontXenomorphWallWeeds";

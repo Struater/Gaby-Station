@@ -37,7 +37,6 @@
   - type: ActionGrant
     actions:
     - ActionXenomorphTailStab
-    - ActionXenomorphWallNest
 - type: entity
   id: MobXenomorphCMURunner
   parent: BaseMobXenomorphCMU
@@ -82,6 +81,7 @@
     - ActionXenomorphTailStab
     - ActionXenomorphLeap
   - type: XenomorphLeap
+    obstacleStun: 1.5
     knockdownTime: 2
     moveDelay: 0.7
     knockdownRequiresStealth: false
@@ -435,7 +435,6 @@
     - ActionXenomorphResinWalker
     - ActionXenomorphHivelordPlasma
     - ActionXenomorphTailStab
-    - ActionXenomorphWallNest
 - type: entity
   id: MobXenomorphCMUCarrier
   parent: BaseMobXenomorphCMU
@@ -497,7 +496,6 @@
   - type: ActionGrant
     actions:
     - ActionXenomorphTailStab
-    - ActionXenomorphWallNest
     - ActionXenomorphCarrierEgg
     - ActionXenomorphCarrierParasite
     - ActionXenomorphCarrierReserve
@@ -548,7 +546,6 @@
     prototype: XenomorphCMUBurrower
   - type: ActionGrant
     actions:
-    - ActionXenomorphWallNest
     - ActionXenomorphTailStab
     - ActionXenomorphBurrow
     - ActionXenomorphTremor
@@ -595,7 +592,6 @@
     prototype: XenomorphCMUReaper
   - type: ActionGrant
     actions:
-    - ActionXenomorphWallNest
     - ActionXenomorphTailStab
     - ActionXenomorphFleshHarvest
     - ActionXenomorphRapture
@@ -932,7 +928,6 @@
     actions:
     - ActionXenomorphTailStab
     - ActionXenomorphOvipositor
-    - ActionXenomorphWallNest
 - type: entity
   id: MobXenomorphCMUHealerDrone
   parent: BaseMobXenomorphCMU
@@ -985,7 +980,6 @@
   - type: ActionGrant
     actions:
     - ActionXenomorphTailStab
-    - ActionXenomorphWallNest
     - ActionXenomorphSalve
     - ActionXenomorphSacrifice
     - ActionXenomorphPlantLesserFruit
@@ -1047,7 +1041,6 @@
   - type: ActionGrant
     actions:
     - ActionXenomorphTailStab
-    - ActionXenomorphWallNest
     - ActionXenomorphPlantHardyWeeds
     - ActionXenomorphResinSurge
     - ActionXenomorphChooseFruit
@@ -1312,7 +1305,6 @@
   - type: ActionGrant
     actions:
     - ActionXenomorphTailStab
-    - ActionXenomorphWallNest
     - ActionXenomorphCarrierEgg
     - ActionXenomorphGenerateEggs
 
@@ -1415,6 +1407,7 @@
   name: resin whisperer hivelord
   components:
   - type: XenomorphResinWhisperer
+  - type: XenomorphConstruction
   - type: XenomorphResinWalker
   - type: XenomorphTailStab
     damage:
@@ -1453,8 +1446,8 @@
     - ActionXenomorphResinWalker
     - ActionXenomorphHivelordPlasma
     - ActionXenomorphTailStab
-    - ActionXenomorphRemoteResinWall
-    - ActionXenomorphRemoteResinDoor
+    - ActionXenomorphChooseResin
+    - ActionXenomorphSecreteResin
 - type: entity
   id: MobXenomorphCMUDesignerHivelord
   parent: BaseMobXenomorphCMU

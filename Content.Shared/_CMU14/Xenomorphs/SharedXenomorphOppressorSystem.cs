@@ -5,9 +5,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphOppressorSystem : EntitySystem
+public sealed partial class SharedXenomorphOppressorSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
 
     public override void Initialize()
     {

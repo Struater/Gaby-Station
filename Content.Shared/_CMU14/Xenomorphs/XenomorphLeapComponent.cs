@@ -9,6 +9,8 @@ namespace Content.Shared._CMU14.Xenomorphs;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class XenomorphLeapComponent : Component
 {
+    [DataField] public TimeSpan ObstacleStun;
+    public bool CheckingMove;
     [DataField] public int PlasmaCost;
     [DataField] public SoundSpecifier? Sound;
 

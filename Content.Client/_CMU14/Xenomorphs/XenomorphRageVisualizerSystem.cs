@@ -8,11 +8,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphRageVisualizerSystem : EntitySystem
+public sealed partial class XenomorphRageVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private const string ShaderId = "DumontXenomorphRage";
     private static readonly ProtoId<ShaderPrototype> Shader = "DumontXenomorphAura";
 

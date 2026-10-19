@@ -38,7 +38,7 @@ ent-ActionXenomorphTailSlam = Tail slam
     .desc = Strike the first enemy in front of your tail, up to 2.5 meters away. Cooldown is 10 seconds on a hit or 1 second on a miss. Costs no plasma.
 
 ent-ActionXenomorphCrusherCharge = Charge (20)
-    .desc = After a 1.2-second windup, charge up to 5 meters. Deal 65 damage, stun and fling the target. Slows nearby enemies on impact. Cooldown: 14 seconds.
+    .desc = After a 1.2-second windup, charge up to 5 meters. Deal 65 damage, stun and fling the target. Slows nearby enemies on impact. Cooldown: 42 seconds.
 ent-ActionXenomorphCrusherSoak = Soak (20)
     .desc = Take 240 damage within 6 seconds to heal 120 health and reset your tail cooldown. Cooldown: 17 seconds.
 ent-ActionXenomorphCrusherShield = Defensive shield (50)
@@ -450,3 +450,8 @@ ent-ActionXenomorphDesignSurge = Greater resin surge (250)
 dumont-xenomorph-design-door = Your designs now mark doors.
 dumont-xenomorph-design-wall = Your designs now mark walls.
 dumont-xenomorph-design-surge-none = There are no designs of yours nearby to convert.
+
+ent-ActionXenomorphChooseResin = Choose resin structure
+    .desc = Select the resin structure to secrete.
+ent-ActionXenomorphSecreteResin = Secrete resin
+    .desc = Build the selected structure on weeds. Plasma is consumed on completion.

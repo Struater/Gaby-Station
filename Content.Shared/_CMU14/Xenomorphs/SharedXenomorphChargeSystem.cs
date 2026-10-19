@@ -19,19 +19,19 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public abstract class SharedXenomorphChargeSystem : EntitySystem
+public abstract partial class SharedXenomorphChargeSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private PullingSystem _pulling = default!;
     private static readonly SoundSpecifier Roar = new SoundCollectionSpecifier("DumontXenomorphRoar", AudioParams.Default.WithVariation(0.125f));
     private static readonly SoundSpecifier Footstep = new SoundCollectionSpecifier("XenoFootstepLarge", AudioParams.Default.WithVolume(-2));
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedPlasmaSystem _plasma = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedPlasmaSystem _plasma = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

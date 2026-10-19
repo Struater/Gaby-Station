@@ -10,9 +10,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Dumont.Xenomorphs;
 
-public sealed class XenomorphLineageSystem : EntitySystem
+public sealed partial class XenomorphLineageSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     public ProtoId<XenomorphLineagePrototype> GetLineage(EntityUid host)
     {
@@ -25,7 +25,7 @@ public sealed class XenomorphLineageSystem : EntitySystem
             }
         }
 
-        return "Other";
+        return "Human";
     }
 
     public List<RadialSelectorEntry> GetEvolutions(EntityUid uid, XenomorphEvolutionComponent evolution)

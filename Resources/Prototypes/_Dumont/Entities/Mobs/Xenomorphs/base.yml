@@ -36,6 +36,8 @@
     interfaces:
       enum.RadialSelectorUiKey.Key:
         type: TrackedRadialSelectorMenuBUI
+      enum.XenomorphConstructionUiKey.Key:
+        type: AttachedRadialSelectorMenuBUI
   - type: GhostRole
     allowMovement: true
     allowSpeech: true

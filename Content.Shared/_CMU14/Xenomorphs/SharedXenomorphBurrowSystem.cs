@@ -11,9 +11,9 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphBurrowSystem : EntitySystem
+public sealed partial class SharedXenomorphBurrowSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
 
     public override void Initialize()
     {

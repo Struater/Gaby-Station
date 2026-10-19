@@ -320,3 +320,26 @@
     sprintSpeedModifier: 0.2053
     ignoreWhitelist:
       components: [Xenomorph]
+
+- type: entity
+  parent: WallResin
+  id: DumontXenomorphReflectiveResinWall
+  name: reflective resin wall
+  components:
+  - type: XenomorphReflectiveResin
+  - type: Sprite
+    sprite: _RMC14/Structures/Walls/bone_resin.rsi
+  - type: Icon
+    sprite: _RMC14/Structures/Walls/bone_resin.rsi
+    state: bone_resin
+  - type: IconSmooth
+    base: bone_resin
+  - type: Damageable
+    damageModifierSet: DumontReflectiveResin
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]

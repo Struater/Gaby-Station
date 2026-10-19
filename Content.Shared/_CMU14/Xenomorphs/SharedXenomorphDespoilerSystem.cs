@@ -6,9 +6,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphDespoilerSystem : EntitySystem
+public sealed partial class SharedXenomorphDespoilerSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphDespoilerComponent, RefreshMovementSpeedModifiersEvent>(OnSpeed);

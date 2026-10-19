@@ -19,22 +19,22 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphOvipositorSystem : EntitySystem
+public sealed partial class XenomorphOvipositorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
     private readonly HashSet<Entity<XenomorphEggComponent>> _eggs = new();
     private readonly HashSet<Entity<XenomorphPortableEggComponent>> _portableEggs = new();
     private static readonly Vector2[] EggOffsets = [new(-1, -1), new(0, -1), new(1, -1), new(-1, 0), new(1, 0), new(-1, 1), new(0, 1), new(1, 1)];
 
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

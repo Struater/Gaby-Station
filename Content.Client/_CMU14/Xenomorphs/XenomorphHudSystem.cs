@@ -11,11 +11,11 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._CMU14.Xenomorphs;
 
-public sealed class XenomorphHudSystem : EntitySystem
+public sealed partial class XenomorphHudSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlays = default!;
-    [Dependency] private readonly MobThresholdSystem _thresholds = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
+    [Dependency] private MobThresholdSystem _thresholds = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
 
     public override void Initialize() => _overlays.AddOverlay(new XenomorphHudOverlay());
     public override void Shutdown() => _overlays.RemoveOverlay<XenomorphHudOverlay>();

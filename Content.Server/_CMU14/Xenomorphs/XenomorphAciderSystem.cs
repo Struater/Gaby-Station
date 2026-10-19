@@ -32,28 +32,29 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._CMU14.Xenomorphs;
 
-public sealed class XenomorphAciderSystem : EntitySystem
+public sealed partial class XenomorphAciderSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly MobStateSystem _mobs = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly XenomorphSpitterSystem _acid = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private Robust.Shared.Physics.Systems.SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPointLightSystem _light = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private MobStateSystem _mobs = default!;
+    [Dependency] private StandingStateSystem _standing = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private XenomorphSpitterSystem _acid = default!;
+    [Dependency] private SharedBodySystem _body = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private TurfSystem _turf = default!;
     private readonly List<(TimeSpan At, EntityCoordinates Coordinates, EntityUid? Mind, string? Lineage)> _larvae = new();
 
     public override void Initialize()
@@ -113,6 +114,7 @@ public sealed class XenomorphAciderSystem : EntitySystem
     {
         if (args.Handled || !_mobs.IsAlive(ent)) return;
         ent.Comp.Hiding = !ent.Comp.Hiding;
+        _physics.RegenerateContacts(ent.Owner);
         _actions.SetToggled(args.Action.Owner, ent.Comp.Hiding);
         Dirty(ent);
         args.Handled = true;

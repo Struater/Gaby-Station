@@ -16,9 +16,9 @@ namespace Content.Server._CMU14.Xenomorphs;
 
 public sealed partial class XenomorphHealerSystem
 {
-    [Dependency] private readonly PlasmaSystem _plasma = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private PlasmaSystem _plasma = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     private bool CanTransfer(EntityUid user, EntityUid target)
         => user != target && _mobs.IsAlive(user) && _blocker.CanConsciouslyPerformAction(user)

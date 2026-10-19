@@ -5,9 +5,9 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class SharedXenomorphVampireSystem : EntitySystem
+public sealed partial class SharedXenomorphVampireSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphVampireComponent, StopThrowEvent>(OnStop, before: new[] { typeof(XenomorphLeapSystem) });

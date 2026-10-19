@@ -8,14 +8,14 @@ using Robust.Shared.Network;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class XenomorphCrestSystem : EntitySystem
+public sealed partial class XenomorphCrestSystem : EntitySystem
 {
-    [Dependency] private readonly XenomorphArmorSystem _armor = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private XenomorphArmorSystem _armor = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

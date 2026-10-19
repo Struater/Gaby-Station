@@ -419,3 +419,39 @@
     lifetime: 5
   - type: Tag
     tags: [HideContextMenu]
+
+- type: entity
+  id: DumontXenomorphDesignBuildMembrane
+  categories: [HideSpawnMenu]
+  components:
+  - type: XenomorphResinBuildVisual
+  - type: Sprite
+    sprite: _RMC14/Effects/xeno_structure_animations.rsi
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - sprite: _RMC14/Effects/xeno_secrete.rsi
+      state: secrete_base
+    - state: membrane
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Tag
+    tags: [HideContextMenu]
+
+- type: entity
+  id: DumontXenomorphDesignBuildMembraneThick
+  categories: [HideSpawnMenu]
+  components:
+  - type: XenomorphResinBuildVisual
+  - type: Sprite
+    sprite: _RMC14/Effects/xeno_structure_animations.rsi
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - sprite: _RMC14/Effects/xeno_secrete.rsi
+      state: secrete_base
+    - state: thickmembrane
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Tag
+    tags: [HideContextMenu]

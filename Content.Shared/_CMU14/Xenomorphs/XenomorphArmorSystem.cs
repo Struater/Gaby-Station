@@ -10,13 +10,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._CMU14.Xenomorphs;
 
-public sealed class XenomorphArmorSystem : EntitySystem
+public sealed partial class XenomorphArmorSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private INetManager _net = default!;
     public static readonly ProtoId<AlertPrototype> ArmorAlert = "DumontXenomorphArmor";
     private static readonly ProtoId<DamageGroupPrototype> ArmorGroup = "Brute";
 
