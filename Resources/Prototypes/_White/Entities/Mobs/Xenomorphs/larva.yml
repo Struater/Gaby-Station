@@ -67,12 +67,13 @@
   parent: BaseMobXenomorphLarva
   id: MobXenomorphLarva
   components:
+  - type: XenomorphLineage
   - type: XenomorphEvolution
     max: 200
     evolvesTo:
-    - prototype: MobXenomorphDrone
-    - prototype: MobXenomorphSentinel
-    - prototype: MobXenomorphHunter
+    - prototype: MobXenomorphCMUDrone
+    - prototype: MobXenomorphCMUSentinel
+    - prototype: MobXenomorphCMURunner
   - type: GhostRole
     allowMovement: true
     allowSpeech: true

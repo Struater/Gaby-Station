@@ -4,6 +4,7 @@
   name: resin nest
   description: Slimy and sticky mass representing a bed?....
   components:
+  - type: XenomorphNest
   - type: Sprite
     sprite: _White/Structures/Furniture/resin_nest.rsi
     state: full

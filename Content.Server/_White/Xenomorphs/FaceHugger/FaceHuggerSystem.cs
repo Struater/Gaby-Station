@@ -1,3 +1,7 @@
+using Content.Shared._CMU14.Xenomorphs;
+using Content.Server._CMU14.Xenomorphs;
+using Content.Shared._Dumont.Xenomorphs;
+using Content.Server._Dumont.Xenomorphs;
 using Content.Server.Body.Systems;
 using Content.Server.Mind;
 using Content.Server._White.Xenomorphs.Infection;
@@ -262,6 +266,13 @@ public sealed class FaceHuggerSystem : EntitySystem
 
     public bool TryEquipFaceHugger(EntityUid uid, EntityUid target, FaceHuggerComponent component)
     {
+        if (_container.TryGetContainingContainer(uid, out var containing)
+            && (HasComp<XenomorphResinHoleComponent>(containing.Owner) || HasComp<XenomorphTunnelComponent>(containing.Owner)))
+            return false;
+
+        if (TryComp<XenomorphCarrierRecoveryComponent>(uid, out var recovery) && _timing.CurTime < recovery.RecoverAt)
+            return false;
+
         if (!component.Active || _mobState.IsDead(uid) || _mobState.IsDead(target) || _entityWhitelist.IsBlacklistPass(component.Blacklist, target))
             return false;
 

@@ -1,3 +1,5 @@
+using Content.Server._CMU14.Xenomorphs;
+using Content.Server._Dumont.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Infection;
 using Content.Shared._White.Xenomorphs.Larva;
 using Content.Shared.Body.Events;
@@ -17,6 +19,8 @@ public sealed class XenomorphInfectionSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedEntityEffectSystem _effect = default!;
+
+    [Dependency] private readonly XenomorphLineageSystem _lineage = default!;
 
     // Dumont start
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -45,6 +49,7 @@ public sealed class XenomorphInfectionSystem : EntitySystem
         Dirty(args.Body, xenomorphInfected);
 
         component.Infected = args.Body;
+        component.Lineage = _lineage.GetLineage(args.Body);
     }
 
     private void OnOrganRemovedFromBody(EntityUid uid, XenomorphInfectionComponent component, OrganRemovedFromBodyEvent args)
@@ -98,6 +103,7 @@ public sealed class XenomorphInfectionSystem : EntitySystem
             }
 
             var larva = Spawn(infection.LarvaPrototype);
+            EnsureComp<XenomorphLineageComponent>(larva).Lineage = infection.Lineage;
 
             var larvaComponent = EnsureComp<XenomorphLarvaComponent>(larva);
             larvaComponent.Victim = infection.Infected.Value;

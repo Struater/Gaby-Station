@@ -39,7 +39,10 @@ public abstract class SharedPlasmaSystem : EntitySystem
 
         RaiseLocalEvent(uid, new PlasmaAmountChangeEvent(component.Plasma));
 
-        _alerts.ShowAlert(uid, component.PlasmaAlert);
+        if (component.MaxPlasma > 0)
+            _alerts.ShowAlert(uid, component.PlasmaAlert);
+        else
+            _alerts.ClearAlert(uid, component.PlasmaAlert);
 
         return true;
     }

@@ -1,4 +1,9 @@
+using Content.Shared._CMU14.Xenomorphs;
+using Content.Server._CMU14.Xenomorphs;
 using System.Linq;
+using Content.Shared._Dumont.Xenomorphs;
+using Content.Shared.Mobs.Systems;
+using Content.Server._Dumont.Xenomorphs;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Server._White.Xenomorphs.Queen;
 using Content.Server.Actions;
@@ -24,6 +29,7 @@ namespace Content.Server._White.Xenomorphs.Evolution;
 
 public sealed class XenomorphEvolutionSystem : EntitySystem
 {
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -37,6 +43,8 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+
+    [Dependency] private readonly XenomorphLineageSystem _lineage = default!;
 
     [Dependency] private readonly XenomorphQueenSystem _queen = default!; // Dumont
 
@@ -62,7 +70,14 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.EvolvesTo.Count == 1)
+        var choices = _lineage.GetEvolutions(uid, component);
+        if (choices.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("xenomorphs-evolution-final-caste"), uid, uid);
+            return;
+        }
+
+        if (choices.Count == 1)
         {
             if (component.Points < component.Max)
             {
@@ -70,12 +85,12 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
                 return;
             }
 
-            args.Handled = Evolve(uid, component.EvolvesTo.First().Prototype, component.EvolutionDelay);
+            args.Handled = Evolve(uid, choices[0].Prototype, component.EvolutionDelay);
             return;
         }
 
         _ui.TryToggleUi(uid, RadialSelectorUiKey.Key, uid);
-        _ui.SetUiState(uid, RadialSelectorUiKey.Key, new TrackedRadialSelectorState(component.EvolvesTo));
+        _ui.SetUiState(uid, RadialSelectorUiKey.Key, new TrackedRadialSelectorState(choices));
 
         args.Handled = true;
     }
@@ -88,7 +103,7 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
             return;
         }
 
-        if (!component.EvolvesTo.Any(entry => entry.Prototype == args.SelectedItem)) // Dumont
+        if (!_lineage.GetEvolutions(uid, component).Any(entry => entry.Prototype == args.SelectedItem)) // Dumont
             return;
 
         if (!Evolve(uid, args.SelectedItem, component.EvolutionDelay))
@@ -100,10 +115,11 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
 
     private void OnXenomorphEvolutionDoAfter(EntityUid uid, XenomorphEvolutionComponent component, ref XenomorphEvolutionDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !_mind.TryGetMind(uid, out var mindUid, out var mind))
+        if (args.Handled || args.Cancelled || !CanStartEvolution(uid) || !_lineage.CanEvolve(uid, args.Choice)
+            || !_mind.TryGetMind(uid, out var mindUid, out var mind))
             return;
 
-        if (args.Caste == "Queen" && _queen.IsQueenAlive()) // Dumont
+        if (args.Caste == "Queen" && _queen.IsQueenAlive(HasComp<XenomorphLineageComponent>(uid))) // Dumont
             return;
 
         var ev = new BeforeXenomorphEvolutionEvent(args.Caste, args.CheckNeedCasteDeath);
@@ -117,8 +133,11 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
         var coordinates = _transform.GetMoverCoordinates(uid);
         var newXeno = Spawn(args.Choice, coordinates);
 
+        _lineage.Transfer(uid, newXeno);
         _mind.TransferTo(mindUid, newXeno, mind:mind);
         _mind.UnVisit(mindUid, mind);
+        mind.OriginalOwnedEntity = GetNetEntity(newXeno);
+        Dirty(mindUid, mind);
 
         var dropHandItemsEvent = new DropHandItemsEvent();
         RaiseLocalEvent(uid, ref dropHandItemsEvent);
@@ -153,15 +172,28 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
         }
     }
 
+    private bool CanStartEvolution(EntityUid uid)
+    {
+        if (!HasComp<XenomorphLineageComponent>(uid))
+            return true;
+
+        return _mobState.IsAlive(uid)
+            && TryComp<XenomorphEvolutionComponent>(uid, out var evolution)
+            && evolution.Points >= evolution.Max
+            && (!TryComp<XenomorphRestComponent>(uid, out var rest) || !rest.Resting)
+            && (!TryComp<XenomorphFortifyComponent>(uid, out var fortify) || !fortify.Fortified)
+            && (!TryComp<XenomorphOvipositorComponent>(uid, out var ovipositor) || !ovipositor.Attached);
+    }
     public bool Evolve(EntityUid uid, string? evolveTo, TimeSpan evolutionDelay, bool checkNeedCasteDeath = true)
     {
-        if (evolveTo == null
+        if (!CanStartEvolution(uid) || evolveTo == null
+            || !_lineage.CanEvolve(uid, evolveTo)
             || !_protoManager.TryIndex(evolveTo, out var xenomorphPrototype)
             || !xenomorphPrototype.TryGetComponent<XenomorphComponent>(out var xenomorph, _componentFactory)) // Goobstation
             return false;
 
         // Dumont start
-        if (xenomorph.Caste == "Queen" && _queen.IsQueenAlive())
+        if (xenomorph.Caste == "Queen" && _queen.IsQueenAlive(HasComp<XenomorphLineageComponent>(uid)))
         {
             _popup.PopupEntity(Loc.GetString("xenomorphs-evolution-no-cast-slot", ("caste", Loc.GetString("xenomorph-caste-queen"))), uid, uid);
             return false;

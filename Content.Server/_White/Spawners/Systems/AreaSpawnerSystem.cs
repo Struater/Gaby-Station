@@ -5,7 +5,9 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._CMU14.Xenomorphs;
 using System.Numerics;
+using Content.Server._Dumont.Xenomorphs;
 using Content.Server._White.Spawners.Components;
 using Content.Server.Atmos.Components;
 using Content.Shared.Maps;
@@ -107,6 +109,10 @@ public sealed class AreaSpawnerSystem : EntitySystem
 
         foreach (var entity in _map.GetAnchoredEntities((gridUid, mapGridComponent), coords))
         {
+            if (component.SpawnPrototype == "ResinWeed" && HasComp<XenomorphHardyWeedComponent>(entity)
+                || component.SpawnPrototype == "DumontXenomorphHardyWeed" && HasComp<AreaSpawnerComponent>(entity))
+                return false;
+
             if (TryComp<AirtightComponent>(entity, out var airtight) && airtight.AirBlocked
                 || Prototype(entity) != null && Prototype(entity)! == component.SpawnPrototype
                 || Prototype(entity) == Prototype(uid))

@@ -236,6 +236,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         base.Started(uid, component, gameRule, args);
 
         component.NextCheck = _timing.CurTime + component.CheckDelay;
+        component.AnnouncementTime = _timing.CurTime + _random.Next(component.MinTimeToAnnouncement, component.MaxTimeToAnnouncement);
     }
 
     protected override void ActiveTick(
@@ -250,14 +251,6 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         if (component.NextCheck > _timing.CurTime)
             return;
 
-        if (!component.AnnouncementTime.HasValue)
-        {
-            var allQueens = GetXenomorphs(component, "Queen");
-            if (allQueens.Count > 0)
-            {
-                component.AnnouncementTime ??= _timing.CurTime + _random.Next(component.MinTimeToAnnouncement, component.MaxTimeToAnnouncement);
-            }
-        }
         component.NextCheck = _timing.CurTime + component.CheckDelay;
 
         if (!component.Announced && component.AnnouncementTime <= _timing.CurTime)

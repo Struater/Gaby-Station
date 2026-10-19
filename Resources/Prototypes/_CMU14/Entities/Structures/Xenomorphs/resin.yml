@@ -1,0 +1,44 @@
+- type: entity
+  id: DumontXenomorphWallWeeds
+  name: wall resin
+  description: Thick resin clinging to the wall.
+  components:
+  - type: Sprite
+    sprite: _RMC14/Structures/Xenos/xeno_weeds.rsi
+    state: weedwall
+    drawdepth: Overdoors
+    noRot: true
+  - type: XenomorphWallResinOverlay
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Resin
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+
+- type: entity
+  parent: ResinNest
+  id: DumontXenomorphWallNest
+  name: wall nest
+  description: A thick resin cocoon attached to the wall.
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    sprite: _RMC14/Structures/Xenos/xeno_weeds.rsi
+    state: nest_overlay
+    drawdepth: Overdoors
+    noRot: true
+  - type: Icon
+    sprite: _RMC14/Structures/Xenos/xeno_weeds.rsi
+    state: nest_overlay
+  - type: WallMount
+    arc: 360
+  - type: Strap
+    position: Stand
+    modifyBuckleDrawDepth: false
