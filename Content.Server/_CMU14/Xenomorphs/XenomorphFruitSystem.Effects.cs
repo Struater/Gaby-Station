@@ -101,13 +101,22 @@ public sealed partial class XenomorphFruitSystem
         if (args.Handled || !args.IsHit || args.User != ent.Owner || ent.Comp.SporeUntil <= _timing.CurTime
             || ent.Comp.SporeReduction >= 0.25f || !args.HitEntities.Any(uid => !HasComp<XenomorphComponent>(uid)
                 && HasComp<Content.Shared.Mobs.Components.MobStateComponent>(uid) && !_mobs.IsDead(uid))) return;
-        ent.Comp.SporeReduction = Math.Min(0.25f, ent.Comp.SporeReduction + 0.05f);
+        var oldReduction = ent.Comp.SporeReduction;
+        ent.Comp.SporeReduction = Math.Min(0.25f, oldReduction + 0.05f);
         foreach (var action in _actions.GetActions(ent))
         {
-            if (MetaData(action.Owner).EntityPrototype?.ID.StartsWith("ActionXenomorph", StringComparison.Ordinal) != true
-                || action.Comp.UseDelay is not { } delay) continue;
-            ent.Comp.ActionDelays.TryAdd(action.Owner, delay);
-            _actions.SetUseDelay(action.AsNullable(), ent.Comp.ActionDelays[action.Owner] * (1 - ent.Comp.SporeReduction));
+            if (MetaData(action.Owner).EntityPrototype?.ID.StartsWith("ActionXenomorph", StringComparison.Ordinal) != true)
+                continue;
+            if (action.Comp.UseDelay is { } delay && delay > TimeSpan.Zero)
+            {
+                ent.Comp.ActionDelays.TryAdd(action.Owner, delay);
+                _actions.SetUseDelay(action.AsNullable(), ent.Comp.ActionDelays[action.Owner] * (1 - ent.Comp.SporeReduction));
+            }
+            if (action.Comp.Cooldown is { } cooldown && cooldown.End > _timing.CurTime)
+            {
+                var remaining = (cooldown.End - _timing.CurTime) * ((1 - ent.Comp.SporeReduction) / (1 - oldReduction));
+                _actions.SetCooldown(action.AsNullable(), cooldown.Start, _timing.CurTime + remaining);
+            }
         }
     }
 

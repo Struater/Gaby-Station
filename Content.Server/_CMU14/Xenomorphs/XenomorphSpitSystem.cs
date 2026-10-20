@@ -76,6 +76,7 @@ public sealed partial class XenomorphSpitSystem : EntitySystem
     }
     private void OnHit(Entity<XenomorphSpitProjectileComponent> ent, ref ProjectileHitEvent args)
     {
+        if (ent.Comp.Suppressed) return;
         var target = args.Target;
         if (HasComp<XenomorphComponent>(target) || (ent.Comp.Origin is { } origin
             && (_transform.GetMapCoordinates(ent).Position - origin.Position).LengthSquared() > ent.Comp.Range * ent.Comp.Range))

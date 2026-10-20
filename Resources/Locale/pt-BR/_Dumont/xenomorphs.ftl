@@ -1,1 +1,9 @@
 xenomorphs-evolution-final-caste = Esta casta encerra sua linhagem evolutiva.
+ent-ActionXenomorphQueenHive = Administrar a colmeia
+    .desc = Observe suas irmãs e escolha até três líderes enquanto estiver no ovipositor.
+ent-ActionXenomorphQueenWord = Palavra da rainha (50)
+    .desc = Envie uma mensagem para toda a colmeia.
+ent-ActionXenomorphQueenOrder = Dar uma ordem (100)
+    .desc = Envie uma ordem à irmã que você está observando.
+ent-ActionXenomorphQueenPheromones = Feromônios (35)
+    .desc = Emita feromônios de frenesi, proteção ou recuperação em um raio de 8 metros. Consome 2,5 de plasma por segundo.

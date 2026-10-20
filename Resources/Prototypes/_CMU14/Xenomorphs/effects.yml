@@ -455,3 +455,27 @@
     lifetime: 5
   - type: Tag
     tags: [HideContextMenu]
+
+- type: entity
+  parent: DumontXenomorphValkyrieScreech
+  id: DumontXenomorphQueenScreech
+  components:
+  - type: Sprite
+    noRot: true
+    layers:
+    - state: screech
+      visible: true
+
+- type: entity
+  parent: DumontXenomorphSalveHealEffect
+  id: DumontXenomorphQueenHealEffect
+  components:
+  - type: Sprite
+    color: "#D9F500"
+  - type: TimedDespawn
+    lifetime: 3
+
+- type: shader
+  id: DumontXenomorphQueenBlind
+  kind: source
+  path: "/Textures/_RMC14/Shaders/screech_blind.swsl"

@@ -365,3 +365,14 @@
     damage:
       types:
         Caustic: 12
+
+- type: entity
+  parent: DumontXenomorphChargedSpit
+  id: DumontXenomorphQueenSpit
+  components:
+  - type: XenomorphQueenVolley
+  - type: XenomorphSpitProjectile
+    range: 10
+    paralyze: 0
+    slow: 0
+    drainMedicine: false

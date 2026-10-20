@@ -67,3 +67,18 @@
   files:
   - /Audio/_RMC14/Xeno/alien_drool1.ogg
   - /Audio/_RMC14/Xeno/alien_drool2.ogg
+
+- type: soundCollection
+  id: DumontXenomorphQueenIdle
+  files:
+  - /Audio/_CMU14/Xeno/alien_queen_breath1.ogg
+  - /Audio/_CMU14/Xeno/alien_queen_breath2.ogg
+  - /Audio/_CMU14/Xeno/alien_queen_breath3.ogg
+  - /Audio/_CMU14/Xeno/alien_queen_breath4.ogg
+
+- type: soundCollection
+  id: DumontXenomorphQueenFootstep
+  files:
+  - /Audio/_RMC14/Xeno/alien_footstep_large1.ogg
+  - /Audio/_RMC14/Xeno/alien_footstep_large2.ogg
+  - /Audio/_RMC14/Xeno/alien_footstep_large3.ogg

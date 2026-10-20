@@ -1044,6 +1044,7 @@
   components:
   - type: Action
     raiseOnUser: true
+    itemIconStyle: NoItem
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: transfer_plasma }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: transfer_plasma }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
@@ -1426,6 +1427,8 @@
   id: ActionXenomorphTailSeize
   components:
   - type: Action
+    raiseOnUser: true
+    itemIconStyle: NoItem
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: tail_seize }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: tail_seize }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
@@ -1435,7 +1438,6 @@
     checkCanAccess: false
   - type: WorldTargetAction
     event: !type:XenomorphTailSeizeActionEvent
-  - type: EntityTargetAction
   - type: XenomorphActionArea
     range: 3.5
     width: 0.2
@@ -1445,6 +1447,8 @@
   id: ActionXenomorphAbduct
   components:
   - type: Action
+    raiseOnUser: true
+    itemIconStyle: NoItem
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: abduct }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: abduct }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
@@ -1454,7 +1458,6 @@
     checkCanAccess: false
   - type: WorldTargetAction
     event: !type:XenomorphAbductActionEvent
-  - type: EntityTargetAction
   - type: XenomorphActionArea
     range: 6
     sprayLine: true
@@ -1464,6 +1467,8 @@
   id: ActionXenomorphDislocate
   components:
   - type: Action
+    raiseOnUser: true
+    itemIconStyle: NoItem
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: dislocate }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: dislocate }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
@@ -1481,6 +1486,8 @@
   id: ActionXenomorphTailLash
   components:
   - type: Action
+    raiseOnUser: true
+    itemIconStyle: NoItem
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: prae_tail_lash }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: prae_tail_lash }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
@@ -1968,3 +1975,89 @@
   - type: EntityTargetAction
   - type: WorldTargetAction
     event: !type:XenomorphSecreteResinActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphQueenScreech
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    raiseOnUser: true
+    useDelay: 50
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: screech }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: screech }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+  - type: InstantAction
+    event: !type:XenomorphQueenScreechActionEvent
+  - type: XenomorphActionArea
+    range: 7
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphQueenSpit
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    raiseOnUser: true
+    useDelay: 5
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: xeno_spit }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: xeno_spit }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+  - type: TargetAction
+    range: 30
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:XenomorphQueenSpitActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphQueenGut
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    raiseOnUser: true
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: gut }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: gut }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+  - type: TargetAction
+    range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    event: !type:XenomorphQueenGutActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphQueenHeal
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    raiseOnUser: true
+    useDelay: 8
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: heal_xeno }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: heal_xeno }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+  - type: TargetAction
+    range: -1
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:XenomorphQueenHealActionEvent
+  - type: XenomorphActionArea
+    range: 4
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphQueenPlasma
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    raiseOnUser: true
+    useDelay: 12
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: transfer_plasma }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: transfer_plasma }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+  - type: TargetAction
+    range: -1
+    checkCanAccess: false
+  - type: EntityTargetAction
+    event: !type:XenomorphQueenPlasmaActionEvent
+

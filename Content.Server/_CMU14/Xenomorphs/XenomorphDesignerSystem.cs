@@ -61,6 +61,7 @@ public sealed partial class XenomorphDesignerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<XenomorphReflectiveResinComponent, Content.Shared.Projectiles.ProjectileReflectAttemptEvent>(OnReflect);
+        SubscribeLocalEvent<XenomorphReflectiveResinComponent, Content.Shared.Weapons.Ranged.Events.HitScanReflectAttemptEvent>(OnReflectHitscan);
         SubscribeLocalEvent<XenomorphDesignerComponent, XenomorphDesignActionEvent>(OnDesign);
         SubscribeLocalEvent<XenomorphDesignerComponent, XenomorphDesignDoAfterEvent>(OnDesigned);
         SubscribeLocalEvent<XenomorphDesignerComponent, XenomorphDesignToggleActionEvent>(OnToggle);

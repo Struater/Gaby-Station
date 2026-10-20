@@ -962,7 +962,6 @@
         eyes: OrganXenomorphEyes
         hive_node: OrganXenomorphHiveNode
         resin_spinner: OrganXenomorphCMUResinSpinner
-        neurotoxin_gland: OrganXenomorphNeurotoxinGland
         acid_gland: OrganXenomorphCMUAcidGland
     chest:
       part: ChestXenomorph

@@ -617,3 +617,35 @@ ent-DumontXenomorphResinMembraneThick = membrana de resina espessa
 
 ent-DumontXenomorphReflectiveResinWall = parede de resina refletora
     .desc = Uma parede de resina endurecida capaz de refletir disparos.
+
+ent-ActionXenomorphQueenScreech = Grito da rainha (250)
+    .desc = Um grito ensurdecedor que reduz a visão, a precisão e a velocidade de inimigos a até 7 metros por 8 segundos.
+ent-ActionXenomorphQueenSpit = Rajada ácida (40)
+    .desc = Dispare três projéteis ácidos em leque. Cada vítima só pode ser atingida uma vez por rajada.
+ent-ActionXenomorphQueenGut = Eviscerar (200)
+    .desc = Dilacere uma vítima próxima após 8 segundos. Mover-se interrompe a execução. Recarga de 15 minutos.
+ent-ActionXenomorphQueenHeal = Curar a colmeia (600)
+    .desc = Cure 30% da vida das irmãs em uma área de 4 metros ao longo de 20 segundos. Requer ovipositor.
+ent-ActionXenomorphQueenPlasma = Doar plasma (400)
+    .desc = Restaure 75% do plasma máximo de uma irmã na área observada. Requer ovipositor.
+xenomorph-queen-hive-title = Colmeia
+xenomorph-queen-return = Retornar à rainha
+xenomorph-queen-watch = Observar
+xenomorph-queen-leader = Nomear líder
+xenomorph-queen-remove-leader = Remover líder
+xenomorph-queen-message-placeholder = Escreva sua mensagem...
+xenomorph-queen-send = Enviar
+xenomorph-queen-mode-hive = Irmãs da colmeia
+xenomorph-queen-mode-word = Palavra da rainha
+xenomorph-queen-mode-order = Ordem para a irmã observada
+xenomorph-queen-word-prefix = A rainha fala à colmeia:
+xenomorph-queen-psychic-prefix = Uma voz ecoa em sua mente:
+xenomorph-queen-phero-frenzy = Frenesi (35)
+xenomorph-queen-phero-warding = Proteção (35)
+xenomorph-queen-phero-recovery = Recuperação (35)
+xenomorph-queen-phero-stopphero = Parar feromônios
+xenomorph-queen-mode-pheromones = Feromônios da rainha
+xenomorph-queen-gut-start = A rainha está começando a dilacerar seu corpo!
+xenomorph-queen-matured = Você amadureceu. Seu corpo ficou mais resistente; o grito e a rajada ácida estão disponíveis.
+
+xenomorph-queen-announcement-title = >> RAINHA <<

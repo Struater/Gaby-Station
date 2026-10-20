@@ -923,11 +923,33 @@
     - Lurker
     - Spitter
     - Hivelord
+  - type: SpamEmitSound
+    sound:
+      collection: DumontXenomorphQueenIdle
+    minInterval: 45
+    maxInterval: 60
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: DumontXenomorphQueenFootstep
+      params:
+        volume: 0
+  - type: XenomorphRoyal
   - type: XenomorphOvipositor
+  - type: UserInterface
+    interfaces:
+      enum.XenomorphQueenUiKey.Key:
+        type: XenomorphQueenBoundUserInterface
   - type: ActionGrant
     actions:
     - ActionXenomorphTailStab
     - ActionXenomorphOvipositor
+    - ActionXenomorphQueenGut
+    - ActionXenomorphQueenHeal
+    - ActionXenomorphQueenPlasma
+    - ActionXenomorphQueenHive
+    - ActionXenomorphQueenPheromones
+    - ActionXenomorphQueenWord
+    - ActionXenomorphQueenOrder
 - type: entity
   id: MobXenomorphCMUHealerDrone
   parent: BaseMobXenomorphCMU

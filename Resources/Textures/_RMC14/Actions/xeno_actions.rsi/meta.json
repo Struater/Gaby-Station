@@ -252,6 +252,24 @@
     },
     {
       "name": "place_resin"
+    },
+    {
+      "name": "gut"
+    },
+    {
+      "name": "heal_xeno"
+    },
+    {
+      "name": "queen_word"
+    },
+    {
+      "name": "queen_order"
+    },
+    {
+      "name": "queen_eye"
+    },
+    {
+      "name": "emit_pheromones"
     }
   ]
 }

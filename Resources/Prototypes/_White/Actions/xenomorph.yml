@@ -306,6 +306,7 @@
   components:
   - type: Action
     raiseOnUser: true # Dumont
+    itemIconStyle: NoItem
     priority: 0
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: transfer_plasma }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: transfer_plasma }

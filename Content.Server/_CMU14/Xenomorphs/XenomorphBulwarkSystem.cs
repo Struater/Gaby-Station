@@ -1,5 +1,6 @@
 using Content.Shared._CMU14.Xenomorphs;
 using Content.Server._Dumont.Xenomorphs;
+using Content.Shared.Weapons.Ranged.Events;
 using System.Numerics;
 using Content.Shared._Dumont.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Xenomorph;
@@ -52,6 +53,7 @@ public sealed partial class XenomorphBulwarkSystem : EntitySystem
         SubscribeLocalEvent<XenomorphBulwarkComponent, XenomorphBulwarkTailSwingActionEvent>(OnTail);
         SubscribeLocalEvent<XenomorphBulwarkComponent, XenomorphReflectiveShieldActionEvent>(OnShield);
         SubscribeLocalEvent<XenomorphBulwarkComponent, ProjectileReflectAttemptEvent>(OnReflect);
+        SubscribeLocalEvent<XenomorphBulwarkComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
         SubscribeLocalEvent<XenomorphBulwarkComponent, MobStateChangedEvent>(OnMobState);
     }
 
@@ -190,6 +192,17 @@ public sealed partial class XenomorphBulwarkSystem : EntitySystem
             _actions.SetUseDelay(action.Owner, cooldown);
             _actions.SetCooldown(action.Owner, cooldown);
         }
+    }
+
+    private void OnReflectHitscan(Entity<XenomorphBulwarkComponent> ent, ref HitScanReflectAttemptEvent args)
+    {
+        if (args.Reflected || !ent.Comp.Reflecting || !ent.Comp.Encased || !_mobs.IsAlive(ent)) return;
+        var incoming = (-args.Direction).ToWorldAngle().GetCardinalDir();
+        var facing = _transform.GetWorldRotation(ent).GetCardinalDir();
+        var chance = incoming == facing ? .8f : incoming == facing.GetOpposite() ? .3f : .65f;
+        if (!_random.Prob(chance)) return;
+        args.Direction = _random.NextAngle(-Angle.FromDegrees(90), Angle.FromDegrees(90)).Opposite().RotateVec(args.Direction);
+        args.Reflected = true;
     }
 
     private void OnReflect(Entity<XenomorphBulwarkComponent> ent, ref ProjectileReflectAttemptEvent args)

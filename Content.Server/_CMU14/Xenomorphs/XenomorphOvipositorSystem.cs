@@ -21,6 +21,7 @@ namespace Content.Server._CMU14.Xenomorphs;
 
 public sealed partial class XenomorphOvipositorSystem : EntitySystem
 {
+    [Dependency] private XenomorphRoyalSystem _royal = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
@@ -50,7 +51,7 @@ public sealed partial class XenomorphOvipositorSystem : EntitySystem
             return;
 
         var attach = !ent.Comp.Attached;
-        if (attach && (!TryComp<XenomorphComponent>(ent, out var xeno) || !xeno.OnWeed
+        if (attach && (_timing.CurTime < ent.Comp.ReadyAt || !TryComp<XenomorphComponent>(ent, out var xeno) || !xeno.OnWeed
             || !_plasma.HasPlasma(ent, ent.Comp.PlasmaCost)
             || Transform(ent).GridUid == null
             || TryComp<XenomorphRestComponent>(ent, out var rest) && rest.Resting))
@@ -93,6 +94,8 @@ public sealed partial class XenomorphOvipositorSystem : EntitySystem
         }
 
         ent.Comp.Attached = args.Attach;
+        ent.Comp.ReadyAt = args.Attach ? _timing.CurTime : _timing.CurTime + TimeSpan.FromMinutes(5);
+        _royal.UpdateOvipositorActions(ent);
         SetActionActive(ent, args.Attach);
         Dirty(ent);
         _appearance.SetData(ent, XenomorphVisuals.Ovipositor, args.Attach);
@@ -105,6 +108,8 @@ public sealed partial class XenomorphOvipositorSystem : EntitySystem
             return;
 
         ent.Comp.Attached = false;
+        ent.Comp.ReadyAt = _timing.CurTime + TimeSpan.FromMinutes(5);
+        _royal.UpdateOvipositorActions(ent);
         SetActionActive(ent, false);
         Dirty(ent);
         _physics.TrySetBodyType(ent, BodyType.KinematicController);
@@ -117,6 +122,8 @@ public sealed partial class XenomorphOvipositorSystem : EntitySystem
             return;
 
         ent.Comp.Attached = false;
+        ent.Comp.ReadyAt = _timing.CurTime + TimeSpan.FromMinutes(5);
+        _royal.UpdateOvipositorActions(ent);
         SetActionActive(ent, false);
         Dirty(ent);
         _transform.Unanchor(ent, Transform(ent));
@@ -129,7 +136,11 @@ public sealed partial class XenomorphOvipositorSystem : EntitySystem
         foreach (var action in _actions.GetActions(uid))
         {
             if (_actions.GetEvent(action) is XenomorphOvipositorActionEvent)
+            {
                 _actions.SetToggled(action.Owner, attached);
+                if (!attached && TryComp<XenomorphOvipositorComponent>(uid, out var ovi))
+                    _actions.SetCooldown(action.Owner, ovi.ReadyAt - _timing.CurTime);
+            }
         }
     }
 

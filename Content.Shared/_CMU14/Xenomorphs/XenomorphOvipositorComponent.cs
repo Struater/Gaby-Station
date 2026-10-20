@@ -31,6 +31,9 @@ public sealed partial class XenomorphOvipositorComponent : Component
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextEgg;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan ReadyAt;
 }
 
 public sealed partial class XenomorphOvipositorActionEvent : InstantActionEvent;

@@ -31,8 +31,11 @@ public sealed partial class XenomorphQueenSystem : EntitySystem
         SubscribeLocalEvent<XenomorphQueenComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnMapInit(EntityUid uid, XenomorphQueenComponent component, MapInitEvent args) =>
-        _actions.AddAction(uid, ref component.PromotionAction, component.PromotionActionId);
+    private void OnMapInit(EntityUid uid, XenomorphQueenComponent component, MapInitEvent args)
+    {
+        if (!HasComp<Content.Shared._Dumont.Xenomorphs.XenomorphRoyalComponent>(uid))
+            _actions.AddAction(uid, ref component.PromotionAction, component.PromotionActionId);
+    }
 
     private void OnShutdown(EntityUid uid, XenomorphQueenComponent component, ComponentShutdown args) =>
         _actions.RemoveAction(uid, component.PromotionAction);

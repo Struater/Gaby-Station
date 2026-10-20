@@ -62,6 +62,7 @@ public sealed partial class XenomorphHudOverlay : Overlay
             DrawBar(handle, _hud.GetShieldState(uid), position);
             DrawBar(handle, _hud.GetResourceState(uid), position);
             DrawBar(handle, _hud.GetHealingState(uid), position);
+            DrawPheromones(uid, handle, bounds, sprite);
         }
         var stacks = _entities.AllEntityQueryEnumerator<XenomorphAcidStacksComponent, SpriteComponent, TransformComponent>();
         while (stacks.MoveNext(out var uid, out var acid, out var sprite, out var xform))
@@ -104,6 +105,24 @@ public sealed partial class XenomorphHudOverlay : Overlay
         }
         handle.UseShader(null);
         handle.SetTransform(Matrix3x2.Identity);
+    }
+
+    private void DrawPheromones(EntityUid uid, DrawingHandleWorld handle, Box2 bounds, SpriteComponent sprite)
+    {
+        if (!_entities.TryGetComponent<XenomorphPheromoneEffectComponent>(uid, out var effect))
+            return;
+
+        var path = new ResPath("/Textures/_RMC14/Interface/xeno_pheromones_hud.rsi");
+        var position = new Vector2((bounds.Width + sprite.Offset.X) / 2 - 1.25f,
+            (bounds.Height + sprite.Offset.Y) / 2 - bounds.Height);
+        if (effect.Recovery > 0)
+            handle.DrawTexture(_sprites.GetFrame(new SpriteSpecifier.Rsi(path, "recovery"), _timing.CurTime), position);
+        if (effect.Warding > 0)
+            handle.DrawTexture(_sprites.GetFrame(new SpriteSpecifier.Rsi(path, "warding"), _timing.CurTime), position);
+        if (effect.Frenzy > 0)
+            handle.DrawTexture(_sprites.GetFrame(new SpriteSpecifier.Rsi(path, "frenzy"), _timing.CurTime), position);
+        if (effect.Source is "recovery" or "warding" or "frenzy")
+            handle.DrawTexture(_sprites.GetFrame(new SpriteSpecifier.Rsi(path, "aura_" + effect.Source), _timing.CurTime), position);
     }
 
     private void DrawBar(DrawingHandleWorld handle, string? state, Vector2 position)

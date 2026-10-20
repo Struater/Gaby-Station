@@ -3,6 +3,8 @@
   parent: BaseMobXenomorphAdult
   abstract: true
   components:
+  - type: FootstepModifier
+    footstepSoundCollection: null
   - type: CombatMode
     combatToggleAction: ActionXenomorphCombatMode
   - type: XenomorphLineage

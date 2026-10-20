@@ -51,10 +51,12 @@ public sealed partial class XenomorphOppressorSystem
         {
             var area = Box2.CenteredAround(from.Position, new Vector2(3, 2)).Translated(new Vector2(0, 1.5f));
             var rotated = new Box2Rotated(area, direction.ToAngle() - Angle.FromDegrees(90), from.Position);
-            ent.Comp.LashArea = rotated;
+            var worldArea = new Box2Rotated(area.Translated(mapOrigin.Position - from.Position),
+                rotated.Rotation + _transform.GetWorldRotation(gridUid), mapOrigin.Position);
+            ent.Comp.LashArea = worldArea;
             ent.Comp.LashGrid = gridUid;
             var bounds = rotated.CalcBoundingBox();
-            foreach (var tile in _map.GetTilesIntersecting(gridUid, grid, rotated))
+            foreach (var tile in _map.GetTilesIntersecting(gridUid, grid, worldArea))
             {
                 var point = _turf.GetTileCenter(tile);
                 if (!_interaction.InRangeUnobstructed(ent.Owner, point, 6, collisionMask: CollisionGroup.Impassable)) continue;

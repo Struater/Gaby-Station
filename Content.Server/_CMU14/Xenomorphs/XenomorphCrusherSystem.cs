@@ -1,5 +1,6 @@
 using Content.Shared._CMU14.Xenomorphs;
 using Content.Server._Dumont.Xenomorphs;
+using Content.Shared.Weapons.Ranged.Events;
 using System.Numerics;
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
@@ -58,6 +59,7 @@ public sealed partial class XenomorphCrusherSystem : EntitySystem
         SubscribeLocalEvent<XenomorphCrusherComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<XenomorphCrusherComponent, GetExplosionResistanceEvent>(OnExplosion);
         SubscribeLocalEvent<XenomorphCrusherComponent, ProjectileReflectAttemptEvent>(OnReflect);
+        SubscribeLocalEvent<XenomorphCrusherComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
         SubscribeLocalEvent<XenomorphCrusherComponent, ThrowDoHitEvent>(OnHit);
         SubscribeLocalEvent<XenomorphCrusherComponent, StopThrowEvent>(OnStop);
         SubscribeLocalEvent<XenomorphCrusherComponent, MeleeHitEvent>(OnMelee);
@@ -154,6 +156,15 @@ public sealed partial class XenomorphCrusherSystem : EntitySystem
     {
         if (ent.Comp.ExplosionUntil > _timing.CurTime)
             args.DamageCoefficient /= (float) Math.Pow(1.1, 1000 / 5.0);
+    }
+
+    private void OnReflectHitscan(Entity<XenomorphCrusherComponent> ent, ref HitScanReflectAttemptEvent args)
+    {
+        if (args.Reflected || ent.Comp.ShieldRemaining <= 0 || ent.Comp.ShieldUntil <= _timing.CurTime
+            || HasComp<XenomorphComponent>(args.Shooter) || (-args.Direction).ToWorldAngle().GetCardinalDir()
+                != _transform.GetWorldRotation(ent).GetCardinalDir() || !_random.Prob(.1f)) return;
+        args.Direction = _random.NextAngle(-Angle.FromDegrees(90), Angle.FromDegrees(90)).Opposite().RotateVec(args.Direction);
+        args.Reflected = true;
     }
 
     private void OnReflect(Entity<XenomorphCrusherComponent> ent, ref ProjectileReflectAttemptEvent args)

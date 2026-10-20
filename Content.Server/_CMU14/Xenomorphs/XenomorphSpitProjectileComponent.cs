@@ -4,6 +4,7 @@ namespace Content.Server._CMU14.Xenomorphs;
 [RegisterComponent]
 public sealed partial class XenomorphSpitProjectileComponent : Component
 {
+    public bool Suppressed;
     [DataField] public bool Charged;
     [DataField] public bool Acid;
     [DataField] public float Range = 5;

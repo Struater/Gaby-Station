@@ -129,6 +129,14 @@ public sealed partial class XenomorphDesignerSystem
         }
     }
 
+    private void OnReflectHitscan(Entity<XenomorphReflectiveResinComponent> ent, ref Content.Shared.Weapons.Ranged.Events.HitScanReflectAttemptEvent args)
+    {
+        if (args.Reflected || !_random.Prob(ent.Comp.Chance)) return;
+        args.Direction = _random.NextAngle(Angle.FromDegrees(-30), Angle.FromDegrees(30)).Opposite().RotateVec(args.Direction);
+        if (args.Damage is { } damage) args.Damage = damage * .5f;
+        args.Reflected = true;
+    }
+
     private void OnReflect(Entity<XenomorphReflectiveResinComponent> ent, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled || !TryComp<PhysicsComponent>(args.ProjUid, out var body)) return;
