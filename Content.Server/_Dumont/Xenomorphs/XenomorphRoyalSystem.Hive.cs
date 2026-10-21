@@ -73,6 +73,7 @@ public sealed partial class XenomorphRoyalSystem
     private void StopWatching(Entity<XenomorphRoyalComponent> ent)
     {
         if (ent.Comp.Watched == null) return;
+        if (TryComp<XenomorphWatchComponent>(ent, out var watch)) EntityManager.System<XenomorphWatchSystem>().Stop((ent.Owner, watch));
         ent.Comp.Watched = null;
         _eye.SetTarget(ent, null);
     }
@@ -93,8 +94,7 @@ public sealed partial class XenomorphRoyalSystem
             case "return": StopWatching(ent); break;
             case "watch":
                 if (!Attached(ent) || target is not { } watched || !Sister(ent, watched)) return;
-                ent.Comp.Watched = watched;
-                _eye.SetTarget(ent, watched);
+                if (TryComp<XenomorphWatchComponent>(ent, out var watch)) EntityManager.System<XenomorphWatchSystem>().Watch((ent.Owner, watch), watched);
                 break;
             case "leader":
                 if (!Attached(ent) || target is not { } leader || leader == ent.Owner || !Sister(ent, leader)) return;

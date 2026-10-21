@@ -13,7 +13,6 @@ public sealed partial class XenomorphAciderComponent : Component
 {
     [DataField, AutoNetworkedField] public int Acid;
     [DataField, AutoNetworkedField] public bool Primed;
-    [DataField, AutoNetworkedField] public bool Hiding;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextGain;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField] public TimeSpan GeneratingUntil;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField] public TimeSpan DetonateAt;

@@ -649,3 +649,22 @@ xenomorph-queen-gut-start = A rainha está começando a dilacerar seu corpo!
 xenomorph-queen-matured = Você amadureceu. Seu corpo ficou mais resistente; o grito e a rajada ácida estão disponíveis.
 
 xenomorph-queen-announcement-title = >> RAINHA <<
+
+cm-xeno-watch = Observar xenomorfo
+xenomorph-watch-no-queen = Você precisa de uma rainha viva para observar a colmeia.
+ent-ActionXenomorphWatch = Observar xenomorfo
+    .desc = Veja pelos olhos de outro xenomorfo. Mova-se para retornar ao seu corpo.
+ent-ActionXenomorphPheromones = Emitir feromônios
+    .desc = Escolha feromônios de frenesi, proteção ou recuperação. Custa 35 de plasma e 2,5 por segundo.
+xenomorph-pheromones-help = Frenesi aumenta a velocidade e o dano; proteção fortalece a defesa; recuperação melhora a regeneração. Selecione novamente a ação para parar a emissão.
+
+ent-ActionXenomorphBoneChips = Fragmentos de osso
+    .desc = Lance fragmentos que causam dano e desaceleram a primeira vítima atingida.
+ent-ActionXenomorphCripplingStrike = Golpe incapacitante (20)
+    .desc = Prepare o próximo golpe por 5 segundos para desacelerar a vítima e causar 20% mais dano.
+ent-ActionXenomorphParalyzingSlash = Corte paralisante (50)
+    .desc = Prepare o próximo golpe por 5 segundos para atordoar a vítima e paralisá-la após 4 segundos.
+
+xenomorph-pheromones-frenzy = Frenesi
+xenomorph-pheromones-warding = Proteção
+xenomorph-pheromones-recovery = Recuperação

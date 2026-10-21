@@ -11,14 +11,8 @@ public sealed partial class SharedXenomorphAciderSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<XenomorphAciderComponent, PreventCollideEvent>(OnCollide);
         SubscribeLocalEvent<XenomorphAciderComponent, RefreshMovementSpeedModifiersEvent>(OnSpeed);
         SubscribeLocalEvent<XenomorphAciderComponent, AfterAutoHandleStateEvent>(OnState);
-    }
-    private void OnCollide(Entity<XenomorphAciderComponent> ent, ref PreventCollideEvent args)
-    {
-        if (ent.Comp.Hiding && (args.OtherFixture.CollisionLayer & (int)CollisionGroup.TableLayer) != 0
-            && (args.OtherFixture.CollisionLayer & (int)CollisionGroup.Impassable) == 0) args.Cancelled = true;
     }
     private void OnSpeed(Entity<XenomorphAciderComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {

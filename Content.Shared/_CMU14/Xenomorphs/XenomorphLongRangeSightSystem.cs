@@ -41,7 +41,7 @@ public sealed partial class XenomorphLongRangeSightSystem : EntitySystem
             args.Handled = true;
             return;
         }
-        args.Handled = _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, TimeSpan.FromSeconds(0.5),
+        args.Handled = _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.PrepareDelay,
             new XenomorphLongRangeSightDoAfterEvent(), ent) { BreakOnMove = true, NeedHand = false });
         ent.Comp.Preparing = args.Handled;
     }
@@ -68,6 +68,9 @@ public sealed partial class XenomorphLongRangeSightSystem : EntitySystem
     private void Refresh(Entity<XenomorphLongRangeSightComponent> ent)
     {
         _movement.RefreshMovementSpeedModifiers(ent);
+        _eye.SetMaxZoom(ent.Owner, ent.Comp.Enabled ? ent.Comp.Zoom : SharedContentEyeSystem.DefaultZoom);
+        _eye.SetZoom(ent.Owner, ent.Comp.Enabled ? ent.Comp.Zoom : SharedContentEyeSystem.DefaultZoom);
+        _eye.UpdatePvsScale(ent.Owner);
         if (TryComp<EyeComponent>(ent, out var eye)) _eye.UpdateEyeOffset((ent, eye));
     }
 

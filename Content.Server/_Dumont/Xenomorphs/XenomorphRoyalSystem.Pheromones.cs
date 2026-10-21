@@ -18,31 +18,35 @@ public sealed partial class XenomorphRoyalSystem
     private readonly Dictionary<EntityUid, string> _sources = new();
     private TimeSpan _nextPheromones;
 
-    private bool ChoosePheromones(EntityUid queen, string mode)
+    public bool ChoosePheromones(EntityUid queen, string mode)
     {
+        if (!TryComp<XenomorphPheromonesComponent>(queen, out var emitter)) return false;
         if (mode == "stopphero") { _pheromones.Remove(queen); SetPheromonesActive(queen, false); return true; }
-        if (mode is not ("frenzy" or "warding" or "recovery") || !_plasma.ChangePlasmaAmount(queen, -35)) return false;
+        if (mode is not ("frenzy" or "warding" or "recovery") || !_mobs.IsAlive(queen) || !_plasma.ChangePlasmaAmount(queen, -emitter.PlasmaCost)) return false;
         _pheromones[queen] = mode;
         SetPheromonesActive(queen, true);
         return true;
     }
     private void SetPheromonesActive(EntityUid queen, bool active)
     {
+        if (TryComp<XenomorphPheromonesComponent>(queen, out var emitter))
+        { emitter.ActiveMode = active ? _pheromones.GetValueOrDefault(queen, "") : ""; Dirty(queen, emitter); }
         foreach (var action in _actions.GetActions(queen))
-            if (_actions.GetEvent(action) is XenomorphQueenMessageActionEvent { Mode: "pheromones" }) _actions.SetToggled(action.Owner, active);
+            if (_actions.GetEvent(action) is XenomorphPheromonesActionEvent or XenomorphQueenMessageActionEvent { Mode: "pheromones" }) _actions.SetToggled(action.Owner, active);
     }
     private void SpreadPheromones(EntityUid queen, EntityUid source, string mode)
     {
         _sources[source] = mode;
         _allies.Clear();
-        _lookup.GetEntitiesInRange(Transform(source).Coordinates, 8, _allies);
+        var emitter = Comp<XenomorphPheromonesComponent>(queen);
+        _lookup.GetEntitiesInRange(Transform(source).Coordinates, emitter.Range, _allies);
         foreach (var sister in _allies)
         {
             if (!Sister(queen, sister)) continue;
             var value = _receivers.GetValueOrDefault(sister);
-            if (mode == "frenzy") value.Frenzy = 4;
-            if (mode == "warding") value.Warding = 4;
-            if (mode == "recovery") value.Recovery = 4;
+            if (mode == "frenzy") value.Frenzy = Math.Max(value.Frenzy, emitter.Multiplier);
+            if (mode == "warding") value.Warding = Math.Max(value.Warding, emitter.Multiplier);
+            if (mode == "recovery") value.Recovery = Math.Max(value.Recovery, emitter.Multiplier);
             _receivers[sister] = value;
         }
     }
@@ -54,7 +58,7 @@ public sealed partial class XenomorphRoyalSystem
         _sources.Clear();
         foreach (var (queen, mode) in _pheromones.ToArray())
         {
-            if (!Exists(queen) || !Ready(queen) || !_plasma.ChangePlasmaAmount(queen, -FixedPoint2.New(2.5)))
+            if (!Exists(queen) || !TryComp<XenomorphPheromonesComponent>(queen, out var emitter) || !_mobs.IsAlive(queen) || !_plasma.ChangePlasmaAmount(queen, -emitter.PlasmaUpkeep))
             { _pheromones.Remove(queen); if (Exists(queen)) SetPheromonesActive(queen, false); continue; }
             SpreadPheromones(queen, queen, mode);
             if (Attached(queen) && TryComp<XenomorphRoyalComponent>(queen, out var royal))

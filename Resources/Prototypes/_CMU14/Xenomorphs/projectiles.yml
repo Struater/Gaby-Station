@@ -376,3 +376,27 @@
     paralyze: 0
     slow: 0
     drainMedicine: false
+
+- type: entity
+  parent: DumontXenomorphSlowingSpit
+  id: DumontXenomorphBoneChips
+  name: bone chips
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Materials/shards.rsi
+    layers:
+    - state: bonechips
+      shader: unshaded
+  - type: Projectile
+    impactEffect: null
+    damage:
+      types:
+        Slash: 10
+  - type: XenomorphSpitProjectile
+    range: 4
+    slow: 5
+    slowFactor: 0.2
+    paralyze: 0
+    armorResists: false
+    drainMedicine: false
+    deleteOnFriendly: false

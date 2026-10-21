@@ -5,4 +5,5 @@ public sealed partial class XenomorphSpitActionEvent : WorldTargetActionEvent
 {
     [DataField] public bool Scattered;
     [DataField] public bool Acid;
+    [DataField] public bool Bone;
 }

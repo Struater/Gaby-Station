@@ -83,3 +83,4 @@
     checkCanAccess: false
   - type: WorldTargetAction
     event: !type:XenomorphPlaceHiveConstructionActionEvent
+

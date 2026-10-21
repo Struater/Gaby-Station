@@ -80,8 +80,7 @@ public sealed partial class XenomorphVisualizerSystem : VisualizerSystem<Xenomor
         SpriteSystem.LayerSetRsi((uid, sprite), acidLayer, path);
         SpriteSystem.LayerSetRsiState((uid, sprite), acidLayer, rest.Resting ? "acid_rest" : !_mobs.IsAlive(uid) ? "acid_downed" : "acid");
         SpriteSystem.LayerSetVisible((uid, sprite), acidLayer, acider.GeneratingUntil > _timing.CurTime && !_mobs.IsDead(uid));
-        SpriteSystem.SetDrawDepth((uid, sprite), (int)(acider.Hiding ? Content.Shared.DrawDepth.DrawDepth.FloorObjects
-            : _mobs.IsDead(uid) ? Content.Shared.DrawDepth.DrawDepth.DeadMobs : Content.Shared.DrawDepth.DrawDepth.Mobs));
+
     }
 
     protected override void OnAppearanceChange(EntityUid uid, XenomorphRestComponent component, ref AppearanceChangeEvent args)
@@ -90,6 +89,10 @@ public sealed partial class XenomorphVisualizerSystem : VisualizerSystem<Xenomor
             return;
 
         AppearanceSystem.TryGetData<bool>(uid, XenomorphVisuals.Invisible, out var invisible, args.Component);
+        if (TryComp<XenomorphHideComponent>(uid, out var hide))
+        {
+            invisible = false;
+        }
         var burrowed = TryComp<XenomorphBurrowComponent>(uid, out var burrow) && burrow.Active;
         SpriteSystem.SetVisible((uid, args.Sprite), !burrowed || _player.LocalEntity == uid);
         SpriteSystem.SetColor((uid, args.Sprite), args.Sprite.Color.WithAlpha(burrowed ? 0.4f : invisible ? 0.1f : 1f));

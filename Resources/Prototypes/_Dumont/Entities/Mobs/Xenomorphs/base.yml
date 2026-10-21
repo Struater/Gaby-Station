@@ -3,6 +3,7 @@
   parent: BaseMobXenomorphAdult
   abstract: true
   components:
+  - type: XenomorphWatch
   - type: FootstepModifier
     footstepSoundCollection: null
   - type: CombatMode
@@ -36,6 +37,10 @@
       visible: false
   - type: UserInterface
     interfaces:
+      enum.XenoWatchUIKey.Key:
+        type: XenoWatchBui
+      enum.XenoPheromonesUI.Key:
+        type: XenoPheromonesBui
       enum.RadialSelectorUiKey.Key:
         type: TrackedRadialSelectorMenuBUI
       enum.XenomorphHiveUiKey.Construction:

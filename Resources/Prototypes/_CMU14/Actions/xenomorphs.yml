@@ -1618,11 +1618,13 @@
   id: ActionXenomorphHide
   components:
   - type: Action
+    itemIconStyle: NoItem
     icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: xenohide }
     iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: xenohide }
     backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
     useDelay: 0.5
   - type: InstantAction
+    raiseOnUser: true
     event: !type:XenomorphHideActionEvent
 
 - type: entity
@@ -2061,3 +2063,75 @@
   - type: EntityTargetAction
     event: !type:XenomorphQueenPlasmaActionEvent
 
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphWatch
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: watch_xeno }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: watch_xeno }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+    useDelay: 0.33
+  - type: InstantAction
+    raiseOnUser: true
+    event: !type:XenomorphWatchActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphPheromones
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: emit_pheromones }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: emit_pheromones }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+    useDelay: 0.33
+  - type: InstantAction
+    raiseOnUser: true
+    event: !type:XenomorphPheromonesActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphBoneChips
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: runner_bonespur }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: runner_bonespur }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+    useDelay: 12
+  - type: TargetAction
+    range: 15
+  - type: WorldTargetAction
+    raiseOnUser: true
+    event: !type:XenomorphSpitActionEvent
+      bone: true
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphCripplingStrike
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: lurker_inject_neuro }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: lurker_inject_neuro }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+    useDelay: 10
+  - type: InstantAction
+    raiseOnUser: true
+    event: !type:XenomorphPreparedStrikeActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionXenomorphParalyzingSlash
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon: { sprite: _RMC14/Actions/xeno_actions.rsi, state: lurker_inject_neuro }
+    iconOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: lurker_inject_neuro }
+    backgroundOn: { sprite: _RMC14/Actions/xeno_actions.rsi, state: template_on }
+    useDelay: 12
+  - type: InstantAction
+    raiseOnUser: true
+    event: !type:XenomorphPreparedStrikeActionEvent

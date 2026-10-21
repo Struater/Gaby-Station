@@ -46,7 +46,7 @@ public sealed partial class XenomorphSpitSystem : EntitySystem
     }
     private void OnSpit(Entity<XenomorphSpitComponent> ent, ref XenomorphSpitActionEvent args)
     {
-        if (args.Handled || !_mobs.IsAlive(ent) || !_blocker.CanAttack(ent) || !_plasma.HasPlasma(ent, args.Acid ? 25 : args.Scattered ? 30 : 20))
+        if (args.Handled || !_mobs.IsAlive(ent) || !_blocker.CanAttack(ent) || !args.Bone && !_plasma.HasPlasma(ent, args.Acid ? 25 : args.Scattered ? 30 : 20))
             return;
         var origin = _transform.GetMapCoordinates(ent);
         var target = _transform.ToMapCoordinates(args.Target);
@@ -57,13 +57,13 @@ public sealed partial class XenomorphSpitSystem : EntitySystem
         for (var i = 0; i < (args.Scattered ? 5 : 1); i++)
         {
             var angle = i == 0 ? Angle.Zero : _random.NextAngle(-Angle.FromDegrees(45), Angle.FromDegrees(45));
-            var projectile = Spawn(charged ? "DumontXenomorphChargedSpit" : args.Acid ? "DumontXenomorphAcidSpit" : args.Scattered ? "DumontXenomorphScatteredSpit" : "DumontXenomorphSlowingSpit", _transform.GetMoverCoordinates(ent));
+            var projectile = Spawn(args.Bone ? "DumontXenomorphBoneChips" : charged ? "DumontXenomorphChargedSpit" : args.Acid ? "DumontXenomorphAcidSpit" : args.Scattered ? "DumontXenomorphScatteredSpit" : "DumontXenomorphSlowingSpit", _transform.GetMoverCoordinates(ent));
             Comp<XenomorphSpitProjectileComponent>(projectile).Origin = origin;
-            _guns.ShootProjectile(projectile, angle.RotateVec(direction), Vector2.Zero, ent, ent, 30);
+            _guns.ShootProjectile(projectile, angle.RotateVec(direction), Vector2.Zero, ent, ent, args.Bone ? 20 : 30);
         }
         if (charged)
             Comp<XenomorphSpitterComponent>(ent).Fired = true;
-        _audio.PlayPvs(new SoundCollectionSpecifier("DumontXenomorphSpit", AudioParams.Default.WithVolume(-10)), ent);
+        if (!args.Bone) _audio.PlayPvs(new SoundCollectionSpecifier("DumontXenomorphSpit", AudioParams.Default.WithVolume(-10)), ent);
         args.Handled = true;
     }
     private void OnCollide(Entity<XenomorphSpitProjectileComponent> ent, ref PreventCollideEvent args)
@@ -71,7 +71,7 @@ public sealed partial class XenomorphSpitSystem : EntitySystem
         if (!HasComp<XenomorphComponent>(args.OtherEntity))
             return;
         args.Cancelled = true;
-        if (!HasComp<XenomorphToxicProjectileComponent>(ent) && TryComp<ProjectileComponent>(ent, out var projectile) && projectile.Shooter != args.OtherEntity)
+        if (ent.Comp.DeleteOnFriendly && !HasComp<XenomorphToxicProjectileComponent>(ent) && TryComp<ProjectileComponent>(ent, out var projectile) && projectile.Shooter != args.OtherEntity)
             QueueDel(ent);
     }
     private void OnHit(Entity<XenomorphSpitProjectileComponent> ent, ref ProjectileHitEvent args)
@@ -92,7 +92,7 @@ public sealed partial class XenomorphSpitSystem : EntitySystem
             _spitter.ShowAcidSplash(target);
         if (ent.Comp.Slow > TimeSpan.Zero && TryComp<MovementSpeedModifierComponent>(target, out var speed))
             _slow.TryUpdateMovementSpeedModDuration(target, "XenomorphStompSlowdown", ent.Comp.Slow,
-                1 / (1 + Math.Max(speed.CurrentSprintSpeed, speed.BaseSprintSpeed) * 0.8f));
+                1 / (1 + Math.Max(speed.CurrentSprintSpeed, speed.BaseSprintSpeed) * ent.Comp.SlowFactor));
         var armor = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING);
         if (ent.Comp.ArmorResists)
             RaiseLocalEvent(target, armor);

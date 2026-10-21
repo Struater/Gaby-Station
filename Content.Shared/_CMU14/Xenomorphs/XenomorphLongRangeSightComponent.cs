@@ -14,6 +14,8 @@ public sealed partial class XenomorphLongRangeSightComponent : Component
     [DataField, AutoNetworkedField] public Vector2 Offset;
     [DataField, AutoNetworkedField] public float OffsetLength = 3;
     [DataField, AutoNetworkedField] public float Speed = 0.8f;
+    [DataField, AutoNetworkedField] public Vector2 Zoom = Vector2.One;
+    [DataField] public TimeSpan PrepareDelay = TimeSpan.FromSeconds(0.5);
     public bool Preparing;
 }
 

@@ -65,7 +65,6 @@ public sealed partial class XenomorphAciderSystem : EntitySystem
         SubscribeLocalEvent<XenomorphAciderComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<XenomorphAciderComponent, MeleeHitEvent>(OnHit);
         SubscribeLocalEvent<XenomorphAciderComponent, XenomorphPrimeAcidActionEvent>(OnPrime);
-        SubscribeLocalEvent<XenomorphAciderComponent, XenomorphHideActionEvent>(OnHide);
         SubscribeLocalEvent<XenomorphAciderComponent, XenomorphAciderCorrodeActionEvent>(OnCorrode);
         SubscribeLocalEvent<XenomorphAciderComponent, XenomorphAciderCorrodeDoAfterEvent>(OnCorrodeDone);
         SubscribeLocalEvent<XenomorphAciderComponent, XenomorphAcidReserveAlertEvent>(OnAlert);
@@ -109,15 +108,6 @@ public sealed partial class XenomorphAciderSystem : EntitySystem
             Refresh(ent);
             break;
         }
-    }
-    private void OnHide(Entity<XenomorphAciderComponent> ent, ref XenomorphHideActionEvent args)
-    {
-        if (args.Handled || !_mobs.IsAlive(ent)) return;
-        ent.Comp.Hiding = !ent.Comp.Hiding;
-        _physics.RegenerateContacts(ent.Owner);
-        _actions.SetToggled(args.Action.Owner, ent.Comp.Hiding);
-        Dirty(ent);
-        args.Handled = true;
     }
     private void OnPrime(Entity<XenomorphAciderComponent> ent, ref XenomorphPrimeAcidActionEvent args)
     {

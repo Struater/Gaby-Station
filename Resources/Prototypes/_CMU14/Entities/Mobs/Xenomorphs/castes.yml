@@ -3,6 +3,8 @@
   parent: BaseMobXenomorphCMU
   name: drone
   components:
+  - type: XenomorphPheromones
+    multiplier: 2
   - type: XenomorphHiveBuilder
   - type: XenomorphTailStab
     damage:
@@ -43,6 +45,13 @@
   parent: BaseMobXenomorphCMU
   name: runner
   components:
+  - type: XenomorphSpit
+  - type: XenomorphLongRangeSight
+    offsetLength: 0
+    speed: 1
+    zoom: 1.25, 1.25
+    prepareDelay: 0
+  - type: XenomorphHide
   - type: XenomorphTailStab
     damage:
       types:
@@ -79,8 +88,11 @@
   - type: VentCrawler
   - type: ActionGrant
     actions:
+    - ActionXenomorphBoneChips
+    - ActionXenomorphLongRangeSight
     - ActionXenomorphTailStab
     - ActionXenomorphLeap
+    - ActionXenomorphHide
   - type: XenomorphLeap
     obstacleStun: 1.5
     knockdownTime: 2
@@ -165,6 +177,8 @@
   parent: BaseMobXenomorphCMU
   name: sentinel
   components:
+  - type: XenomorphPreparedStrike
+    paralyzing: true
   - type: XenomorphTailStab
     damage:
       types:
@@ -200,6 +214,7 @@
   - type: XenomorphSpit
   - type: ActionGrant
     actions:
+    - ActionXenomorphParalyzingSlash
     - ActionXenomorphSlowingSpit
     - ActionXenomorphScatteredSpit
     - ActionXenomorphTailStab
@@ -208,6 +223,8 @@
   parent: BaseMobXenomorphCMU
   name: lurker
   components:
+  - type: XenomorphPreparedStrike
+    paralyzing: false
   - type: XenomorphTailStab
     damage:
       types:
@@ -244,6 +261,7 @@
   - type: VentCrawler
   - type: ActionGrant
     actions:
+    - ActionXenomorphCripplingStrike
     - ActionXenomorphTailStab
     - ActionXenomorphPounce
     - ActionXenomorphInvisibility
@@ -398,6 +416,9 @@
   parent: BaseMobXenomorphCMU
   name: hivelord
   components:
+  - type: XenomorphPheromones
+    multiplier: 2.5
+    pheroSuffix: hivelord
   - type: XenomorphHiveBuilder
   - type: XenomorphResinWalker
   - type: XenomorphTailStab
@@ -442,6 +463,8 @@
   parent: BaseMobXenomorphCMU
   name: carrier
   components:
+  - type: XenomorphPheromones
+    multiplier: 2
   - type: XenomorphHiveBuilder
   - type: XenomorphCarrier
   - type: XenomorphTailStab
@@ -513,6 +536,8 @@
   parent: BaseMobXenomorphCMU
   name: burrower
   components:
+  - type: XenomorphPheromones
+    multiplier: 2
   - type: XenomorphHiveBuilder
   - type: XenomorphBurrow
   - type: XenomorphTailStab
@@ -560,6 +585,9 @@
   parent: BaseMobXenomorphCMU
   name: reaper
   components:
+  - type: XenomorphPheromones
+    multiplier: 3
+    pheroSuffix: strong
   - type: XenomorphHiveBuilder
   - type: XenomorphReaper
   - type: XenomorphTailStab
@@ -872,6 +900,9 @@
   parent: BaseMobXenomorphCMU
   name: queen
   components:
+  - type: XenomorphPheromones
+    multiplier: 4
+    pheroSuffix: queen
   - type: XenomorphHiveBuilder
   - type: XenomorphTailStab
     damage:
@@ -953,7 +984,6 @@
     - ActionXenomorphQueenHeal
     - ActionXenomorphQueenPlasma
     - ActionXenomorphQueenHive
-    - ActionXenomorphQueenPheromones
     - ActionXenomorphQueenWord
     - ActionXenomorphQueenOrder
 - type: entity
@@ -961,6 +991,9 @@
   parent: BaseMobXenomorphCMU
   name: healer drone
   components:
+  - type: XenomorphPheromones
+    multiplier: 3
+    pheroSuffix: strong
   - type: XenomorphHiveBuilder
   - type: XenomorphFruitPlanter
   - type: XenomorphHealer
@@ -1017,6 +1050,8 @@
   parent: BaseMobXenomorphCMU
   name: gardener drone
   components:
+  - type: XenomorphPheromones
+    multiplier: 2
   - type: XenomorphHiveBuilder
   - type: XenomorphResinSurge
   - type: XenomorphFruitPlanter
@@ -1097,7 +1132,6 @@
         variation: 0.15
   - type: XenomorphHeatshield
   - type: XenomorphCrest
-  - type: XenomorphTailSweep
   - type: XenomorphArmor
     armor: 25
     explosionArmor: 50
@@ -1140,7 +1174,6 @@
     actions:
     - ActionXenomorphTailSlam
     - ActionXenomorphCrest
-    - ActionXenomorphTailSweep
     - ActionXenomorphSelfImmolate
     - ActionXenomorphThermoregulation
     - ActionXenomorphVomitBile
@@ -1149,6 +1182,7 @@
   parent: BaseMobXenomorphCMU
   name: acider runner
   components:
+  - type: XenomorphHide
   - type: XenomorphAcider
   - type: PointLight
     enabled: false
@@ -1286,6 +1320,9 @@
   parent: BaseMobXenomorphCMU
   name: eggsac carrier
   components:
+  - type: XenomorphPheromones
+    multiplier: 3
+    pheroSuffix: strong
   - type: XenomorphHiveBuilder
   - type: XenomorphCarrier
     maxParasites: 0
@@ -1381,6 +1418,7 @@
     prototype: XenomorphCMUBulwarkWarrior
   - type: ActionGrant
     actions:
+    - ActionXenomorphTailStab
     - ActionXenomorphEncasedPlates
     - ActionXenomorphPlateBash
     - ActionXenomorphBulwarkTailSwing
@@ -1437,6 +1475,14 @@
   parent: BaseMobXenomorphCMU
   name: resin whisperer hivelord
   components:
+  - type: XenomorphPheromones
+    multiplier: 2.5
+    pheroSuffix: hivelord
+  - type: XenomorphLongRangeSight
+    offsetLength: 0
+    speed: 1
+    zoom: 1.25, 1.25
+    prepareDelay: 0
   - type: XenomorphHiveBuilder
   - type: XenomorphResinWhisperer
   - type: XenomorphConstruction
@@ -1475,6 +1521,7 @@
     prototype: XenomorphCMUResinWhispererHivelord
   - type: ActionGrant
     actions:
+    - ActionXenomorphLongRangeSight
     - ActionXenomorphResinWalker
     - ActionXenomorphHivelordPlasma
     - ActionXenomorphTailStab
@@ -1485,6 +1532,14 @@
   parent: BaseMobXenomorphCMU
   name: designer hivelord
   components:
+  - type: XenomorphPheromones
+    multiplier: 2.5
+    pheroSuffix: hivelord
+  - type: XenomorphLongRangeSight
+    offsetLength: 0
+    speed: 1
+    zoom: 1.25, 1.25
+    prepareDelay: 0
   - type: XenomorphHiveBuilder
   - type: XenomorphDesigner
   - type: XenomorphResinWalker
@@ -1522,6 +1577,7 @@
     prototype: XenomorphCMUDesignerHivelord
   - type: ActionGrant
     actions:
+    - ActionXenomorphLongRangeSight
     - ActionXenomorphResinWalker
     - ActionXenomorphTailStab
     - ActionXenomorphDesignOptimized
@@ -1765,6 +1821,9 @@
   parent: BaseMobXenomorphCMU
   name: valkyrie praetorian
   components:
+  - type: XenomorphPheromones
+    multiplier: 3
+    pheroSuffix: strong
   - type: XenomorphValkyrie
   - type: XenomorphArmor
     armor: 35

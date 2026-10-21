@@ -68,6 +68,11 @@
   id: MobXenomorphLarva
   components:
   - type: XenomorphLineage
+  - type: XenomorphWatch
+  - type: XenomorphHide
+  - type: ActionGrant
+    actions:
+    - ActionXenomorphHide
   - type: XenomorphEvolution
     max: 200
     evolvesTo:
@@ -88,6 +93,8 @@
   - type: GhostTakeoverAvailable
   - type: UserInterface
     interfaces:
+      enum.XenoWatchUIKey.Key:
+        type: XenoWatchBui
       enum.RadialSelectorUiKey.Key:
         type: TrackedRadialSelectorMenuBUI
   - type: GlobalAntagonist # Orion

@@ -273,6 +273,15 @@
     },
     {
       "name": "morph_resin"
+    },
+    {
+      "name": "watch_xeno"
+    },
+    {
+      "name": "runner_bonespur"
+    },
+    {
+      "name": "lurker_inject_neuro"
     }
   ]
 }
