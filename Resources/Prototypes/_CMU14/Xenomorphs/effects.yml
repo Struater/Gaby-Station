@@ -479,3 +479,35 @@
   id: DumontXenomorphQueenBlind
   kind: source
   path: "/Textures/_RMC14/Shaders/screech_blind.swsl"
+
+- type: entity
+  id: DumontHiveHealBusy
+  categories: [HideSpawnMenu]
+  components:
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: Sprite
+    sprite: _RMC14/Effects/heal.rsi
+    state: busy_medical
+    color: "#FFFFFF"
+    noRot: true
+    drawdepth: Effects
+  - type: EffectVisuals
+  - type: Tag
+    tags: [HideContextMenu]
+
+- type: entity
+  id: DumontHiveHealPlasma
+  categories: [HideSpawnMenu]
+  components:
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: Sprite
+    sprite: _RMC14/Effects/heal.rsi
+    state: plasma_overlay
+    color: "#00FFFF"
+    noRot: true
+    drawdepth: Effects
+  - type: EffectVisuals
+  - type: Tag
+    tags: [HideContextMenu]

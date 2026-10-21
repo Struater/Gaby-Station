@@ -270,6 +270,9 @@
     },
     {
       "name": "emit_pheromones"
+    },
+    {
+      "name": "morph_resin"
     }
   ]
 }

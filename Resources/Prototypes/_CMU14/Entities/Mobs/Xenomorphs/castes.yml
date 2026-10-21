@@ -3,6 +3,7 @@
   parent: BaseMobXenomorphCMU
   name: drone
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphTailStab
     damage:
       types:
@@ -397,6 +398,7 @@
   parent: BaseMobXenomorphCMU
   name: hivelord
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphResinWalker
   - type: XenomorphTailStab
     damage:
@@ -440,6 +442,7 @@
   parent: BaseMobXenomorphCMU
   name: carrier
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphCarrier
   - type: XenomorphTailStab
     damage:
@@ -510,6 +513,7 @@
   parent: BaseMobXenomorphCMU
   name: burrower
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphBurrow
   - type: XenomorphTailStab
     damage:
@@ -556,6 +560,7 @@
   parent: BaseMobXenomorphCMU
   name: reaper
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphReaper
   - type: XenomorphTailStab
     damage:
@@ -867,6 +872,7 @@
   parent: BaseMobXenomorphCMU
   name: queen
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphTailStab
     damage:
       types:
@@ -955,6 +961,7 @@
   parent: BaseMobXenomorphCMU
   name: healer drone
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphFruitPlanter
   - type: XenomorphHealer
   - type: XenomorphTailStab
@@ -1010,6 +1017,7 @@
   parent: BaseMobXenomorphCMU
   name: gardener drone
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphResinSurge
   - type: XenomorphFruitPlanter
     maximum: 6
@@ -1278,6 +1286,7 @@
   parent: BaseMobXenomorphCMU
   name: eggsac carrier
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphCarrier
     maxParasites: 0
     maxEggs: 12
@@ -1428,6 +1437,7 @@
   parent: BaseMobXenomorphCMU
   name: resin whisperer hivelord
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphResinWhisperer
   - type: XenomorphConstruction
   - type: XenomorphResinWalker
@@ -1475,6 +1485,7 @@
   parent: BaseMobXenomorphCMU
   name: designer hivelord
   components:
+  - type: XenomorphHiveBuilder
   - type: XenomorphDesigner
   - type: XenomorphResinWalker
   - type: XenomorphTailStab

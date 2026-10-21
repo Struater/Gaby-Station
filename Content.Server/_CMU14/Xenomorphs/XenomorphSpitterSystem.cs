@@ -154,19 +154,25 @@ public sealed partial class XenomorphSpitterSystem : EntitySystem
         if (args.Handled || !_mobs.IsAlive(ent) || !_blocker.CanAttack(ent) || !_plasma.HasPlasma(ent, ent.Comp.SprayCost)
             || Transform(ent).GridUid is not { } grid)
             return;
-        var target = _transform.ToMapCoordinates(args.Target);
-        if (target.MapId != _transform.GetMapCoordinates(ent).MapId)
-            return;
-        var from = _transform.ToCoordinates(grid, _transform.GetMapCoordinates(ent)).Position;
+        args.Handled = CreateSpray(ent, args.Target, ent.Comp.SprayRange, ent.Comp.StrongSpray, ent.Comp.StackingSpray);
+    }
+
+    public bool CreateSpray(EntityUid user, EntityCoordinates targetCoordinates, float range, bool strong = false, bool stacking = false, double spreadDelay = .2)
+    {
+        if (Transform(user).GridUid is not { } grid) return false;
+        var target = _transform.ToMapCoordinates(targetCoordinates);
+        if (target.MapId != _transform.GetMapCoordinates(user).MapId)
+            return false;
+        var from = _transform.ToCoordinates(grid, _transform.GetMapCoordinates(user)).Position;
         var to = _transform.ToCoordinates(grid, target).Position;
         from = new Vector2(MathF.Floor(from.X) + 0.5f, MathF.Floor(from.Y) + 0.5f);
         to = new Vector2(MathF.Floor(to.X) + 0.5f, MathF.Floor(to.Y) + 0.5f);
         var delta = to - from;
         var length = delta.Length();
         if (!float.IsFinite(length) || length < 0.1f)
-            return;
+            return false;
         var direction = delta / length;
-        var spray = new Spray { User = ent, Start = new EntityCoordinates(grid, from), Strong = ent.Comp.StrongSpray, Stacking = ent.Comp.StackingSpray, Range = ent.Comp.SprayRange };
+        var spray = new Spray { User = user, Start = new EntityCoordinates(grid, from), Strong = strong, Stacking = stacking, Range = range };
         var previous = from;
         var barricades = new HashSet<Entity<XenomorphSprayAcidableComponent>>();
         for (var i = 1; i <= MathF.Ceiling(Math.Min(length, spray.Range)); i++)
@@ -177,21 +183,21 @@ public sealed partial class XenomorphSpitterSystem : EntitySystem
                 continue;
             previous = point;
             var coordinates = new EntityCoordinates(grid, point);
-            if (!_interaction.InRangeUnobstructed(ent.Owner, coordinates, range: spray.Range + 1))
+            if (!_interaction.InRangeUnobstructed(user, coordinates, range: spray.Range + 1))
             {
                 _lookup.GetEntitiesInRange(_transform.ToMapCoordinates(coordinates), 0.4f, barricades);
                 foreach (var barricade in barricades)
-                    if (_interaction.InRangeUnobstructed(ent.Owner, barricade.Owner, range: spray.Range + 1))
-                        spray.Barricades.Add((barricade, _timing.CurTime + TimeSpan.FromSeconds(Math.Max(0, Vector2.Distance(point, from) - 1) * 0.2)));
+                    if (_interaction.InRangeUnobstructed(user, barricade.Owner, range: spray.Range + 1))
+                        spray.Barricades.Add((barricade, _timing.CurTime + TimeSpan.FromSeconds(Math.Max(0, Vector2.Distance(point, from) - 1) * spreadDelay)));
                 break;
             }
-            spray.Tiles.Add((coordinates, _timing.CurTime + TimeSpan.FromSeconds(Math.Max(0, Vector2.Distance(point, from) - 1) * 0.2)));
+            spray.Tiles.Add((coordinates, _timing.CurTime + TimeSpan.FromSeconds(Math.Max(0, Vector2.Distance(point, from) - 1) * spreadDelay)));
         }
         if (spray.Tiles.Count == 0 && spray.Barricades.Count == 0)
-            return;
+            return false;
         _sprays.Add(spray);
-        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/refill.ogg"), ent);
-        args.Handled = true;
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/refill.ogg"), user);
+        return true;
     }
 
     private void SprayHit(Spray spray, EntityUid pool, EntityUid target)

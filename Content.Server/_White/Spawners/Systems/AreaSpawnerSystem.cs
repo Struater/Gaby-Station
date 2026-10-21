@@ -5,9 +5,11 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._CMU14.Xenomorphs;
 using Content.Server._CMU14.Xenomorphs;
 using System.Numerics;
 using Content.Server._Dumont.Xenomorphs;
+using Content.Shared._Dumont.Xenomorphs;
 using Content.Server._White.Spawners.Components;
 using Content.Server.Atmos.Components;
 using Content.Shared.Maps;
@@ -72,7 +74,11 @@ public sealed partial class AreaSpawnerSystem : EntitySystem
 
             foreach (var tile in validTiles)
             {
-                var spawnedUid = Spawn(areaSpawner.SpawnPrototype, Transform(uid).Coordinates.Offset(tile));
+                var coordinates = Transform(uid).Coordinates.Offset(tile);
+                if (areaSpawner.SpawnPrototype == "DumontHiveWeeds" && Transform(uid).GridUid is { } grid && TryComp<MapGridComponent>(grid, out var mapGrid))
+                    foreach (var existing in _map.GetAnchoredEntities((grid, mapGrid), coordinates))
+                        if (Prototype(existing)?.ID == "ResinWeed") QueueDel(existing);
+                var spawnedUid = Spawn(areaSpawner.SpawnPrototype, coordinates);
                 areaSpawner.Spawneds.Add(spawnedUid);
             }
         }
@@ -109,7 +115,7 @@ public sealed partial class AreaSpawnerSystem : EntitySystem
 
         foreach (var entity in _map.GetAnchoredEntities((gridUid, mapGridComponent), coords))
         {
-            if (component.SpawnPrototype == "ResinWeed" && HasComp<XenomorphHardyWeedComponent>(entity)
+            if (component.SpawnPrototype == "ResinWeed" && (HasComp<XenomorphHardyWeedComponent>(entity) || HasComp<XenomorphHiveWeedComponent>(entity))
                 || component.SpawnPrototype == "DumontXenomorphHardyWeed" && HasComp<AreaSpawnerComponent>(entity))
                 return false;
 

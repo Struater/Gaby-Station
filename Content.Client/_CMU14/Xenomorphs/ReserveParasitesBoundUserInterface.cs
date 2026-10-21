@@ -19,6 +19,8 @@ public sealed class ReserveParasitesBoundUserInterface(EntityUid owner, Enum uiK
         _window = this.CreateWindow<ReserveParasitesWindow>();
         if (EntMan.TryGetComponent<XenomorphCarrierComponent>(Owner, out var paras))
             _window.SetReserveShown(paras.ReservedParasites);
+        else if (EntMan.TryGetComponent<XenomorphEggMorpherComponent>(Owner, out var morpher))
+            _window.SetReserveShown(morpher.ReservedParasites);
 
         _window.ApplyButton.OnPressed += _ =>
         {

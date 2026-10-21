@@ -38,6 +38,8 @@
     interfaces:
       enum.RadialSelectorUiKey.Key:
         type: TrackedRadialSelectorMenuBUI
+      enum.XenomorphHiveUiKey.Construction:
+        type: AttachedRadialSelectorMenuBUI
       enum.XenomorphConstructionUiKey.Key:
         type: AttachedRadialSelectorMenuBUI
   - type: GhostRole

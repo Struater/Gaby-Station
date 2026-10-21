@@ -67,7 +67,10 @@ public sealed partial class XenomorphConstructionSystem : EntitySystem
             list[2] = "DumontXenomorphResinDoorThick";
         }
         if (caste is "Queen" or "Hivelord" && !HasComp<XenomorphResinWhispererComponent>(user))
+        {
             list.Add("DumontXenomorphReflectiveResinWall");
+            list.Add("DumontHiveAcidPillar");
+        }
         if (HasComp<XenomorphResinWhispererComponent>(user)) list.Add("ResinWeedNode");
         return list;
     }
@@ -112,6 +115,7 @@ public sealed partial class XenomorphConstructionSystem : EntitySystem
         "DumontXenomorphFastResin" => 35,
         "DumontXenomorphResinSpikes" => 80,
         "DumontXenomorphReflectiveResinWall" => 145,
+        "DumontHiveAcidPillar" => 250,
         _ => 50,
     };
 
@@ -139,6 +143,7 @@ public sealed partial class XenomorphConstructionSystem : EntitySystem
         var weed = false;
         foreach (var uid in _lookup.GetEntitiesIntersecting(coordinates, LookupFlags.All))
         {
+            if (HasComp<XenomorphHiveStructureComponent>(uid) || HasComp<XenomorphAcidPillarComponent>(uid)) return false;
             if (HasComp<XenomorphWeedWallSpreadComponent>(uid)) weed = true;
             if (HasComp<XenomorphStickyResinComponent>(uid) || HasComp<XenomorphResinFloorComponent>(uid)) return false;
         }
@@ -175,8 +180,9 @@ public sealed partial class XenomorphConstructionSystem : EntitySystem
         delay *= speed;
         var floor = ent.Comp.Choice.Id is "DumontXenomorphFastResin" or "DumontXenomorphDesignResidueThick";
         if (floor) delay *= .5f;
+        if (ent.Comp.Choice.Id == "DumontHiveAcidPillar") delay *= 6;
         EntityUid? effect = null;
-        if (!floor && ent.Comp.Choice.Id != "DumontXenomorphResinSpikes" && ent.Comp.Choice.Id != "ResinWeedNode")
+        if (!floor && ent.Comp.Choice.Id != "DumontXenomorphResinSpikes" && ent.Comp.Choice.Id != "ResinWeedNode" && ent.Comp.Choice.Id != "DumontHiveAcidPillar")
             effect = _visual.CreateBuildEffect(coordinates, ent.Comp.Choice.Id.Contains("Door"), ent.Comp.Choice.Id.Contains("Thick"), delay, ent.Comp.Choice.Id.Contains("Membrane"));
         args.Handled = _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, delay,
             new XenomorphConstructionDoAfterEvent { Choice = ent.Comp.Choice, Coordinates = GetNetCoordinates(coordinates), Effect = GetNetEntity(effect) }, ent)

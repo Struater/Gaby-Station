@@ -74,7 +74,7 @@ public sealed partial class XenomorphHealerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void Heal(EntityUid uid, FixedPoint2 amount)
+    public void Heal(EntityUid uid, FixedPoint2 amount)
     {
         if (!TryComp<DamageableComponent>(uid, out var damage)) return;
         var heal = new DamageSpecifier();
