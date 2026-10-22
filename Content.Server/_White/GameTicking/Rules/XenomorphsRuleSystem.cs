@@ -51,7 +51,6 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private NukeCodePaperSystem _nukeCodePaper = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private StationSystem _station = default!;
@@ -148,6 +147,7 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var xenomorphs, out _))
         {
+            if (xenomorphs.WinConditions.Contains(WinCondition.HiveContactEstablished)) continue;
             foreach (var grid in GetStationGrids())
             {
                 if (ev.OwningStation != grid)
@@ -261,7 +261,8 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
             if (!string.IsNullOrEmpty(component.Announcement))
                 _chat.DispatchGlobalAnnouncement(Loc.GetString(component.Announcement), component.Sender != null ? Loc.GetString(component.Sender) : null, colorOverride: component.AnnouncementColor);
 
-            PlayXenomorphMusic(component.XenomorphInfestationSound); // Dumont
+            if (EntityManager.System<Content.Server._Dumont.Xenomorphs.XenomorphHiveObjectivesSystem>().HijackingQueen == null)
+                PlayXenomorphMusic(component.XenomorphInfestationSound); // Dumont
         }
 
         CheckRoundEnd(uid, component, gameRule);
@@ -269,9 +270,9 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
 
     private void CheckRoundEnd(EntityUid uid, XenomorphsRuleComponent component, GameRuleComponent gameRule)
     {
+        if (component.WinConditions.Contains(WinCondition.HiveContactEstablished)) return;
         var stationGrids = GetStationGrids();
 
-        var humans = GetHumans(stationGrids);
         var xenomorphs = GetXenomorphs(component);
 
         // Check if there are any xenomorph larva ghost role present
@@ -305,28 +306,17 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
             _roundEnd.EndRound();
             return;
         }
+    }
 
-        if (!component.Announced || component.WinType == WinType.XenoMinor
-            || xenomorphs.Count / (float) (xenomorphs.Count + humans.Count) < component.XenomorphsShuttleCallPercentage)
-            return;
-
-        _roundEnd.DoRoundEndBehavior(
-            RoundEndBehavior.ShuttleCall,
-            component.ShuttleCallTime,
-            component.RoundEndTextSender,
-            component.RoundEndTextShuttleCall,
-            component.RoundEndTextAnnouncement
-        );
-        PlayXenomorphMusic(component.XenomorphTakeoverSound); // Dumont
-
-        component.WinType = WinType.XenoMinor;
-        component.WinConditions.Add(WinCondition.XenoTakeoverStation);
-
-        var station = _station.GetStations().FirstOrNull();
-        if (!station.HasValue)
-            return;
-
-        _nukeCodePaper.SendNukeCodes(station.Value);
+    public void CompleteHiveContact()
+    {
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out var rule, out _))
+        {
+            rule.WinType = WinType.XenoMajor;
+            rule.Announced = true;
+            if (!rule.WinConditions.Contains(WinCondition.HiveContactEstablished)) rule.WinConditions.Add(WinCondition.HiveContactEstablished);
+        }
     }
 
     // Dumont start

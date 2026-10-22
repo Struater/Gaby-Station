@@ -515,7 +515,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        ConsoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
+        ConsoleAccumulator = DockTimeOverride ?? _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
         EmergencyShuttleArrived = true;
 
         var query = AllEntityQuery<StationEmergencyShuttleComponent>();
@@ -543,11 +543,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             _ => 1,
         };
 
-        ConsoleAccumulator *= multiplier;
+        if (DockTimeOverride == null) ConsoleAccumulator *= multiplier;
 
         foreach (var shuttleDockResult in dockResults)
         {
-            AnnounceShuttleDock(shuttleDockResult, multiplier > 1);
+            AnnounceShuttleDock(shuttleDockResult, DockTimeOverride == null && multiplier > 1);
         }
 
         _commsConsole.UpdateCommsConsoleInterface();

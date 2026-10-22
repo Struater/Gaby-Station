@@ -149,7 +149,7 @@ public sealed partial class XenomorphHiveCaptureSystem : EntitySystem
         }
         _popup.PopupEntity(Loc.GetString("xenomorph-hive-capture-complete", ("target", target)), ent, args.User);
         var ev = new XenomorphHivePylonCapturedEvent(target);
-        RaiseLocalEvent(pylon, ref ev);
+        RaiseLocalEvent(pylon, ref ev, true);
         QueueDel(ent);
     }
 

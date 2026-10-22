@@ -102,6 +102,7 @@ namespace Content.Server.RoundEnd
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
+        private bool _countdownRecallLocked;
         public TimeSpan? LastCountdownStart { get; set; } = null;
         public TimeSpan? ExpectedCountdownEnd { get; set; } = null;
         public TimeSpan? ExpectedShuttleLength => ExpectedCountdownEnd - LastCountdownStart;
@@ -138,6 +139,7 @@ namespace Content.Server.RoundEnd
 
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
+            _countdownRecallLocked = false;
             SetAutoCallTime();
             _autoCalledBefore = false;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -167,7 +169,7 @@ namespace Content.Server.RoundEnd
 
         public bool CanCallOrRecall()
         {
-            return _cooldownTokenSource == null;
+            return _cooldownTokenSource == null && !_countdownRecallLocked;
         }
 
         public bool IsRoundEndRequested()
@@ -193,7 +195,7 @@ namespace Content.Server.RoundEnd
             RequestRoundEnd(duration, requester, checkCooldown, text, name, hasReason, reason);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "comms-console-announcement-title-centcom", bool hasReason = false, string reason = "")
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "comms-console-announcement-title-centcom", bool hasReason = false, string reason = "", bool replaceExisting = false, bool allowRecall = true)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound)
                 return;
@@ -202,9 +204,14 @@ namespace Content.Server.RoundEnd
                 return;
 
             if (_countdownTokenSource != null)
-                return;
+            {
+                if (!replaceExisting) return;
+                _countdownTokenSource.Cancel();
+                _countdownTokenSource = null;
+            }
 
             _countdownTokenSource = new();
+            _countdownRecallLocked = !allowRecall;
 
             if (requester != null)
             {
@@ -272,11 +279,12 @@ namespace Content.Server.RoundEnd
         public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true, string name = "comms-console-announcement-title-centcom")
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
-            if (checkCooldown && _cooldownTokenSource != null) return;
+            if (checkCooldown && (_cooldownTokenSource != null || _countdownRecallLocked)) return;
 
             if (_countdownTokenSource == null) return;
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
+            _countdownRecallLocked = false;
 
             if (requester != null)
             {

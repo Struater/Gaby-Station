@@ -416,6 +416,7 @@ public sealed partial class EmergencyShuttleSystem
         ConsoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
+        DockTimeOverride = null;
         TransitTime = MinimumTransitTime + (MaximumTransitTime - MinimumTransitTime) * _random.NextFloat();
         // Round to nearest 10
         TransitTime = MathF.Round(TransitTime / 10f) * 10f;
@@ -466,7 +467,7 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || ConsoleAccumulator <= AuthorizeTime) return false;
+        if (DockTimeOverride != null || EarlyLaunchAuthorized || !EmergencyShuttleArrived || ConsoleAccumulator <= AuthorizeTime) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         ConsoleAccumulator = AuthorizeTime;

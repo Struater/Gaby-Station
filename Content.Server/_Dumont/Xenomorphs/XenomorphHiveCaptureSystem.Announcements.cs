@@ -93,6 +93,7 @@ public sealed partial class XenomorphHiveCaptureSystem
         AnnounceHive(Loc.GetString("xenomorph-hive-pylon-captured", ("location", location)));
         _chat.DispatchGlobalAnnouncement(Loc.GetString("xenomorph-hive-pylon-cc", ("location", location)),
             Loc.GetString("xenomorph-hive-pylon-cc-sender"), colorOverride: Color.Red);
+        if (EntityManager.System<XenomorphHiveObjectivesSystem>().HijackingQueen != null) return;
         var sound = new SoundPathSpecifier("/Audio/_Dumont/Eventos/Vendetta.ogg", AudioParams.Default.WithVolume(-4));
         _music.StopStationEventMusic(args.Target, StationEventMusicType.Xenomorph);
         _music.DispatchStationEventMusic(args.Target, sound, StationEventMusicType.Xenomorph, sound.Params);

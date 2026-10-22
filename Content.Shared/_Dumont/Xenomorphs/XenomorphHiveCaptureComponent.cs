@@ -7,7 +7,7 @@ namespace Content.Shared._Dumont.Xenomorphs;
 [RegisterComponent]
 public sealed partial class XenomorphHiveClusterComponent : Component
 {
-    [DataField] public TimeSpan CaptureDelay = TimeSpan.FromSeconds(150);
+    [DataField] public TimeSpan CaptureDelay = TimeSpan.FromMinutes(1);
     public EntityUid? CapturingUser;
     public EntityUid? CaptureTarget;
 }
