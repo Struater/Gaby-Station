@@ -114,6 +114,7 @@ public sealed partial class XenomorphRoyalSystem
         if (message.Mode == "order" && (message.Target is not { } target || !Exists(target)
             || !Sister(ent, target))) return false;
         if (!_plasma.ChangePlasmaAmount(ent, -cost)) return false;
+        if (message.Mode == "word") EntityManager.System<XenomorphHiveCaptureSystem>().PlayHiveCommandSound();
         var query = EntityQueryEnumerator<ActorComponent>();
         while (query.MoveNext(out var uid, out var actor))
         {

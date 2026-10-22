@@ -668,3 +668,4 @@ ent-ActionXenomorphParalyzingSlash = Corte paralisante (50)
 xenomorph-pheromones-frenzy = Frenesi
 xenomorph-pheromones-warding = Proteção
 xenomorph-pheromones-recovery = Recuperação
+

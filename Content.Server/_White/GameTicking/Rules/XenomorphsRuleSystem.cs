@@ -235,6 +235,7 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
     {
         base.Started(uid, component, gameRule, args);
 
+        EntityManager.System<Content.Server._Dumont.Xenomorphs.XenomorphHiveCaptureSystem>().StartInfestation();
         component.NextCheck = _timing.CurTime + component.CheckDelay;
         component.AnnouncementTime = _timing.CurTime + _random.Next(component.MinTimeToAnnouncement, component.MaxTimeToAnnouncement);
     }

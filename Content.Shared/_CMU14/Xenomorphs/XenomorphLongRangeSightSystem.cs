@@ -41,9 +41,16 @@ public sealed partial class XenomorphLongRangeSightSystem : EntitySystem
             args.Handled = true;
             return;
         }
+        if (ent.Comp.PrepareDelay <= TimeSpan.Zero)
+        {
+            SetEnabled(ent, true);
+            args.Handled = true;
+            return;
+        }
+        ent.Comp.Preparing = true;
         args.Handled = _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.PrepareDelay,
             new XenomorphLongRangeSightDoAfterEvent(), ent) { BreakOnMove = true, NeedHand = false });
-        ent.Comp.Preparing = args.Handled;
+        if (!args.Handled) ent.Comp.Preparing = false;
     }
 
     private void OnPrepared(Entity<XenomorphLongRangeSightComponent> ent, ref XenomorphLongRangeSightDoAfterEvent args)

@@ -331,3 +331,95 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [Destruction]
+
+- type: entity
+  parent: BaseDumontHiveStructure
+  id: DumontHiveCluster
+  name: hive cluster
+  description: A large clump of gooey mass. It rhythmically pulses, pumping resin through the hive's weeds.
+  components:
+  - type: DoAfter
+  - type: Sprite
+    sprite: _RMC14/Structures/Xenos/hive_cluster.rsi
+    layers:
+    - sprite: _RMC14/Structures/Xenos/xeno_weeds.rsi
+      state: hive_weed0
+    - state: hive_cluster_idle
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: XenomorphHiveStructure
+    kind: Cluster
+    limit: 4
+    requiresHiveWeeds: false
+    requiresSpace: false
+    repairCost: 300
+  - type: XenomorphHiveCluster
+  - type: AreaSpawner
+    radius: 5
+    spawnPrototype: DumontHiveWeeds
+
+- type: entity
+  parent: BaseDumontHiveConstructionNode
+  id: DumontHiveClusterConstructionNode
+  name: hive cluster
+  description: A wriggling marker for a hive cluster.
+  components:
+  - type: Sprite
+    color: '#FFFFFFAA'
+    layers:
+    - sprite: _RMC14/Structures/Xenos/hive_cluster.rsi
+      state: hive_cluster_idle
+    - sprite: _RMC14/Interface/xeno_hud.rsi
+      state: xeno_structure_node_indicator
+      scale: 0.8, 0.8
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: XenomorphHiveConstructionNode
+    initialPlasmaCost: 400
+    plasmaCost: 300
+    spawn: DumontHiveCluster
+  - type: XenomorphHiveStructure
+    kind: Cluster
+    limit: 4
+    requiresHiveWeeds: false
+    requiresSpace: false
+
+- type: entity
+  parent: BaseDumontHiveStructure
+  id: DumontHivePylon
+  name: hive pylon
+  description: A towering spike of resin marking a site captured by the hive.
+  components:
+  - type: Sprite
+    sprite: _RMC14/Structures/Xenos/hive_structures.rsi
+    layers:
+    - sprite: _RMC14/Structures/Xenos/xeno_weeds.rsi
+      state: hive_weed0
+    - state: pylon
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: XenomorphHiveStructure
+    kind: Pylon
+    limit: 1
+    requiresHiveWeeds: false
+    requiresSpace: false
+    repairCost: 1000
+  - type: XenomorphHivePylon
+  - type: AreaSpawner
+    radius: 5
+    spawnPrototype: DumontHiveWeeds

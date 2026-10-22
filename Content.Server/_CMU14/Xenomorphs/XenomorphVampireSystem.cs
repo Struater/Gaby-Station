@@ -120,12 +120,10 @@ public sealed partial class XenomorphVampireSystem : EntitySystem
         if (args.Handled || !Ready(ent) || Transform(ent).GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var grid)) return;
         var origin = _transform.GetMapCoordinates(ent);
         var target = _transform.ToMapCoordinates(args.Target);
-        var from = _transform.ToCoordinates(gridUid, origin);
-        var to = _transform.ToCoordinates(gridUid, target);
-        var delta = to.Position - from.Position;
+        var delta = target.Position - origin.Position;
         if (origin.MapId != target.MapId || !float.IsFinite(delta.LengthSquared()) || delta.LengthSquared() < .001f) return;
-        var area = Box2.CenteredAround(from.Position, new Vector2(1, 2)).Translated(new Vector2(0, 1.5f));
-        var rotated = new Box2Rotated(area, delta.ToAngle() - Angle.FromDegrees(90), from.Position);
+        var area = Box2.CenteredAround(origin.Position, new Vector2(1, 2)).Translated(new Vector2(0, 1.5f));
+        var rotated = new Box2Rotated(area, delta.ToAngle() - Angle.FromDegrees(90), origin.Position);
         _area.Clear();
         _lookup.GetEntitiesIntersecting(gridUid, rotated, _area, LookupFlags.Dynamic | LookupFlags.Static);
         var hits = 0;

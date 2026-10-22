@@ -82,3 +82,10 @@
   - /Audio/_RMC14/Xeno/alien_footstep_large1.ogg
   - /Audio/_RMC14/Xeno/alien_footstep_large2.ogg
   - /Audio/_RMC14/Xeno/alien_footstep_large3.ogg
+
+- type: soundCollection
+  id: DumontXenomorphQueenCommand
+  files:
+  - /Audio/_RMC14/Xeno/alien_queen_command.ogg
+  - /Audio/_RMC14/Xeno/alien_queen_command2.ogg
+  - /Audio/_RMC14/Xeno/alien_queen_command3.ogg

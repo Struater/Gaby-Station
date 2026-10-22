@@ -40,7 +40,7 @@ public sealed partial class XenomorphHiveConstructionSystem : EntitySystem
     [Dependency] private IComponentFactory _factory = default!;
     [Dependency] private XenomorphDesignerSystem _visual = default!;
 
-    private static readonly EntProtoId[] Choices = { "DumontHiveCoreConstructionNode", "DumontHiveRecoveryConstructionNode", "DumontHivePlasmaConstructionNode", "DumontHiveEggMorpherConstructionNode" };
+    private static readonly EntProtoId[] Choices = { "DumontHiveCoreConstructionNode", "DumontHiveRecoveryConstructionNode", "DumontHivePlasmaConstructionNode", "DumontHiveEggMorpherConstructionNode", "DumontHiveClusterConstructionNode" };
 
     public override void Initialize()
     {
