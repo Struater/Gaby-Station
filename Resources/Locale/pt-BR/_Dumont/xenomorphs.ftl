@@ -31,12 +31,12 @@ xenomorph-hive-core-destroyed = O núcleo da colmeia próximo a { $location } fo
 xenomorph-hive-pylon-destroyed = Nosso pilone próximo a { $location } foi destruído!
 xenomorph-hive-pylon-captured = A instalação próxima a { $location } foi capturada! Um pilone foi estabelecido. Defendam-no!
 xenomorph-hive-pylon-cc-sender = Central de Comando
-xenomorph-hive-pylon-cc = Atenção, tripulação. Os xenomorfos consolidaram uma instalação próxima a { $location }. Façam tudo ao seu alcance para detê-los. Eles não podem avançar mais. A situação também está se deteriorando na Central de Comando. Os fuzileiros navais foram contatados, mas nenhuma resposta chegou até o momento. Mantenham-se firmes.
+xenomorph-hive-pylon-cc = Atenção, tripulação. Os xenomorfos consolidaram uma instalação próxima a { $location }. Façam tudo ao seu alcance para detê-los. Eles não podem avançar mais. A situação também está se deteriorando na Central de Comando. Os fuzileiros navais foram contatados, mas nenhuma resposta chegou até o momento. No pior dos casos, usem o dispositivo nuclear para pulverização da estação. Os códigos de detonação foram enviados a todos os consoles de comunicação.
 
 ent-XenomorphEstablishPylonObjective = Estabeleça um Pylon.
     .desc = Capture uma instalação com um Cluster e estabeleça um Pylon para a colmeia.
 ent-XenomorphCorruptCommsObjective = Corrompa a mente-colmeia humana e estabeleça contatos com as outras irmãs.
-    .desc = Ajude a rainha a alcançar o console de comunicações da estação. Em modo ovipositor, ela deve corrompê-lo durante três minutos. A corrupção só termina se a rainha morrer, sair do modo ovipositor ou cancelá-la por vontade própria.
+    .desc = Ajude a rainha a alcançar o console de comunicações da estação.
 xenomorph-comms-hijack-verb = Corromper a mente-colmeia humana
 xenomorph-comms-hijack-cancel = Cancelar corrupção da mente-colmeia
 xenomorph-comms-hijack-requirements = A rainha precisa estar em modo ovipositor, ao lado de um console de comunicações da estação. Só pode haver uma corrupção em andamento.
@@ -47,3 +47,12 @@ xenomorph-comms-hijack-complete = A mente-colmeia humana foi corrompida. Nossas 
 xenomorph-comms-hijack-unknown = ???
 xenomorph-comms-hijack-evacuation = Evacuação de emergência acionada. A nave chegará em { $time } { $units } e permanecerá por apenas 30 segundos. Abandonem a estação.
 xenomorphs-cond-hivecontactestablished = A rainha corrompeu a mente-colmeia humana e estabeleceu contato com outras colmeias.
+
+xenomorph-rank-1 = Prole da Colmeia
+xenomorph-rank-2 = Soldados da Colmeia
+xenomorph-rank-3 = Guardas Reais
+xenomorph-rank-examine = Hierarquia: { $rank }.
+xenomorph-royal-guard-limit = A colmeia só comporta { $limit } guarda(s) real(is). Não há vaga disponível.
+xenomorph-royal-guard-unlocked = O Pylon fortaleceu a colmeia! Necessitamos de outro guarda real. Uma segunda vaga está disponível.
+xenomorph-queen-fallen-no-evolution = A rainha caiu. A colmeia não pode gerar outra rainha nesta rodada.
+xenomorph-queen-fallen = A Rainha caiu, se reagrupem para lutar ou morrer! Vinguem-a!

@@ -7,6 +7,7 @@
     minPlayers: 40 # Dumont
   - type: AntagObjectives
     objectives:
+    - XenomorphSurviveObjective
     - XenomorphEstablishPylonObjective
     - XenomorphCorruptCommsObjective
   - type: XenomorphsRule # Goobstation - Required for Evolution Logic

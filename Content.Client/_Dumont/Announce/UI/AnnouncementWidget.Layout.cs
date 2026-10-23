@@ -367,12 +367,13 @@ public sealed partial class AnnouncementWidget
         if (Parent is not UIScreen screen || ActiveAnnouncement == null)
             return;
 
-        var screenSize = screen.Size;
+        var screenSize = ResolveScreenSize();
         Measure(screenSize);
         var widgetSize = DesiredSize;
         var style = ActiveAnnouncement.Data.Style;
 
         var position = CalculatePosition(screenSize, widgetSize, style);
+        if (PositioningReference is { Disposed: false } reference) position += reference.GlobalPosition - screen.GlobalPosition;
         position += ActiveAnnouncement.CurrentSlideOffset + ActiveAnnouncement.CurrentBounceOffset;
 
         UpdateLayoutRect(position, widgetSize);

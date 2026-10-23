@@ -12,6 +12,8 @@ using Content.Server._White.Roles;
 using Content.Shared._Dumont.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Xenomorph;
 using Content.Shared.Audio;
+using Content.Shared.Actions;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
@@ -31,6 +33,8 @@ namespace Content.Server._Dumont.Xenomorphs;
 
 public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
 {
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -55,6 +59,8 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<XenomorphOvipositorComponent, MapInitEvent>(OnQueenInit);
+        SubscribeLocalEvent<XenomorphRoyalComponent, XenomorphCommsHijackActionEvent>(OnHijackAction);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRestart);
         SubscribeLocalEvent<XenomorphLineageComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<XenomorphHiveObjectiveComponent, RequirementCheckEvent>(OnRequirement);
@@ -67,6 +73,20 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         SubscribeLocalEvent<XenomorphCommsHijackComponent, XenomorphCommsHijackDoAfterEvent>(OnHijacked);
         SubscribeLocalEvent<XenomorphCommsHijackComponent, DoAfterAttemptEvent<XenomorphCommsHijackDoAfterEvent>>(OnAttempt);
         SubscribeLocalEvent<XenomorphCommsHijackComponent, ComponentShutdown>(OnQueenRemoved);
+    }
+
+    private void OnQueenInit(Entity<XenomorphOvipositorComponent> ent, ref MapInitEvent args)
+    {
+        if (IsQueen(ent)) _actions.AddAction(ent, ref ent.Comp.HijackAction, "ActionXenomorphCorruptComms");
+    }
+
+    private void OnHijackAction(Entity<XenomorphRoyalComponent> ent, ref XenomorphCommsHijackActionEvent args)
+    {
+        if (args.Handled) return;
+        if (HijackingQueen == ent.Owner) { args.Handled = CancelHijack(ent); return; }
+        if (TryComp<CommunicationsConsoleComponent>(args.Target, out var console) && TryBeginHijack(ent, (args.Target, console)))
+            args.Handled = true;
+        else _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requirements"), ent, ent);
     }
 
     private void OnRestart(RoundRestartCleanupEvent args)
@@ -103,11 +123,11 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         && HasComp<XenomorphLineageComponent>(user) && HasComp<XenomorphComponent>(user);
 
     private bool CanBegin(EntityUid user, Entity<CommunicationsConsoleComponent> console)
-        => !CommsCorrupted && HijackingQueen == null && IsQueen(user) && !_mobs.IsDead(user)
+        => !CommsCorrupted && HijackingQueen == null && IsQueen(user) && _mobs.IsAlive(user) && _blocker.CanConsciouslyPerformAction(user)
             && TryComp<XenomorphOvipositorComponent>(user, out var ovi) && ovi.Attached
             && !TerminatingOrDeleted(console) && console.Comp.CanShuttle && !console.Comp.Global
             && Transform(console).Anchored && _stations.GetOwningStation(console) != null
-            && _interaction.InRangeUnobstructed(user, console.Owner, 1.75f);
+            && _interaction.InRangeUnobstructed(user, console.Owner, 3.5f);
 
     public bool TryBeginHijack(EntityUid queen, Entity<CommunicationsConsoleComponent> console)
     {
@@ -129,6 +149,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             _musicSource = null;
             return false;
         }
+        if (TryComp<XenomorphOvipositorComponent>(queen, out var activeOvi)) _actions.SetToggled(activeOvi.HijackAction, true);
         _chat.DispatchGlobalAnnouncement(Loc.GetString("xenomorph-comms-hijack-alert"), "S.A.A.E.", colorOverride: Color.Red);
         _hive.AnnounceHive(Loc.GetString("xenomorph-comms-hijack-started"));
         _music.StopStationEventMusic(_musicSource.Value, StationEventMusicType.Xenomorph);
@@ -155,7 +176,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
 
     private void OnConsoleVerbs(Entity<CommunicationsConsoleComponent> ent, ref GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !CanBegin(args.User, ent)) return;
+        if (!args.CanInteract || !CanBegin(args.User, ent)) return;
         var user = args.User;
         args.Verbs.Add(new Verb { Text = Loc.GetString("xenomorph-comms-hijack-verb"), Act = () => TryBeginHijack(user, ent) });
     }
@@ -183,6 +204,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
     {
         if (args.Handled || HijackingQueen != ent.Owner) return;
         args.Handled = true;
+        if (TryComp<XenomorphOvipositorComponent>(ent, out var ovi)) _actions.SetToggled(ovi.HijackAction, false);
         if (_musicSource is { } source && !TerminatingOrDeleted(source))
             _music.StopStationEventMusic(source, StationEventMusicType.Xenomorph);
         HijackingQueen = null;
@@ -209,9 +231,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             if (!TryComp<MindComponent>(mindId, out var mind) || !HasComp<XenomorphLineageComponent>(mind.OwnedEntity)
                 || !HasComp<XenomorphComponent>(mind.OwnedEntity)) continue;
             if (!_roles.MindHasRole<XenomorphRoleComponent>(mindId)) _roles.MindAddRole(mindId, "MindRoleXenomorph", mind, silent: true);
-            for (var i = mind.Objectives.Count - 1; i >= 0; i--)
-                if (MetaData(mind.Objectives[i]).EntityPrototype?.ID == "XenomorphSurviveObjective") _mind.TryRemoveObjective(mindId, mind, i);
-            foreach (var objective in new[] { "XenomorphEstablishPylonObjective", "XenomorphCorruptCommsObjective" })
+            foreach (var objective in new[] { "XenomorphSurviveObjective", "XenomorphEstablishPylonObjective", "XenomorphCorruptCommsObjective" })
                 if (!mind.Objectives.Any(uid => MetaData(uid).EntityPrototype?.ID == objective)) _mind.TryAddObjective(mindId, mind, objective);
         }
         _pendingMinds.Clear();

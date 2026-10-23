@@ -16,6 +16,8 @@ namespace Content.Client._Dumont.Announce;
 
 public sealed partial class AnnouncementWidget : UIWidget
 {
+    public Control? PositioningReference { get; set; }
+
     private static readonly Vector2 FallbackScreenSize = new(1920f, 1080f);
 
     [Dependency] private IGameTiming _timing = default!;
@@ -179,6 +181,7 @@ public sealed partial class AnnouncementWidget : UIWidget
 
     private Vector2 ResolveScreenSize()
     {
+        if (PositioningReference is { Disposed: false } reference) return reference.Size;
         return Parent is UIScreen screen ? screen.Size : FallbackScreenSize;
     }
 }

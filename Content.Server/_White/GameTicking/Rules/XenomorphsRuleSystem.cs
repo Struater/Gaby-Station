@@ -98,6 +98,7 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
         BeforeXenomorphEvolutionEvent args
     )
     {
+        if (HasComp<Content.Server._Dumont.Xenomorphs.XenomorphLineageComponent>(uid)) return;
         if (!_protoManager.TryIndex(args.Caste, out var cast) || cast.MaxCount == 0)
             return;
 

@@ -33,6 +33,7 @@ public sealed partial class XenomorphQueenAnnouncementSystem : EntitySystem
         var preset = _prototypes.Index<AnnouncementPresetPrototype>("XenoQueen");
         _recipient = _players.LocalEntity;
         _announcement = screen.GetOrAddWidget<AnnouncementWidget>();
+        _announcement.PositioningReference = FindViewport(screen);
         _announcement.ShowAnnouncement(new AnnouncementNetData
         {
             Text = args.Message.Split('\n'),
@@ -46,6 +47,14 @@ public sealed partial class XenomorphQueenAnnouncementSystem : EntitySystem
     {
         if (_announcement != null && (_players.LocalEntity != _recipient || _announcement.Parent != _ui.ActiveScreen))
             ClearAnnouncement();
+    }
+
+    private static Control? FindViewport(Control parent)
+    {
+        if (parent.Name == "MainViewport") return parent;
+        foreach (var child in parent.Children)
+            if (FindViewport(child) is { } viewport) return viewport;
+        return null;
     }
 
     private void ClearAnnouncement()

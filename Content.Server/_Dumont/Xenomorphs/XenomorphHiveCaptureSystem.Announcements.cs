@@ -20,6 +20,8 @@ namespace Content.Server._Dumont.Xenomorphs;
 
 public sealed partial class XenomorphHiveCaptureSystem
 {
+    [Dependency] private Content.Server.Nuke.NukeCodePaperSystem _codes = default!;
+    [Dependency] private Content.Server.Communications.CommunicationsConsoleSystem _comms = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private Content.Server.Chat.Managers.IChatManager _hiveChat = default!;
@@ -56,7 +58,7 @@ public sealed partial class XenomorphHiveCaptureSystem
         _captureSounds.Clear();
     }
 
-    public void AnnounceHive(string message)
+    public void AnnounceHive(string message, SoundSpecifier? sound = null)
     {
         var query = EntityQueryEnumerator<ActorComponent, XenomorphLineageComponent, XenomorphComponent>();
         while (query.MoveNext(out _, out var actor, out _, out _))
@@ -65,15 +67,15 @@ public sealed partial class XenomorphHiveCaptureSystem
             _hiveChat.ChatMessageToOne(ChatChannel.Local, message, FormattedMessage.EscapeText(message), default, false,
                 actor.PlayerSession.Channel, Color.FromHex("#b56dd6"), recordReplay: true, hidePopup: true);
         }
-        PlayHiveCommandSound();
+        PlayHiveCommandSound(sound);
     }
 
-    public void PlayHiveCommandSound()
+    public void PlayHiveCommandSound(SoundSpecifier? sound = null)
     {
         var filter = Filter.Empty();
         var query = EntityQueryEnumerator<ActorComponent, XenomorphLineageComponent, XenomorphComponent>();
         while (query.MoveNext(out _, out var actor, out _, out _)) filter.AddPlayer(actor.PlayerSession);
-        _audio.PlayGlobal(new SoundCollectionSpecifier("DumontXenomorphQueenCommand", AudioParams.Default.WithVolume(-6)), filter, true);
+        _audio.PlayGlobal(sound ?? new SoundCollectionSpecifier("DumontXenomorphQueenCommand", AudioParams.Default.WithVolume(-6)), filter, true);
     }
 
     private string Location(EntityUid uid) => FormattedMessage.RemoveMarkupPermissive(_navMap.GetNearestBeaconString((uid, Transform(uid))));
@@ -90,7 +92,12 @@ public sealed partial class XenomorphHiveCaptureSystem
     private void OnPylonCaptured(Entity<XenomorphHivePylonComponent> ent, ref XenomorphHivePylonCapturedEvent args)
     {
         var location = Location(args.Target);
-        AnnounceHive(Loc.GetString("xenomorph-hive-pylon-captured", ("location", location)));
+        if (_stations.GetOwningStation(args.Target) is { } station && _codes.TryGetStationNukeCodes(station, out var codes))
+            _comms.ReceiveNuclearCodes(station, codes);
+        var hiveMessage = Loc.GetString("xenomorph-hive-pylon-captured", ("location", location));
+        if (EntityManager.System<XenomorphHiveRanksSystem>().UnlockRoyalGuardSlot())
+            hiveMessage += "\n" + Loc.GetString("xenomorph-royal-guard-unlocked");
+        AnnounceHive(hiveMessage);
         _chat.DispatchGlobalAnnouncement(Loc.GetString("xenomorph-hive-pylon-cc", ("location", location)),
             Loc.GetString("xenomorph-hive-pylon-cc-sender"), colorOverride: Color.Red);
         if (EntityManager.System<XenomorphHiveObjectivesSystem>().HijackingQueen != null) return;

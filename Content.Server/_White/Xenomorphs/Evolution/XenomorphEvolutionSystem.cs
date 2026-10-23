@@ -44,6 +44,7 @@ public sealed partial class XenomorphEvolutionSystem : EntitySystem
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
+    [Dependency] private XenomorphHiveRanksSystem _ranks = default!;
     [Dependency] private XenomorphLineageSystem _lineage = default!;
 
     [Dependency] private XenomorphQueenSystem _queen = default!; // Dumont
@@ -120,6 +121,8 @@ public sealed partial class XenomorphEvolutionSystem : EntitySystem
             || !_mind.TryGetMind(uid, out var mindUid, out var mind))
             return;
 
+        if (!_ranks.CanEvolve(uid, args.Caste)) return;
+
         if (args.Caste == "Queen" && _queen.IsQueenAlive(HasComp<XenomorphLineageComponent>(uid))) // Dumont
             return;
 
@@ -194,6 +197,7 @@ public sealed partial class XenomorphEvolutionSystem : EntitySystem
             return false;
 
         // Dumont start
+        if (!_ranks.CanEvolve(uid, xenomorph.Caste)) return false;
         if (xenomorph.Caste == "Queen" && _queen.IsQueenAlive(HasComp<XenomorphLineageComponent>(uid)))
         {
             _popup.PopupEntity(Loc.GetString("xenomorphs-evolution-no-cast-slot", ("caste", Loc.GetString("xenomorph-caste-queen"))), uid, uid);

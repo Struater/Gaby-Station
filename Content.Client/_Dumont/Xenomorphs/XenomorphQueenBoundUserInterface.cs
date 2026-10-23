@@ -78,7 +78,7 @@ public sealed class XenomorphQueenBoundUserInterface(EntityUid owner, Enum uiKey
         foreach (var member in hive.Members)
         {
             var row = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal, SeparationOverride = 6 };
-            row.AddChild(new Label { Text = member.Name + " (" + member.Caste + ")", HorizontalExpand = true });
+            row.AddChild(new Label { Text = member.Name + " (" + member.Caste + (member.Tier is >= 1 and <= 3 ? " — " + Loc.GetString($"xenomorph-rank-{member.Tier}") : "") + ")", HorizontalExpand = true });
             var watch = new Button { Text = Loc.GetString("xenomorph-queen-watch"), Disabled = !hive.Attached };
             watch.OnPressed += _ => SendMessage(new XenomorphQueenUiMessage("watch", member.Entity));
             row.AddChild(watch);

@@ -1,5 +1,6 @@
 using Content.Shared._CMU14.Xenomorphs;
 using Content.Shared.DoAfter;
+using Content.Shared.Actions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Dumont.Xenomorphs;
@@ -15,3 +16,5 @@ public sealed partial class XenomorphCommsHijackComponent : Component;
 
 [Serializable, NetSerializable]
 public sealed partial class XenomorphCommsHijackDoAfterEvent : SimpleDoAfterEvent;
+
+public sealed partial class XenomorphCommsHijackActionEvent : EntityTargetActionEvent;

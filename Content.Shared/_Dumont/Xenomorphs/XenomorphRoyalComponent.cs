@@ -54,12 +54,13 @@ public sealed class XenomorphQueenUiState(List<XenomorphQueenMember> members, st
 }
 
 [Serializable, NetSerializable]
-public sealed class XenomorphQueenMember(NetEntity entity, string name, string caste, bool leader)
+public sealed class XenomorphQueenMember(NetEntity entity, string name, string caste, bool leader, int tier = 0)
 {
     public NetEntity Entity = entity;
     public string Name = name;
     public string Caste = caste;
     public bool Leader = leader;
+    public int Tier = tier;
 }
 
 [Serializable, NetSerializable]

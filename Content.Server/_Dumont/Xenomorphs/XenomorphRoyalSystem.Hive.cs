@@ -41,7 +41,7 @@ public sealed partial class XenomorphRoyalSystem
         var members = new List<XenomorphQueenMember>();
         var query = EntityQueryEnumerator<XenomorphLineageComponent, XenomorphComponent>();
         while (query.MoveNext(out var uid, out _, out var xeno))
-            if (Sister(ent, uid)) members.Add(new XenomorphQueenMember(GetNetEntity(uid), Name(uid), xeno.Caste.Id, ent.Comp.Leaders.Contains(uid)));
+            if (Sister(ent, uid)) members.Add(new XenomorphQueenMember(GetNetEntity(uid), Name(uid), xeno.Caste.Id, ent.Comp.Leaders.Contains(uid), EntityManager.System<XenomorphHiveRanksSystem>().Tier(xeno.Caste)));
         _ui.SetUiState(ent.Owner, XenomorphQueenUiKey.Key,
             new XenomorphQueenUiState(members, mode, Attached(ent), GetNetEntity(ent.Comp.Watched), _pheromones.GetValueOrDefault(ent.Owner, "")));
     }
