@@ -30,11 +30,20 @@ public sealed partial class XenomorphCorruptedEvacSystem : EntitySystem
     {
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRestart);
         SubscribeLocalEvent<EmergencyShuttlePreDockEvent>(OnPreparing);
+        InitializeTransmissions();
     }
 
-    public void EnableCorruption() => _enabled = true;
+    public void EnableCorruption()
+    {
+        _enabled = true;
+        _emergency.TransitTime = 200f;
+    }
 
-    private void OnRestart(RoundRestartCleanupEvent args) => _enabled = false;
+    private void OnRestart(RoundRestartCleanupEvent args)
+    {
+        _enabled = false;
+        ResetTransmissions();
+    }
 
     private void OnPreparing(ref EmergencyShuttlePreDockEvent args)
     {

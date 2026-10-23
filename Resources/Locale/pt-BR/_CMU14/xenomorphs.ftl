@@ -669,4 +669,3 @@ xenomorph-pheromones-frenzy = Frenesi
 xenomorph-pheromones-warding = Proteção
 xenomorph-pheromones-recovery = Recuperação
 
-xenomorph-queen-only-once = Uma rainha já foi estabelecida nesta rodada. Não é possível se tornar outra rainha.

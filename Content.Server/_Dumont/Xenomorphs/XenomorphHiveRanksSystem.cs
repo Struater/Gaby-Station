@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Dumont.Xenomorphs;
 
@@ -19,6 +20,8 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
     [Dependency] private MobStateSystem _mobs = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private XenomorphHiveCaptureSystem _hive = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    private TimeSpan? _queenReplacementAt;
     private bool _extraGuardUnlocked;
     private EntityUid? _queen;
     public bool QueenHasExisted { get; private set; }
@@ -38,14 +41,17 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
     {
         _extraGuardUnlocked = false;
         _queen = null;
+        _queenReplacementAt = null;
         QueenHasExisted = false;
         QueenFallen = false;
     }
 
     private void OnSpawned(Entity<XenomorphLineageComponent> ent, ref MapInitEvent args)
     {
-        if (!HasComp<XenomorphRoyalComponent>(ent) || QueenHasExisted) return;
+        if (!HasComp<XenomorphRoyalComponent>(ent) || (QueenHasExisted && !QueenFallen)) return;
         QueenHasExisted = true;
+        QueenFallen = false;
+        _queenReplacementAt = null;
         _queen = ent;
     }
 
@@ -53,6 +59,7 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
     {
         if (ent.Owner != _queen || QueenFallen || args.NewMobState != MobState.Dead) return;
         QueenFallen = true;
+        _queenReplacementAt = _timing.CurTime + TimeSpan.FromMinutes(10);
         _hive.AnnounceHive(Loc.GetString("xenomorph-queen-fallen"),
             new SoundPathSpecifier("/Audio/_RMC14/Xeno/alien_queen_died.ogg", AudioParams.Default.WithVolume(-6)));
     }
@@ -68,6 +75,7 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
     {
         if (ent.Owner != _queen || QueenFallen) return;
         QueenFallen = true;
+        _queenReplacementAt = _timing.CurTime + TimeSpan.FromMinutes(10);
         _hive.AnnounceHive(Loc.GetString("xenomorph-queen-fallen"),
             new SoundPathSpecifier("/Audio/_RMC14/Xeno/alien_queen_died.ogg", AudioParams.Default.WithVolume(-6)));
     }
@@ -79,7 +87,12 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
         if (!HasComp<XenomorphLineageComponent>(user)) return true;
         string? reason = null;
         if (caste == "Queen" && QueenHasExisted)
-            reason = QueenFallen ? "xenomorph-queen-fallen-no-evolution" : "xenomorph-queen-only-once";
+        {
+            if (!QueenFallen)
+                reason = "xenomorph-queen-already-alive";
+            else if (_queenReplacementAt is { } replacement && _timing.CurTime < replacement)
+                reason = "xenomorph-queen-replacement-wait";
+        }
         else if (Tier(caste) == 3)
         {
             var count = 0;
@@ -89,7 +102,11 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
             if (count >= RoyalGuardLimit) reason = "xenomorph-royal-guard-limit";
         }
         if (reason == null) return true;
-        if (popup) _popup.PopupEntity(Loc.GetString(reason, ("limit", RoyalGuardLimit)), user, user);
+        if (popup)
+        {
+            var seconds = Math.Max(0, (int) Math.Ceiling(((_queenReplacementAt ?? _timing.CurTime) - _timing.CurTime).TotalSeconds));
+            _popup.PopupEntity(Loc.GetString(reason, ("limit", RoyalGuardLimit), ("seconds", seconds)), user, user);
+        }
         return false;
     }
 
