@@ -670,5 +670,3 @@ xenomorph-pheromones-warding = Proteção
 xenomorph-pheromones-recovery = Recuperação
 
 xenomorph-queen-only-once = Uma rainha já foi estabelecida nesta rodada. Não é possível se tornar outra rainha.
-ent-ActionXenomorphCorruptComms = Corromper a mente-colmeia humana
-    .desc = Em modo ovipositor, estabeleça contato pelo console de comunicações da estação. Interaja novamente com o console ou use o menu da própria rainha para cancelar.

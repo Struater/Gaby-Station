@@ -33,6 +33,9 @@ public sealed partial class AnnouncementLayoutConfig
     public AnnouncementPosition Position { get; set; } = AnnouncementPosition.MiddleCenter;
 
     [DataField]
+    public Vector2 PositionOffset { get; set; } = Vector2.Zero;
+
+    [DataField]
     public AnnouncementSpeakerNamePosition SpeakerNamePosition { get; set; } = AnnouncementSpeakerNamePosition.Below;
 
     [DataField]

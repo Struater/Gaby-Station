@@ -372,7 +372,7 @@ public sealed partial class AnnouncementWidget
         var widgetSize = DesiredSize;
         var style = ActiveAnnouncement.Data.Style;
 
-        var position = CalculatePosition(screenSize, widgetSize, style);
+        var position = CalculatePosition(screenSize, widgetSize, style) + style.LayoutConfig.PositionOffset;
         if (PositioningReference is { Disposed: false } reference) position += reference.GlobalPosition - screen.GlobalPosition;
         position += ActiveAnnouncement.CurrentSlideOffset + ActiveAnnouncement.CurrentBounceOffset;
 

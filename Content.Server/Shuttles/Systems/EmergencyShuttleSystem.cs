@@ -349,6 +349,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return null;
         }
 
+        var preparing = new EmergencyShuttlePreDockEvent(stationShuttle.EmergencyShuttle.Value);
+        RaiseLocalEvent(ref preparing);
+
         var targetGrid = _station.GetLargestGrid(stationUid);
 
         // UHH GOOD LUCK

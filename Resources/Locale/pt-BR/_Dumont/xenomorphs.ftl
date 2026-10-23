@@ -40,12 +40,12 @@ ent-XenomorphCorruptCommsObjective = Corrompa a mente-colmeia humana e estabele�
 xenomorph-comms-hijack-verb = Corromper a mente-colmeia humana
 xenomorph-comms-hijack-cancel = Cancelar corrupção da mente-colmeia
 xenomorph-comms-hijack-requirements = A rainha precisa estar em modo ovipositor, ao lado de um console de comunicações da estação. Só pode haver uma corrupção em andamento.
-xenomorph-comms-hijack-alert = ALERTA CRÍTICO. Uma rainha xenomorfa iniciou a corrupção de nossa rede de comunicações. Mobilizem todos os esforços para detê-la! Se a contenção não for possível, evacuem imediatamente pelos meios disponíveis. Não permitam que ela estabeleça contato com outras colmeias.
+xenomorph-comms-hijack-alert = ALERTA CRÍTICO. Uma entidade está interferindo no funcionamento da rede de comunicações da estação. Mobilizem todos os esforços para detê-la! Se a contenção não for possível, evacuem imediatamente pelos meios disponíveis.
 xenomorph-comms-hijack-started = Nossa rainha está corrompendo a mente-colmeia humana. Protejam-na enquanto estabelecemos contato com nossas irmãs!
 xenomorph-comms-hijack-interrupted = O contato com nossas irmãs foi interrompido. A corrupção da mente-colmeia humana não foi concluída.
 xenomorph-comms-hijack-complete = A mente-colmeia humana foi corrompida. Nossas irmãs ouviram nosso chamado! A vitória é da colmeia!
 xenomorph-comms-hijack-unknown = ???
-xenomorph-comms-hijack-evacuation = Evacuação de emergência acionada. A nave chegará em { $time } { $units } e permanecerá por apenas 30 segundos. Abandonem a estação.
+xenomorph-comms-hijack-evacuation = A nave de emergência foi chamada.
 xenomorphs-cond-hivecontactestablished = A rainha corrompeu a mente-colmeia humana e estabeleceu contato com outras colmeias.
 
 xenomorph-rank-1 = Prole da Colmeia
@@ -56,3 +56,6 @@ xenomorph-royal-guard-limit = A colmeia só comporta { $limit } guarda(s) real(i
 xenomorph-royal-guard-unlocked = O Pylon fortaleceu a colmeia! Necessitamos de outro guarda real. Uma segunda vaga está disponível.
 xenomorph-queen-fallen-no-evolution = A rainha caiu. A colmeia não pode gerar outra rainha nesta rodada.
 xenomorph-queen-fallen = A Rainha caiu, se reagrupem para lutar ou morrer! Vinguem-a!
+
+ent-MobDumontXenomorphEvacERTCorpse = agente de segurança ERT
+    .desc = Um agente morto da equipe de resposta a emergências, encasulado em resina alienígena.

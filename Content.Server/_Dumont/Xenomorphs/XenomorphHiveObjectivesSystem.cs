@@ -12,7 +12,6 @@ using Content.Server._White.Roles;
 using Content.Shared._Dumont.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Xenomorph;
 using Content.Shared.Audio;
-using Content.Shared.Actions;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
@@ -33,7 +32,6 @@ namespace Content.Server._Dumont.Xenomorphs;
 
 public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
@@ -49,6 +47,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
     [Dependency] private EmergencyShuttleSystem _shuttle = default!;
     [Dependency] private XenomorphsRuleSystem _rules = default!;
     [Dependency] private XenomorphHiveCaptureSystem _hive = default!;
+    [Dependency] private XenomorphCorruptedEvacSystem _corruptedEvac = default!;
 
     public bool PylonEstablished { get; private set; }
     public bool CommsCorrupted { get; private set; }
@@ -59,8 +58,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<XenomorphOvipositorComponent, MapInitEvent>(OnQueenInit);
-        SubscribeLocalEvent<XenomorphRoyalComponent, XenomorphCommsHijackActionEvent>(OnHijackAction);
+        SubscribeLocalEvent<CommunicationsConsoleComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRestart);
         SubscribeLocalEvent<XenomorphLineageComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<XenomorphHiveObjectiveComponent, RequirementCheckEvent>(OnRequirement);
@@ -73,20 +71,6 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         SubscribeLocalEvent<XenomorphCommsHijackComponent, XenomorphCommsHijackDoAfterEvent>(OnHijacked);
         SubscribeLocalEvent<XenomorphCommsHijackComponent, DoAfterAttemptEvent<XenomorphCommsHijackDoAfterEvent>>(OnAttempt);
         SubscribeLocalEvent<XenomorphCommsHijackComponent, ComponentShutdown>(OnQueenRemoved);
-    }
-
-    private void OnQueenInit(Entity<XenomorphOvipositorComponent> ent, ref MapInitEvent args)
-    {
-        if (IsQueen(ent)) _actions.AddAction(ent, ref ent.Comp.HijackAction, "ActionXenomorphCorruptComms");
-    }
-
-    private void OnHijackAction(Entity<XenomorphRoyalComponent> ent, ref XenomorphCommsHijackActionEvent args)
-    {
-        if (args.Handled) return;
-        if (HijackingQueen == ent.Owner) { args.Handled = CancelHijack(ent); return; }
-        if (TryComp<CommunicationsConsoleComponent>(args.Target, out var console) && TryBeginHijack(ent, (args.Target, console)))
-            args.Handled = true;
-        else _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requirements"), ent, ent);
     }
 
     private void OnRestart(RoundRestartCleanupEvent args)
@@ -149,7 +133,6 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             _musicSource = null;
             return false;
         }
-        if (TryComp<XenomorphOvipositorComponent>(queen, out var activeOvi)) _actions.SetToggled(activeOvi.HijackAction, true);
         _chat.DispatchGlobalAnnouncement(Loc.GetString("xenomorph-comms-hijack-alert"), "S.A.A.E.", colorOverride: Color.Red);
         _hive.AnnounceHive(Loc.GetString("xenomorph-comms-hijack-started"));
         _music.StopStationEventMusic(_musicSource.Value, StationEventMusicType.Xenomorph);
@@ -165,13 +148,32 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         return true;
     }
 
+    private void OnInteractHand(Entity<CommunicationsConsoleComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled || !IsQueen(args.User))
+            return;
+
+        args.Handled = true;
+        InteractWithConsole(args.User, ent);
+    }
+
+    private void InteractWithConsole(EntityUid queen, Entity<CommunicationsConsoleComponent> console)
+    {
+        if (HijackingQueen == queen)
+        {
+            CancelHijack(queen);
+            return;
+        }
+
+        if (!TryBeginHijack(queen, console))
+            _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requirements"), queen, queen);
+    }
+
     private void OnActivate(Entity<CommunicationsConsoleComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !IsQueen(args.User)) return;
-        if (HijackingQueen == args.User) { args.Handled = CancelHijack(args.User); return; }
         args.Handled = true;
-        if (!TryBeginHijack(args.User, ent))
-            _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requirements"), ent, args.User);
+        InteractWithConsole(args.User, ent);
     }
 
     private void OnConsoleVerbs(Entity<CommunicationsConsoleComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -204,7 +206,6 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
     {
         if (args.Handled || HijackingQueen != ent.Owner) return;
         args.Handled = true;
-        if (TryComp<XenomorphOvipositorComponent>(ent, out var ovi)) _actions.SetToggled(ovi.HijackAction, false);
         if (_musicSource is { } source && !TerminatingOrDeleted(source))
             _music.StopStationEventMusic(source, StationEventMusicType.Xenomorph);
         HijackingQueen = null;
@@ -220,8 +221,13 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         _hive.AnnounceHive(Loc.GetString("xenomorph-comms-hijack-complete"));
         _shuttle.SetDockTimeOverride(30f);
         if (!_shuttle.EmergencyShuttleArrived && !_shuttle.ShuttlesLeft)
+        {
+            _corruptedEvac.EnableCorruption();
             _roundEnd.RequestRoundEnd(TimeSpan.FromMinutes(2), checkCooldown: false,
-                text: "xenomorph-comms-hijack-evacuation", name: "xenomorph-comms-hijack-unknown", replaceExisting: true, allowRecall: false);
+                text: "xenomorph-comms-hijack-evacuation", name: "xenomorph-comms-hijack-unknown", replaceExisting: true, allowRecall: false,
+                announcementColor: Color.FromHex("#b56dd6"),
+                announcementSound: new SoundPathSpecifier("/Audio/_RMC14/Xeno/alien_queen_screech.ogg", AudioParams.Default.WithVolume(-7)));
+        }
     }
 
     public override void Update(float frameTime)

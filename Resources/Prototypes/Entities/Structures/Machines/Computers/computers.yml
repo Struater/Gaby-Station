@@ -1046,6 +1046,10 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "Command" ]]
+  - type: InteractedBlacklist
+    exceptions:
+      components:
+      - XenomorphRoyal
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
   - type: DeviceNetwork

@@ -14,7 +14,8 @@
       animationEnhancements:
         enableCRT: false
     layout:
-      position: MiddleCenter
+      position: TopCenter
+      positionOffset: 0, 50
       speakerNamePosition: Below
       spritePosition: Left
       spriteSpacing: 4

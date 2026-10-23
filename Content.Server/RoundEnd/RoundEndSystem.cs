@@ -64,6 +64,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -195,7 +196,7 @@ namespace Content.Server.RoundEnd
             RequestRoundEnd(duration, requester, checkCooldown, text, name, hasReason, reason);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "comms-console-announcement-title-centcom", bool hasReason = false, string reason = "", bool replaceExisting = false, bool allowRecall = true)
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "comms-console-announcement-title-centcom", bool hasReason = false, string reason = "", bool replaceExisting = false, bool allowRecall = true, Color? announcementColor = null, SoundSpecifier? announcementSound = null)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound)
                 return;
@@ -247,9 +248,9 @@ namespace Content.Server.RoundEnd
                 Loc.GetString(name),
                 false,
                 null,
-                Color.Gold);
+                announcementColor ?? Color.Gold);
 
-            _audio.PlayGlobal("/Audio/_Gabystation/Announcements/shuttlecalled_saae.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal(announcementSound ?? new SoundPathSpecifier("/Audio/_Gabystation/Announcements/shuttlecalled_saae.ogg"), Filter.Broadcast(), true);
 
             LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;

@@ -14,8 +14,6 @@ public sealed partial class XenomorphOvipositorComponent : Component
     [DataField, AutoNetworkedField]
     public bool Attached;
 
-    [DataField] public EntityUid? HijackAction;
-
     [DataField]
     public int PlasmaCost = 500;
 
