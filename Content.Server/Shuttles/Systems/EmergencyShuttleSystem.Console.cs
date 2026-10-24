@@ -244,7 +244,8 @@ public sealed partial class EmergencyShuttleSystem
                 if (!Deleted(centcomm.Entity))
                 {
                     _shuttle.FTLToDock(comp.EmergencyShuttle.Value, shuttle,
-                        centcomm.Entity.Value, ConsoleAccumulator, TransitTime);
+                        centcomm.Entity.Value, ConsoleAccumulator, TransitTime,
+                        priorityTag: HasComp<Content.Server._Dumont.Xenomorphs.XenomorphCorruptedEvacComponent>(comp.EmergencyShuttle.Value) ? DockTag.ToString() : null);
                     continue;
                 }
 
@@ -291,7 +292,7 @@ public sealed partial class EmergencyShuttleSystem
             ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
-            Timer.Spawn((int)(TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
+            Timer.Spawn(TimeSpan.FromSeconds(TransitTime) + _bufferTime, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
         }
 
         // All the others.
