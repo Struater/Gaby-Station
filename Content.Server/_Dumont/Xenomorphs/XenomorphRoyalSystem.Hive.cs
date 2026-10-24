@@ -41,7 +41,7 @@ public sealed partial class XenomorphRoyalSystem
         var members = new List<XenomorphQueenMember>();
         var query = EntityQueryEnumerator<XenomorphLineageComponent, XenomorphComponent>();
         while (query.MoveNext(out var uid, out _, out var xeno))
-            if (Sister(ent, uid)) members.Add(new XenomorphQueenMember(GetNetEntity(uid), Name(uid), xeno.Caste.Id, ent.Comp.Leaders.Contains(uid), EntityManager.System<XenomorphHiveRanksSystem>().Tier(xeno.Caste)));
+            if (uid != ent.Owner && Sister(ent, uid)) members.Add(new XenomorphQueenMember(GetNetEntity(uid), Name(uid), xeno.Caste.Id, ent.Comp.Leaders.Contains(uid), EntityManager.System<XenomorphHiveRanksSystem>().Tier(xeno.Caste)));
         _ui.SetUiState(ent.Owner, XenomorphQueenUiKey.Key,
             new XenomorphQueenUiState(members, mode, Attached(ent), GetNetEntity(ent.Comp.Watched), _pheromones.GetValueOrDefault(ent.Owner, "")));
     }
@@ -93,11 +93,11 @@ public sealed partial class XenomorphRoyalSystem
         {
             case "return": StopWatching(ent); break;
             case "watch":
-                if (!Attached(ent) || target is not { } watched || !Sister(ent, watched)) return;
+                if (target is not { } watched || !Sister(ent, watched)) return;
                 if (TryComp<XenomorphWatchComponent>(ent, out var watch)) EntityManager.System<XenomorphWatchSystem>().Watch((ent.Owner, watch), watched);
                 break;
             case "leader":
-                if (!Attached(ent) || target is not { } leader || leader == ent.Owner || !Sister(ent, leader)) return;
+                if (target is not { } leader || leader == ent.Owner || !Sister(ent, leader)) return;
                 ent.Comp.Leaders.RemoveAll(uid => !Exists(uid) || _mobs.IsDead(uid));
                 if (!ent.Comp.Leaders.Remove(leader) && ent.Comp.Leaders.Count < 3) ent.Comp.Leaders.Add(leader);
                 break;
@@ -137,7 +137,7 @@ public sealed partial class XenomorphRoyalSystem
         var query = EntityQueryEnumerator<XenomorphRoyalComponent>();
         while (query.MoveNext(out var uid, out var queen))
         {
-            if (queen.Watched is { } watched && (!Attached(uid) || !Sister(uid, watched))) StopWatching((uid, queen));
+            if (queen.Watched is { } watched && !Sister(uid, watched)) StopWatching((uid, queen));
         }
         if (_nextHiveUpdate > _timing.CurTime) return;
         _nextHiveUpdate = _timing.CurTime + TimeSpan.FromSeconds(2);

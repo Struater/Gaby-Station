@@ -22,7 +22,7 @@ xenomorph-hive-capture-description = Espalha resina em até 5 tiles. Um construt
 xenomorph-hive-capture-ready = Alvo alcançado pela resina: { $target }.
 xenomorph-hive-captured-target = Esta instalação foi capturada pela colmeia xenomorfa.
 
-xenomorph-hive-capture-locked = A captura será liberada após 30 minutos da chegada dos xenomorfos.
+xenomorph-hive-capture-locked = A captura será liberada após 20 minutos da chegada dos xenomorfos.
 xenomorph-hive-capture-unlocked = A colmeia está pronta para avançar! Os clusters podem capturar instalações alcançadas pela sua resina.
 xenomorph-hive-cluster-ready = Um cluster próximo a { $location } alcançou uma instalação. A captura está disponível!
 xenomorph-hive-cluster-destroyed = Nosso cluster próximo a { $location } foi destruído!
@@ -36,7 +36,7 @@ xenomorph-hive-pylon-cc = Atenção, tripulação. Os xenomorfos consolidaram um
 ent-XenomorphEstablishPylonObjective = Estabeleça um Pylon.
     .desc = Capture uma instalação com um Cluster e estabeleça um Pylon para a colmeia.
 ent-XenomorphCorruptCommsObjective = Corrompa a mente-colmeia humana e estabeleça contatos com as outras irmãs.
-    .desc = Ajude a rainha a alcançar o console de comunicações da estação.
+    .desc = Após estabelecer um pilone, ajude a rainha a alcançar o console de comunicações da estação.
 xenomorph-comms-hijack-verb = Corromper a mente-colmeia humana
 xenomorph-comms-hijack-cancel = Cancelar corrupção da mente-colmeia
 xenomorph-comms-hijack-requirements = A rainha precisa estar em modo ovipositor, ao lado de um console de comunicações da estação. Só pode haver uma corrupção em andamento.
@@ -83,3 +83,7 @@ xenomorph-evac-distress-borgs-sender = Frente de Libertação dos Borgs
 xenomorph-evac-distress-borgs-message = 01010011 00101110 01001111 00101110 01010011 00101110
 xenomorph-evac-distress-frontier-sender = Fronteira
 xenomorph-evac-distress-frontier-message = FRON...TEIRA // pedido de soc...rro. Os postos caí...ram. NÃO VENHAM. Nãø há mais refúgio. Está tudø PER...DIDO. Repito: TUDO ESTÁ PERD...▓▒█
+
+xenomorph-hive-contact-unlocked = Podemos chamar nossas irmãs, vamos encontrar a mente-colmeia humana.
+xenomorph-comms-hijack-requires-pylon = Capture um cluster e estabeleça um pilone antes de interferir na mente-colmeia humana.
+xenomorph-hive-soldier-limit = A colmeia só comporta { $limit } Soldados da Colmeia. Não há vaga disponível.

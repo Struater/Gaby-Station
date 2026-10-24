@@ -26,6 +26,7 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
     private EntityUid? _queen;
     public bool QueenHasExisted { get; private set; }
     public bool QueenFallen { get; private set; }
+    public int SoldierLimit => _extraGuardUnlocked ? 6 : 4;
     public int RoyalGuardLimit => _extraGuardUnlocked ? 2 : 1;
 
     public override void Initialize()
@@ -86,6 +87,7 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
     {
         if (!HasComp<XenomorphLineageComponent>(user)) return true;
         string? reason = null;
+        var limit = RoyalGuardLimit;
         if (caste == "Queen" && QueenHasExisted)
         {
             if (!QueenFallen)
@@ -93,19 +95,21 @@ public sealed partial class XenomorphHiveRanksSystem : EntitySystem
             else if (_queenReplacementAt is { } replacement && _timing.CurTime < replacement)
                 reason = "xenomorph-queen-replacement-wait";
         }
-        else if (Tier(caste) == 3)
+        else if (Tier(caste) is 2 or 3)
         {
+            var tier = Tier(caste);
+            limit = tier == 2 ? SoldierLimit : RoyalGuardLimit;
             var count = 0;
             var query = EntityQueryEnumerator<XenomorphLineageComponent, XenomorphComponent>();
             while (query.MoveNext(out var uid, out _, out var xeno))
-                if (uid != user && !TerminatingOrDeleted(uid) && !_mobs.IsDead(uid) && Tier(xeno.Caste) == 3) count++;
-            if (count >= RoyalGuardLimit) reason = "xenomorph-royal-guard-limit";
+                if (uid != user && !TerminatingOrDeleted(uid) && !_mobs.IsDead(uid) && Tier(xeno.Caste) == tier) count++;
+            if (count >= limit) reason = tier == 2 ? "xenomorph-hive-soldier-limit" : "xenomorph-royal-guard-limit";
         }
         if (reason == null) return true;
         if (popup)
         {
             var seconds = Math.Max(0, (int) Math.Ceiling(((_queenReplacementAt ?? _timing.CurTime) - _timing.CurTime).TotalSeconds));
-            _popup.PopupEntity(Loc.GetString(reason, ("limit", RoyalGuardLimit), ("seconds", seconds)), user, user);
+            _popup.PopupEntity(Loc.GetString(reason, ("limit", limit), ("seconds", seconds)), user, user);
         }
         return false;
     }

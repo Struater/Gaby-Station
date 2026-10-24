@@ -107,7 +107,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         && HasComp<XenomorphLineageComponent>(user) && HasComp<XenomorphComponent>(user);
 
     private bool CanBegin(EntityUid user, Entity<CommunicationsConsoleComponent> console)
-        => !CommsCorrupted && HijackingQueen == null && IsQueen(user) && _mobs.IsAlive(user) && _blocker.CanConsciouslyPerformAction(user)
+        => PylonEstablished && !CommsCorrupted && HijackingQueen == null && IsQueen(user) && _mobs.IsAlive(user) && _blocker.CanConsciouslyPerformAction(user)
             && TryComp<XenomorphOvipositorComponent>(user, out var ovi) && ovi.Attached
             && !TerminatingOrDeleted(console) && console.Comp.CanShuttle && !console.Comp.Global
             && Transform(console).Anchored && _stations.GetOwningStation(console) != null
@@ -165,6 +165,11 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             return;
         }
 
+        if (!PylonEstablished)
+        {
+            _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requires-pylon"), queen, queen);
+            return;
+        }
         if (!TryBeginHijack(queen, console))
             _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requirements"), queen, queen);
     }

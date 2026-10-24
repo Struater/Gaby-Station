@@ -76,7 +76,7 @@ public sealed partial class XenomorphWatchSystem : EntitySystem
             || !HasComp<XenomorphWatchComponent>(target) || _mobs.IsDead(target) || !TryComp<ActorComponent>(watcher, out var actor)) return false;
         Stop(watcher);
         watcher.Comp.Watching = target;
-        if (TryComp<XenomorphRoyalComponent>(watcher, out var royal) && TryComp<XenomorphOvipositorComponent>(watcher, out var ovipositor) && ovipositor.Attached) royal.Watched = target;
+        if (TryComp<XenomorphRoyalComponent>(watcher, out var royal)) royal.Watched = target;
         _watchers[watcher] = (target, actor.PlayerSession);
         _views.AddViewSubscriber(target, actor.PlayerSession);
         _eye.SetTarget(watcher, target);

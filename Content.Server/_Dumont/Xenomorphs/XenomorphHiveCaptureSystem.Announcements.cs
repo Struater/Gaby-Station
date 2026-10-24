@@ -31,11 +31,12 @@ public sealed partial class XenomorphHiveCaptureSystem
     private TimeSpan? _infestationStarted;
     private TimeSpan _nextAnnouncementCheck;
     private bool _unlockAnnounced;
+    private TimeSpan? _contactAnnouncementAt;
     private readonly HashSet<EntityUid> _readyClusters = new();
     private readonly HashSet<EntityUid> _knownCores = new();
     private readonly Dictionary<EntityUid, TimeSpan> _captureSounds = new();
 
-    public bool CaptureUnlocked => _infestationStarted is { } start && _timing.CurTime >= start + TimeSpan.FromMinutes(30);
+    public bool CaptureUnlocked => _infestationStarted is { } start && _timing.CurTime >= start + TimeSpan.FromMinutes(20);
 
     public void StartInfestation() => _infestationStarted ??= _timing.CurTime;
 
@@ -52,6 +53,7 @@ public sealed partial class XenomorphHiveCaptureSystem
     {
         _infestationStarted = null;
         _unlockAnnounced = false;
+        _contactAnnouncementAt = null;
         _nextAnnouncementCheck = default;
         _readyClusters.Clear();
         _knownCores.Clear();
@@ -91,6 +93,7 @@ public sealed partial class XenomorphHiveCaptureSystem
 
     private void OnPylonCaptured(Entity<XenomorphHivePylonComponent> ent, ref XenomorphHivePylonCapturedEvent args)
     {
+        _contactAnnouncementAt = _timing.CurTime + TimeSpan.FromSeconds(20);
         var location = Location(args.Target);
         if (_stations.GetOwningStation(args.Target) is { } station && _codes.TryGetStationNukeCodes(station, out var codes))
             _comms.ReceiveNuclearCodes(station, codes);
@@ -110,6 +113,11 @@ public sealed partial class XenomorphHiveCaptureSystem
     {
         if (_timing.CurTime < _nextAnnouncementCheck) return;
         _nextAnnouncementCheck = _timing.CurTime + TimeSpan.FromSeconds(1);
+        if (_contactAnnouncementAt is { } contactAt && _timing.CurTime >= contactAt)
+        {
+            _contactAnnouncementAt = null;
+            AnnounceHive(Loc.GetString("xenomorph-hive-contact-unlocked"));
+        }
         if (_infestationStarted == null)
         {
             var xenos = EntityQueryEnumerator<XenomorphLineageComponent, XenomorphComponent>();
