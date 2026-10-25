@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Radio jammer sprite from tgstation (c65da5a49477413310c81c460ea4b243a9f864dd), recolored by the Dumont contributor for the xenomorph action.",
+  "copyright": "Recolored by Struater",
   "size": { "x": 32, "y": 32 },
   "states": [ { "name": "jammer" } ]
 }
