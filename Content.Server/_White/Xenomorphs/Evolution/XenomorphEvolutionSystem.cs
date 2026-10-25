@@ -141,6 +141,7 @@ public sealed partial class XenomorphEvolutionSystem : EntitySystem
         _mind.TransferTo(mindUid, newXeno, mind:mind);
         _mind.UnVisit(mindUid, mind);
         mind.OriginalOwnedEntity = GetNetEntity(newXeno);
+        mind.CharacterName = Name(newXeno);
         Dirty(mindUid, mind);
 
         var dropHandItemsEvent = new DropHandItemsEvent();
