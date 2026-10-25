@@ -48,6 +48,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
     [Dependency] private XenomorphsRuleSystem _rules = default!;
     [Dependency] private XenomorphHiveCaptureSystem _hive = default!;
     [Dependency] private XenomorphCorruptedEvacSystem _corruptedEvac = default!;
+    [Dependency] private XenomorphShuttleHijackSystem _invasion = default!;
 
     public bool PylonEstablished { get; private set; }
     public bool CommsCorrupted { get; private set; }
@@ -93,12 +94,14 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
     }
 
     private void OnObjectiveAssigned(Entity<XenomorphHiveObjectiveComponent> ent, ref ObjectiveAfterAssignEvent args)
-        => _objectives.SetIcon(ent, ent.Comp.Contact
+        => _objectives.SetIcon(ent, ent.Comp.Hijack
+            ? new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Machines/computers.rsi"), "shuttle")
+            : ent.Comp.Contact
             ? new SpriteSpecifier.Texture(new ResPath("/Textures/_Dumont/Interface/Objectives/comms.png"))
             : new SpriteSpecifier.Rsi(new ResPath("/Textures/_RMC14/Structures/Xenos/hive_structures.rsi"), "pylon"), args.Objective);
 
     private void OnProgress(Entity<XenomorphHiveObjectiveComponent> ent, ref ObjectiveGetProgressEvent args)
-        => args.Progress = (ent.Comp.Contact ? CommsCorrupted : PylonEstablished) ? 1f : 0f;
+        => args.Progress = (ent.Comp.Hijack ? _invasion.Invaded : ent.Comp.Contact ? CommsCorrupted : PylonEstablished) ? 1f : 0f;
 
     private void OnPylon(ref XenomorphHivePylonCapturedEvent args)
         => PylonEstablished = true;
@@ -107,7 +110,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         && HasComp<XenomorphLineageComponent>(user) && HasComp<XenomorphComponent>(user);
 
     private bool CanBegin(EntityUid user, Entity<CommunicationsConsoleComponent> console)
-        => PylonEstablished && !CommsCorrupted && HijackingQueen == null && IsQueen(user) && _mobs.IsAlive(user) && _blocker.CanConsciouslyPerformAction(user)
+        => PylonEstablished && !_invasion.CommsLocked && !_shuttle.EmergencyShuttleArrived && !CommsCorrupted && HijackingQueen == null && IsQueen(user) && _mobs.IsAlive(user) && _blocker.CanConsciouslyPerformAction(user)
             && TryComp<XenomorphOvipositorComponent>(user, out var ovi) && ovi.Attached
             && !TerminatingOrDeleted(console) && console.Comp.CanShuttle && !console.Comp.Global
             && Transform(console).Anchored && _stations.GetOwningStation(console) != null
@@ -133,6 +136,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             _musicSource = null;
             return false;
         }
+        _invasion.OnCommsHijackStarted();
         _chat.DispatchGlobalAnnouncement(Loc.GetString("xenomorph-comms-hijack-alert"), "S.A.A.E.", colorOverride: Color.Red);
         _hive.AnnounceHive(Loc.GetString("xenomorph-comms-hijack-started"));
         _music.StopStationEventMusic(_musicSource.Value, StationEventMusicType.Xenomorph);
@@ -165,6 +169,11 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             return;
         }
 
+        if (_invasion.CommsLocked || _shuttle.EmergencyShuttleArrived)
+        {
+            _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-evac-docked"), queen, queen);
+            return;
+        }
         if (!PylonEstablished)
         {
             _popup.PopupEntity(Loc.GetString("xenomorph-comms-hijack-requires-pylon"), queen, queen);
@@ -194,7 +203,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         args.Verbs.Add(new Verb { Text = Loc.GetString("xenomorph-comms-hijack-cancel"), Act = () => CancelHijack(ent) });
     }
 
-    private bool CanContinue(EntityUid queen) => !TerminatingOrDeleted(queen) && !_mobs.IsDead(queen)
+    private bool CanContinue(EntityUid queen) => !_invasion.CommsLocked && !TerminatingOrDeleted(queen) && !_mobs.IsDead(queen)
         && TryComp<XenomorphOvipositorComponent>(queen, out var ovi) && ovi.Attached;
 
     private void OnAttempt(Entity<XenomorphCommsHijackComponent> ent, ref DoAfterAttemptEvent<XenomorphCommsHijackDoAfterEvent> args)
@@ -235,6 +244,14 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         }
     }
 
+    public void RefreshHiveObjectives()
+    {
+        var minds = EntityQueryEnumerator<MindComponent>();
+        while (minds.MoveNext(out var uid, out var mind))
+            if (HasComp<XenomorphLineageComponent>(mind.OwnedEntity) && HasComp<XenomorphComponent>(mind.OwnedEntity))
+                _pendingMinds.Add(uid);
+    }
+
     public override void Update(float frameTime)
     {
         foreach (var mindId in _pendingMinds)
@@ -242,7 +259,12 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
             if (!TryComp<MindComponent>(mindId, out var mind) || !HasComp<XenomorphLineageComponent>(mind.OwnedEntity)
                 || !HasComp<XenomorphComponent>(mind.OwnedEntity)) continue;
             if (!_roles.MindHasRole<XenomorphRoleComponent>(mindId)) _roles.MindAddRole(mindId, "MindRoleXenomorph", mind, silent: true);
-            foreach (var objective in new[] { "XenomorphSurviveObjective", "XenomorphEstablishPylonObjective", "XenomorphCorruptCommsObjective" })
+            if (_invasion.CommsLocked)
+                for (var i = mind.Objectives.Count - 1; i >= 0; i--)
+                    if (MetaData(mind.Objectives[i]).EntityPrototype?.ID == "XenomorphCorruptCommsObjective")
+                        _mind.TryRemoveObjective(mindId, mind, i);
+            foreach (var objective in new[] { "XenomorphSurviveObjective", "XenomorphEstablishPylonObjective",
+                _invasion.CommsLocked ? "XenomorphHijackShuttleObjective" : "XenomorphCorruptCommsObjective" })
                 if (!mind.Objectives.Any(uid => MetaData(uid).EntityPrototype?.ID == objective)) _mind.TryAddObjective(mindId, mind, objective);
         }
         _pendingMinds.Clear();

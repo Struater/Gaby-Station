@@ -8,6 +8,7 @@ namespace Content.Shared._Dumont.Xenomorphs;
 public sealed partial class XenomorphHiveObjectiveComponent : Component
 {
     [DataField] public bool Contact;
+    [DataField] public bool Hijack;
 }
 
 [RegisterComponent]

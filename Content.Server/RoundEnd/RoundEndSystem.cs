@@ -201,6 +201,10 @@ namespace Content.Server.RoundEnd
             if (_gameTicker.RunLevel != GameRunLevel.InRound)
                 return;
 
+            var attempt = new EvacuationRequestAttemptEvent();
+            RaiseLocalEvent(ref attempt);
+            if (attempt.Cancelled) return;
+
             if (checkCooldown && _cooldownTokenSource != null)
                 return;
 
@@ -277,7 +281,7 @@ namespace Content.Server.RoundEnd
             }
         }
 
-        public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true, string name = "comms-console-announcement-title-centcom")
+        public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true, string name = "comms-console-announcement-title-centcom", bool announce = true)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
             if (checkCooldown && (_cooldownTokenSource != null || _countdownRecallLocked)) return;
@@ -296,10 +300,12 @@ namespace Content.Server.RoundEnd
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
             }
 
-            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
-                Loc.GetString(name), false, colorOverride: Color.Gold);
-
-            _audio.PlayGlobal("/Audio/_Gabystation/Announcements/shuttlerecalled_saae.ogg", Filter.Broadcast(), true);
+            if (announce)
+            {
+                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
+                    Loc.GetString(name), false, colorOverride: Color.Gold);
+                _audio.PlayGlobal("/Audio/_Gabystation/Announcements/shuttlerecalled_saae.ogg", Filter.Broadcast(), true);
+            }
 
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
@@ -327,6 +333,9 @@ namespace Content.Server.RoundEnd
         public void EndRound(TimeSpan? countdownTime = null)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            var attempt = new RoundEndAttemptEvent();
+            RaiseLocalEvent(ref attempt);
+            if (attempt.Cancelled) return;
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);

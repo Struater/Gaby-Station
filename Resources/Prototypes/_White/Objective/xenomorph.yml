@@ -42,3 +42,15 @@
     issuer: objective-issuer-xenomorph-hive
   - type: XenomorphHiveObjective
     contact: true
+
+- type: entity
+  parent: BaseObjective
+  id: XenomorphHijackShuttleObjective
+  name: Invade the distant human fortress.
+  description: Help the Queen hijack a shuttle before the emergency shuttle reaches Central Command.
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: objective-issuer-xenomorph-hive
+  - type: XenomorphHiveObjective
+    hijack: true

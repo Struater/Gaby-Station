@@ -148,7 +148,8 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var xenomorphs, out _))
         {
-            if (xenomorphs.WinConditions.Contains(WinCondition.HiveContactEstablished)) continue;
+            if (xenomorphs.WinConditions.Contains(WinCondition.HiveContactEstablished)
+                || EntityManager.System<Content.Server._Dumont.Xenomorphs.XenomorphShuttleHijackSystem>().Invaded) continue;
             foreach (var grid in GetStationGrids())
             {
                 if (ev.OwningStation != grid)
@@ -180,33 +181,25 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
 
     private void OnRoundEnd(XenomorphsRuleComponent component)
     {
-        if (component.WinType != WinType.XenoMinor)
-            return;
-
-        var centcomms = _emergencyShuttle.GetCentcommMaps();
-        var station = GetStationGrids();
-
-        var xenomorphs = GetXenomorphs(component);
-        foreach (var xenomorph in xenomorphs)
+        if (component.WinConditions.Contains(WinCondition.HiveContactEstablished)) return;
+        var invasion = EntityManager.System<Content.Server._Dumont.Xenomorphs.XenomorphShuttleHijackSystem>();
+        if (GetXenomorphs(component).Count == 0)
         {
-            var xform = Transform(xenomorph);
-            if (xform.MapUid == null || !centcomms.Contains(xform.MapUid.Value))
-                continue;
-
-            component.WinType = WinType.XenoMajor;
-            component.WinConditions.Add(WinCondition.XenoInfiltratedOnCentCom);
-            break;
+            component.WinType = WinType.CrewMajor;
+            if (!component.WinConditions.Contains(WinCondition.AllReproduceXenoDead))
+                component.WinConditions.Add(WinCondition.AllReproduceXenoDead);
         }
-
-        var nukeQuery = AllEntityQuery<NukeComponent, TransformComponent>();
-        while (nukeQuery.MoveNext(out _, out var xform))
+        else if (invasion.Invaded)
         {
-            if (xform.MapUid == null || !station.Contains(xform.MapUid.Value))
-                continue;
-
+            component.WinType = WinType.XenoMinor;
+            if (!component.WinConditions.Contains(WinCondition.XenoInfiltratedOnCentCom))
+                component.WinConditions.Add(WinCondition.XenoInfiltratedOnCentCom);
+        }
+        else if (invasion.CrewArrived && invasion.CrewEscaped)
+        {
             component.WinType = WinType.CrewMinor;
-            component.WinConditions.Add(WinCondition.NukeActiveInStation);
-            break;
+            if (!component.WinConditions.Contains(WinCondition.CrewEscaped))
+                component.WinConditions.Add(WinCondition.CrewEscaped);
         }
     }
 
@@ -271,7 +264,8 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
 
     private void CheckRoundEnd(EntityUid uid, XenomorphsRuleComponent component, GameRuleComponent gameRule)
     {
-        if (component.WinConditions.Contains(WinCondition.HiveContactEstablished)) return;
+        var invasion = EntityManager.System<Content.Server._Dumont.Xenomorphs.XenomorphShuttleHijackSystem>();
+        if (component.WinConditions.Contains(WinCondition.HiveContactEstablished) || invasion.Invaded) return;
         var stationGrids = GetStationGrids();
 
         var xenomorphs = GetXenomorphs(component);
@@ -299,6 +293,8 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
             return; // Dumont
         }
 
+        if (invasion.CommsLocked) return;
+
         if (xenomorphs.Count / (float) (xenomorphs.Count + GetHumans(stationGrids, true).Count) >= 1)
         {
             component.WinType = WinType.XenoMajor;
@@ -306,6 +302,18 @@ public sealed partial class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRule
             ForceEndSelf(uid, gameRule);
             _roundEnd.EndRound();
             return;
+        }
+    }
+
+    public void CompleteShuttleInvasion()
+    {
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out var rule, out _))
+        {
+            rule.WinType = WinType.XenoMinor;
+            rule.Announced = true;
+            if (!rule.WinConditions.Contains(WinCondition.XenoInfiltratedOnCentCom))
+                rule.WinConditions.Add(WinCondition.XenoInfiltratedOnCentCom);
         }
     }
 

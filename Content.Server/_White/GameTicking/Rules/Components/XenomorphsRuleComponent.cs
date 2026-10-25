@@ -98,5 +98,6 @@ public enum WinCondition : byte
     XenoInfiltratedOnCentCom,
     AllReproduceXenoDead,
     AllCrewDead,
-    HiveContactEstablished
+    HiveContactEstablished,
+    CrewEscaped
 }
