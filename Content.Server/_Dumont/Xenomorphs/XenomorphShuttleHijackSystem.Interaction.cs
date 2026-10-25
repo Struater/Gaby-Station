@@ -11,6 +11,7 @@ using Content.Shared._NF.Shuttles;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
@@ -39,6 +40,7 @@ public sealed partial class XenomorphShuttleHijackSystem
 
     private void InitializeInteraction()
     {
+        SubscribeLocalEvent<XenomorphRoyalComponent, AttackAttemptEvent>(OnConsoleAttack);
         SubscribeLocalEvent<ShuttleConsoleComponent, InteractHandEvent>(OnConsoleHand);
         SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(OnConsoleActivate, before: new[] { typeof(ActivatableUISystem) });
         SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<Verb>>(OnConsoleVerbs);
@@ -46,6 +48,15 @@ public sealed partial class XenomorphShuttleHijackSystem
 
     private bool IsQueen(EntityUid uid) => HasComp<XenomorphRoyalComponent>(uid)
         && HasComp<XenomorphLineageComponent>(uid);
+
+    private void OnConsoleAttack(Entity<XenomorphRoyalComponent> ent, ref AttackAttemptEvent args)
+    {
+        if (args.Cancelled || args.Target is not { } target || !TryComp<ShuttleConsoleComponent>(target, out var console)
+            || !TryComp<XenomorphOvipositorComponent>(ent, out var ovi) || !ovi.Attached) return;
+        // A console click must not become a claw strike when combat mode is selected.
+        args.Cancel();
+        TryHijack(ent, (target, console));
+    }
 
     private void OnConsoleHand(Entity<ShuttleConsoleComponent> ent, ref InteractHandEvent args)
     {

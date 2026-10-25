@@ -59,6 +59,7 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
 
     public override void Initialize()
     {
+        InitializeResults();
         SubscribeLocalEvent<CommunicationsConsoleComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRestart);
         SubscribeLocalEvent<XenomorphLineageComponent, MindAddedMessage>(OnMindAdded);
@@ -82,10 +83,14 @@ public sealed partial class XenomorphHiveObjectivesSystem : EntitySystem
         _hijackDoAfter = null;
         _musicSource = null;
         _pendingMinds.Clear();
+        _hadXenomorphs = false;
     }
 
     private void OnMindAdded(Entity<XenomorphLineageComponent> ent, ref MindAddedMessage args)
-        => _pendingMinds.Add(args.Mind.Owner);
+    {
+        _hadXenomorphs = true;
+        _pendingMinds.Add(args.Mind.Owner);
+    }
 
     private void OnRequirement(Entity<XenomorphHiveObjectiveComponent> ent, ref RequirementCheckEvent args)
     {
