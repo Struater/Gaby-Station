@@ -2135,3 +2135,4 @@
   - type: InstantAction
     raiseOnUser: true
     event: !type:XenomorphPreparedStrikeActionEvent
+

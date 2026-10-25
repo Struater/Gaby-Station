@@ -87,3 +87,7 @@ xenomorph-evac-distress-frontier-message = FRON...TEIRA // pedido de soc...rro. 
 xenomorph-hive-contact-unlocked = Podemos chamar nossas irmãs, vamos encontrar a mente-colmeia humana.
 xenomorph-comms-hijack-requires-pylon = Capture um cluster e estabeleça um pilone antes de interferir na mente-colmeia humana.
 xenomorph-hive-soldier-limit = A colmeia só comporta { $limit } Soldados da Colmeia. Não há vaga disponível.
+
+ent-ActionXenomorphRadioJammer = Interferência de rádio
+    .desc = Liga ou desliga uma interferência que impede transmissões de rádio em um raio de 6 tiles. Consome 25 de plasma para ativar e 5 por segundo enquanto estiver ligada. Não afeta a comunicação da colmeia.
+xenomorph-jammer-no-plasma = Não temos plasma suficiente para iniciar a interferência.
