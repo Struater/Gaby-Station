@@ -1,0 +1,94 @@
+<Document>
+# O ciclo de vida do xenomorfo
+
+<Box>
+<GuideEntityEmbed Entity="XenomorphEgg" Caption="Ovo" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphFaceHugger" Caption="Facehugger" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphLarva" Caption="Larva" Scale="2" Interactive="false"/>
+</Box>
+
+Um facehugger infecta um hospedeiro. A larva cresce dentro dele até emergir e integrar a colmeia. A espécie desse hospedeiro define a [bold]linhagem[/bold] do novo xeno, preservada nas evoluções seguintes.
+
+Sobreviva até completar o contador e selecione uma forma disponível em Evoluir. Variantes como Healer Drone e Dancer Praetorian têm habilidades próprias, mas pertencem à casta-base de sua família para a progressão da linhagem.
+
+## Hierarquia e vagas
+
+- [bold]T1 — Prole da Colmeia:[/bold] sem limite de vagas.
+
+- [bold]T2 — Soldados da Colmeia:[/bold] quatro vagas; passam a seis após capturar um Cluster e estabelecer o Pylon.
+
+- [bold]T3 — Guardas Reais:[/bold] uma vaga; o Pylon libera a segunda.
+
+- [bold]Rainha:[/bold] apenas uma viva. Se morrer, outra pode surgir depois de dez minutos, desde que haja um Guarda Real pronto para evoluir.
+
+Os limites são compartilhados por nível, não por casta. Um Crusher já ocupa uma vaga de Guarda Real, assim como um Praetorian. Uma vaga livre não altera as escolhas da linhagem.
+
+## Conheça todas as castas
+
+- [textlink="Rainha: ovipositor, comando, líderes e objetivo final." link="XenomorphQueen"]
+
+- [textlink="T3: Crusher, Ravager, Boiler, Despoiler, Praetorian e variantes." link="XenomorphRoyalGuards"]
+
+- [textlink="T2: Lurker, Warrior, Spitter, Bull, Hivelord, Carrier, Burrower, Reaper e variantes." link="XenomorphSoldiers"]
+
+- [textlink="T1: Drone, Runner, Defender, Sentinel e variantes." link="XenomorphProle"]
+
+## Um caminho até a Rainha
+
+<Box>
+<GuideEntityEmbed Entity="MobXenomorphCMUDrone" Caption="Drone" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphCMUHivelord" Caption="Hivelord" Scale="2" Interactive="false"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="MobXenomorphCMUPraetorian" Caption="Praetorian" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphCMUQueen" Caption="Rainha" Scale="1.4" Interactive="false"/>
+</Box>
+
+Na linhagem humana, uma rota é [bold]Larva → Drone → Hivelord → Praetorian → Rainha[/bold]. Também é possível chegar a Praetorian por Runner → Lurker ou Sentinel → Spitter dessa linhagem. Qualquer Guarda Real (T3), incluindo suas variantes, pode evoluir para Rainha, independentemente da linhagem.
+
+## Rotas por hospedeiro
+
+[bold]Humanos e espécies sem uma rota específica[/bold]
+
+- Larva → Runner → Lurker → Praetorian ou variantes → Rainha.
+
+- Larva → Sentinel → Spitter → Praetorian ou variantes → Rainha.
+
+- Larva → Drone → Hivelord → Praetorian ou variantes → Rainha.
+
+[bold]Oni[/bold]
+
+- Larva → Defender ou Heatshield Defender → Bull → Crusher → Rainha.
+
+[bold]Rodentia, Resomi, Dwarf e Shadowkin[/bold]
+
+- Larva → Runner ou Acider Runner → Spitter, Venator Spitter ou Burrower.
+
+- A família Spitter segue para Boiler e depois para Rainha; Burrower encerra essa rota.
+
+[bold]Arachnid, Reptilian e Chitinid[/bold]
+
+- Larva → Drone → Reaper, Carrier ou Eggsac Carrier.
+
+- Reaper segue para Despoiler e depois para Rainha; as opções Carrier encerram essa rota.
+
+[bold]Plasmaman, Vox e SlimePerson[/bold]
+
+- Larva → Sentinel ou Toxic Sentinel → Spitter, Venator Spitter, Hivelord ou Resin Whisperer Hivelord.
+
+- A família Spitter segue para Boiler e depois para Rainha; Hivelord encerra essa rota.
+
+[bold]Feroxi, Yowie e Harpy[/bold]
+
+- Larva → Defender → Warrior, Bulwark Warrior ou Hivelord.
+
+- A família Warrior segue para Ravager, Hedgehog Ravager ou Berserker Ravager, que podem evoluir para Rainha; Hivelord encerra essa rota.
+
+[bold]Vulpkanin, Daengati e Tajaran[/bold]
+
+- Larva → Drone, Healer Drone ou Gardener Drone → Lurker, Vampire Lurker, Hivelord ou Designer Hivelord.
+
+- A família Lurker segue para Ravager e depois para Rainha; as opções Hivelord encerram essa rota.
+
+[bold]Planejem a sucessão.[/bold] Qualquer Guarda Real pode se tornar Rainha, mas nem toda rota de evolução alcança T3. O menu Evoluir mostra as opções daquele corpo. Uma Rainha viva impede outra evolução para Rainha; após a morte dela, aguardem dez minutos.
+</Document>

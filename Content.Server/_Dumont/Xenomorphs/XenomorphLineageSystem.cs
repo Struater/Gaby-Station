@@ -33,8 +33,13 @@ public sealed partial class XenomorphLineageSystem : EntitySystem
         if (!TryComp<XenomorphLineageComponent>(uid, out var lineage))
             return evolution.EvolvesTo;
 
-        if (!TryComp<XenomorphComponent>(uid, out var xeno)
-            || !_prototypes.Index(lineage.Lineage).Evolutions.TryGetValue(xeno.Caste, out var choices))
+        if (!TryComp<XenomorphComponent>(uid, out var xeno))
+            return new();
+
+        if (_prototypes.Index(xeno.Caste).Tier == 3)
+            return new() { new RadialSelectorEntry { Prototype = "MobXenomorphCMUQueen" } };
+
+        if (!_prototypes.Index(lineage.Lineage).Evolutions.TryGetValue(xeno.Caste, out var choices))
             return new();
 
         return choices.Select(choice => new RadialSelectorEntry { Prototype = choice.Id }).ToList();

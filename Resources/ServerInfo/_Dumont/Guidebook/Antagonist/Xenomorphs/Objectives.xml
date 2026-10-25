@@ -1,0 +1,102 @@
+<Document>
+# Objetivos da colmeia
+
+## 1. Sobreviva e estabeleça a base
+
+<Box>
+<GuideEntityEmbed Entity="MobXenomorphLarva" Caption="Proteja os novos xenos" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHiveCore" Caption="Estabeleça o núcleo" Scale="2" Interactive="false"/>
+</Box>
+
+Sobreviver continua sendo parte da missão. Protejam larvas, hospedeiros e construtores. Um núcleo e uma rota defendida de resina permitem preparar o primeiro objetivo de conquista.
+
+[textlink="Aprenda a colocar e concluir projetos." link="XenomorphStructures"]
+
+## 2. Estabeleça um Pylon
+
+<Box>
+<GuideEntityEmbed Entity="DumontHiveCluster" Caption="Construa um Cluster" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHivePylon" Caption="Capture para virar Pylon" Scale="2" Interactive="false"/>
+</Box>
+
+A colmeia pode manter quatro Clusters e um Pylon. A resina do Cluster precisa alcançar o piso de [bold]um[/bold] destes três tipos de alvo, na mesma área da estação:
+
+<Box>
+<GuideEntityEmbed Entity="NuclearBomb" Caption="Bomba nuclear da estação" Scale="1.5" Interactive="false"/>
+<GuideEntityEmbed Entity="PlayerStationAiEmpty" Caption="Núcleo da IA" Scale="1.5" Interactive="false"/>
+<GuideEntityEmbed Entity="XenomorphGuideDepartmentBeacon" Caption="Beacon departamental" Scale="2" Interactive="false"/>
+</Box>
+
+- [bold]Bomba nuclear da estação:[/bold] a bomba da própria estação, ancorada.
+
+- [bold]Núcleo da IA:[/bold] o núcleo físico ancorado, não um borg ou holograma.
+
+- [bold]Beacon departamental:[/bold] um beacon de departamento aceito para captura. Um beacon genérico qualquer não garante um alvo válido.
+
+### Onde estão os beacons?
+
+[bold][color=#FFBF00]Os beacons são invisíveis durante o jogo normal, escondidos sob o piso.[/color][/bold] A imagem é uma referência do dispositivo, não um marcador visível esperando por você.
+
+Eles normalmente ficam no começo ou perto da entrada do departamento, mas a posição depende do mapa. Vocês podem precisar [bold]dominar um departamento inteiro e cobri-lo com resina[/bold], ou ter a sorte de encontrar a posição do beacon. Espalhem território e protejam a área; não dependam de enxergar o alvo para planejar.
+
+Quando a resina de um Cluster alcança um alvo válido e a captura está liberada, a colmeia recebe um aviso com a localização aproximada. Examinar o Cluster também ajuda a conferir se encontrou uma instalação.
+
+### Quando a captura é liberada?
+
+Depois de [bold]20 minutos desde a chegada dos xenomorfos à partida[/bold], a colmeia recebe o aviso. Não é necessariamente o minuto 20 do relógio da rodada: a infestação pode ter começado depois.
+
+### Como capturar
+
+1. Construa e conclua um Cluster cuja resina possa alcançar um dos alvos.
+
+2. Aguarde a liberação da captura e o contato da resina com o alvo.
+
+3. Um [bold]construtor[/bold] deve se aproximar e clicar no Cluster, ou usar a opção de capturar no menu de interação. Não é exclusivo da Rainha.
+
+4. Proteja esse xeno por [bold]um minuto[/bold]. Movimento, dano, perda de contato da resina ou outras condições inválidas interrompem a captura.
+
+5. Ao terminar, o Cluster se transforma em Pylon e a colmeia recebe a confirmação.
+
+<Box>
+<GuideEntityEmbed Entity="MobXenomorphCMUDrone" Caption="Um construtor captura" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphCMUWarrior" Caption="As demais defendem" Scale="2" Interactive="false"/>
+</Box>
+
+### O que muda com o Pylon?
+
+- O objetivo de estabelecer um Pylon é concluído.
+
+- As vagas de Soldados da Colmeia passam de quatro para seis.
+
+- Uma segunda vaga de Guarda Real é liberada, com aviso à colmeia.
+
+- O objetivo do console de comunicações fica disponível. Cerca de vinte segundos depois, chega outro aviso de que a colmeia já pode procurar a mente-colmeia humana.
+
+- A Central de Comando alerta a tripulação e envia os códigos de detonação nuclear aos consoles de comunicação. A estação passa a ter um motivo urgente para reagir.
+
+[bold]Defendam a conquista.[/bold] O Pylon não produz buffs ou geleia real. Aqui ele permite avançar nos objetivos e amplia a capacidade da colmeia.
+
+## 3. Corrompa a mente-colmeia humana
+
+<Box>
+<GuideEntityEmbed Entity="MobXenomorphCMUQueen" Caption="Escolte a Rainha" Scale="1.4" Interactive="false"/>
+<GuideEntityEmbed Entity="ComputerComms" Caption="Console de comunicações da estação" Scale="2" Interactive="false"/>
+</Box>
+
+[bold]Só a Rainha inicia essa etapa, e um Pylon já deve ter sido estabelecido.[/bold] O alvo é um console de comunicações da estação, ancorado e capaz de chamar a nave de emergência. Não é um terminal de monitoramento, console de navegação ou console global da Central.
+
+
+<Box>
+<GuideEntityEmbed Entity="XenomorphGuideOvipositor" Caption="Mantenha o ovipositor" Scale="2" Interactive="false"/>
+</Box>
+
+### O que interrompe a interferência?
+
+Depois de iniciada, só termina sem sucesso se a Rainha [bold]morrer, sair do ovipositor ou cancelar voluntariamente[/bold]. Dano, atordoamento e a destruição do console não desfazem o vínculo já estabelecido. A Rainha não fica invulnerável: mantenham a defesa e a recuperação.
+
+Para cancelar, a Rainha pode clicar novamente no console durante a interferência ou usar a opção de cancelamento no próprio menu de interação.
+
+### Vitória da colmeia
+
+Se a canalização terminar com sucesso, a colmeia estabelece contato e alcança sua [bold]vitória maior[/bold].
+</Document>
