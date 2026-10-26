@@ -99,4 +99,36 @@ Para cancelar, a Rainha pode clicar novamente no console durante a interferênci
 ### Vitória da colmeia
 
 Se a canalização terminar com sucesso, a colmeia estabelece contato e alcança sua [bold]vitória maior[/bold].
+
+## Alternativa: Hijack e invasão da Central de Comando
+
+<Box>
+<GuideEntityEmbed Entity="MobXenomorphCMUQueen" Caption="Proteja a Rainha" Scale="1.4" Interactive="false"/>
+<GuideEntityEmbed Entity="ComputerShuttle" Caption="Tome o console da nave" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="XenomorphGuideOvipositor" Caption="Fixe o ovipositor a bordo" Scale="2" Interactive="false"/>
+</Box>
+
+Se a nave de emergência [bold]atracar na estação antes da interferência nas comunicações ser concluída[/bold], o objetivo da mente-colmeia humana é bloqueado. A Rainha anuncia a nova missão: reunir os xenos e alcançar a fortaleza humana distante. Essa rota alternativa [bold]não exige um Pylon[/bold].
+
+### Como iniciar o Hijack
+
+1. Reúnam os xenos em [bold]outra nave[/bold]. A própria nave de emergência não pode ser tomada.
+
+2. A Rainha deve fixar o [bold]ovipositor a bordo[/bold], perto de um console de controle da nave ancorado. A nave não pode estar viajando.
+
+3. [bold]Clique no console da nave[/bold] para iniciar uma canalização de [bold]120 segundos[/bold]. Protejam a Rainha: ela deve permanecer viva, fixada e próxima do console. Clicar novamente cancela a tentativa.
+
+4. Ao concluir, a nave parte para a Central de Comando. A viagem leva [bold]três minutos[/bold] e termina com uma colisão na entrada da instalação. Preparem-se para desembarcar e combater!
+
+[bold][color=#FFBF00]Iniciem a canalização antes que a evac chegue à Central de Comando.[/color][/bold] A evac leva apenas um minuto de viagem após partir da estação. Se ninguém começar o Hijack a tempo, a janela de invasão fecha. Uma tentativa já em andamento pode terminar depois da chegada da evac.
+
+### Resultados da invasão
+
+- [bold]Vitória menor dos xenos:[/bold] a nave tomada chega à Central com pelo menos um xeno vivo a bordo.
+
+- [bold]Vitória menor da tripulação:[/bold] tripulantes escapam vivos pela evac e os xenos não conseguem invadir a Central.
+
+- [bold]Vitória maior da tripulação:[/bold] todos os xenos são eliminados, inclusive se isso acontecer depois da invasão.
+
+A chegada da evac à Central não encerra imediatamente a rodada quando o Hijack já está em andamento. A colmeia ainda pode chegar para o combate final. Fiquem atentos aos avisos vermelhos de explosão: eles aparecem cinco segundos antes da detonação, que espalha fogo pela área.
 </Document>

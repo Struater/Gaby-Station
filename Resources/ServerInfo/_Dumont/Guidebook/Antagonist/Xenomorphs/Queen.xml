@@ -59,4 +59,17 @@ Depois de [bold]dez minutos viva como Rainha[/bold], você amadurece, ganha resi
 O objetivo exige um Pylon já estabelecido. Fixe o ovipositor perto de um console de comunicações da estação e [bold]clique no console[/bold] para iniciar três minutos de interferência. Não é necessário procurar uma action separada de hijack. Protejam a Rainha durante toda a canalização.
 
 [textlink="Consulte requisitos, interrupções e o resultado do objetivo." link="XenomorphObjectives"]
+
+## Hijack: alcance a fortaleza humana
+
+<Box>
+<GuideEntityEmbed Entity="ComputerShuttle" Caption="Console de controle da nave" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="XenomorphGuideOvipositor" Caption="Ovipositor a bordo" Scale="2" Interactive="false"/>
+</Box>
+
+Se a evac atracar antes de você concluir a interferência nas comunicações, reúna a colmeia em outra nave. Fixe o ovipositor perto do console de controle e [bold]clique nele[/bold] para iniciar [bold]120 segundos de Hijack[/bold]. Inicie antes que a evac chegue à Central de Comando; a própria nave de emergência não pode ser tomada.
+
+Ao concluir, sua nave viaja por três minutos e colide na entrada da Central. Chegar com xenos vivos a bordo garante uma [bold]vitória menor da colmeia[/bold]. Proteja os sobreviventes: se a tripulação eliminar todos os xenos, ela conquista a vitória maior mesmo após a invasão.
+
+[textlink="Veja a janela de invasão e os resultados possíveis." link="XenomorphObjectives"]
 </Document>

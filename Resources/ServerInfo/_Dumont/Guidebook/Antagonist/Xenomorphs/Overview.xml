@@ -18,6 +18,7 @@ Vocês são xenos da mesma colmeia. Sobrevivam, obtenham novos hospedeiros e tra
 <Box>
 <GuideEntityEmbed Entity="DumontHivePylon" Caption="Estabeleça um Pylon" Scale="2" Interactive="false"/>
 <GuideEntityEmbed Entity="ComputerComms" Caption="Alcance a mente-colmeia humana" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="ComputerShuttle" Caption="Hijack: invada a Central" Scale="2" Interactive="false"/>
 </Box>
 
 - [bold]Mantenha-se vivo.[/bold] Um xeno vivo pode defender o ninho, evoluir e continuar a reprodução.
@@ -25,6 +26,8 @@ Vocês são xenos da mesma colmeia. Sobrevivam, obtenham novos hospedeiros e tra
 - [bold]Estabeleça um Pylon.[/bold] Um Cluster precisa alcançar um alvo válido com sua resina e ser capturado por um construtor.
 
 - [bold]Corrompa a mente-colmeia humana e estabeleça contato com os outros xenos.[/bold] Depois do Pylon, ajudem a Rainha a chegar ao console de comunicações da estação.
+
+- [bold]Hijack: invada a fortaleza humana.[/bold] Se a evac atracar antes da conclusão do objetivo das comunicações, ajudem a Rainha a tomar outra nave. Chegar à Central de Comando com xenos vivos garante uma vitória menor.
 
 [textlink="Veja os requisitos e o passo a passo dos objetivos." link="XenomorphObjectives"]
 
@@ -36,7 +39,7 @@ Vocês são xenos da mesma colmeia. Sobrevivam, obtenham novos hospedeiros e tra
 
 - [textlink="Estruturas: resina, ninho, núcleo e apoio à colmeia." link="XenomorphStructures"]
 
-- [textlink="Objetivos: Cluster, Pylon e console de comunicações." link="XenomorphObjectives"]
+- [textlink="Objetivos: Cluster, Pylon, comunicações e Hijack." link="XenomorphObjectives"]
 
 ## Se você está enfrentando a colmeia
 

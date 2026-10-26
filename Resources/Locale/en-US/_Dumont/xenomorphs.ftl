@@ -22,7 +22,7 @@ ent-XenomorphHijackShuttleObjective = Invade the distant human fortress.
 
 xenomorph-shuttle-hijack-channel = I am taking control of the metal bird. Gather and protect me for two minutes!
 xenomorph-shuttle-hijack-interrupted = I have lost control of the metal bird!
-xenomorph-invasion-unscheduled = Unscheduled shuttle departure detected from the operational area.
+xenomorph-invasion-unscheduled = Unscheduled shuttle departure detected in the Sector-14 area.
 xenomorph-invasion-general-quarters = ATTENTION! All Central Command personnel, man your battle stations. Prepare to repel boarders.
 xenomorph-invasion-collision = EMERGENCY: SHUTTLE ON COLLISION COURSE WITH CENTRAL COMMAND. CRASH IMMINENT.
 xenomorph-invasion-impact = IMPACT CONFIRMED. Multiple breaches in Central Command's perimeter. Hostile contacts inside the facility. All personnel, repel the invaders!
