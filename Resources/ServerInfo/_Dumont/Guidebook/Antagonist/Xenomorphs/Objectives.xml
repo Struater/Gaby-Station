@@ -12,34 +12,34 @@ Sobreviver continua sendo parte da missão. Protejam larvas, hospedeiros e const
 
 [textlink="Aprenda a colocar e concluir projetos." link="XenomorphStructures"]
 
-## 2. Estabeleça um Pylon
+## 2. Estabeleça um Pilone
 
 <Box>
-<GuideEntityEmbed Entity="DumontHiveCluster" Caption="Construa um Cluster" Scale="2" Interactive="false"/>
-<GuideEntityEmbed Entity="DumontHivePylon" Caption="Capture para virar Pylon" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHiveCluster" Caption="Construa um Aglomerado" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHivePylon" Caption="Capture para virar Pilone" Scale="2" Interactive="false"/>
 </Box>
 
-A colmeia pode manter quatro Clusters e um Pylon. A resina do Cluster precisa alcançar o piso de [bold]um[/bold] destes três tipos de alvo, na mesma área da estação:
+A colmeia pode manter quatro Aglomerados e um Pilone. A resina do Aglomerado precisa alcançar o piso de [bold]um[/bold] destes três tipos de alvo, na mesma área da estação:
 
 <Box>
 <GuideEntityEmbed Entity="NuclearBomb" Caption="Bomba nuclear da estação" Scale="1.5" Interactive="false"/>
 <GuideEntityEmbed Entity="PlayerStationAiEmpty" Caption="Núcleo da IA" Scale="1.5" Interactive="false"/>
-<GuideEntityEmbed Entity="XenomorphGuideDepartmentBeacon" Caption="Beacon departamental" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="XenomorphGuideDepartmentBeacon" Caption="Sinalizador departamental" Scale="2" Interactive="false"/>
 </Box>
 
 - [bold]Bomba nuclear da estação:[/bold] a bomba da própria estação, ancorada.
 
 - [bold]Núcleo da IA:[/bold] o núcleo físico ancorado, não um borg ou holograma.
 
-- [bold]Beacon departamental:[/bold] um beacon de departamento aceito para captura. Um beacon genérico qualquer não garante um alvo válido.
+- [bold]Sinalizador departamental:[/bold] um sinalizador de departamento aceito para captura. Um sinalizador genérico qualquer não garante um alvo válido.
 
-### Onde estão os beacons?
+### Onde estão os sinalizadores?
 
-[bold][color=#FFBF00]Os beacons são invisíveis durante o jogo normal, escondidos sob o piso.[/color][/bold] A imagem é uma referência do dispositivo, não um marcador visível esperando por você.
+[bold][color=#FFBF00]Os sinalizadores são invisíveis durante o jogo normal, escondidos sob o piso.[/color][/bold] A imagem é uma referência do dispositivo, não um marcador visível esperando por você.
 
-Eles normalmente ficam no começo ou perto da entrada do departamento, mas a posição depende do mapa. Vocês podem precisar [bold]dominar um departamento inteiro e cobri-lo com resina[/bold], ou ter a sorte de encontrar a posição do beacon. Espalhem território e protejam a área; não dependam de enxergar o alvo para planejar.
+Eles normalmente ficam no começo ou perto da entrada do departamento, mas a posição depende do mapa. Vocês podem precisar [bold]dominar um departamento inteiro e cobri-lo com resina[/bold], ou ter a sorte de encontrar a posição do sinalizador. Espalhem território e protejam a área; não dependam de enxergar o alvo para planejar.
 
-Quando a resina de um Cluster alcança um alvo válido e a captura está liberada, a colmeia recebe um aviso com a localização aproximada. Examinar o Cluster também ajuda a conferir se encontrou uma instalação.
+Quando a resina de um Aglomerado alcança um alvo válido e a captura está liberada, a colmeia recebe um aviso com a localização aproximada. Examinar o Aglomerado também ajuda a conferir se encontrou uma instalação.
 
 ### Quando a captura é liberada?
 
@@ -47,24 +47,24 @@ Depois de [bold]20 minutos desde a chegada dos xenomorfos à partida[/bold], a c
 
 ### Como capturar
 
-1. Construa e conclua um Cluster cuja resina possa alcançar um dos alvos.
+1. Construa e conclua um Aglomerado cuja resina possa alcançar um dos alvos.
 
 2. Aguarde a liberação da captura e o contato da resina com o alvo.
 
-3. Um [bold]construtor[/bold] deve se aproximar e clicar no Cluster, ou usar a opção de capturar no menu de interação. Não é exclusivo da Rainha.
+3. Um [bold]construtor[/bold] deve se aproximar e clicar no Aglomerado, ou usar a opção de capturar no menu de interação. Não é exclusivo da Rainha.
 
 4. Proteja esse xeno por [bold]um minuto[/bold]. Movimento, dano, perda de contato da resina ou outras condições inválidas interrompem a captura.
 
-5. Ao terminar, o Cluster se transforma em Pylon e a colmeia recebe a confirmação.
+5. Ao terminar, o Aglomerado se transforma em Pilone e a colmeia recebe a confirmação.
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphCMUDrone" Caption="Um construtor captura" Scale="2" Interactive="false"/>
-<GuideEntityEmbed Entity="MobXenomorphCMUWarrior" Caption="As demais defendem" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphCMUWarrior" Caption="Os demais defendem" Scale="2" Interactive="false"/>
 </Box>
 
-### O que muda com o Pylon?
+### O que muda com o Pilone?
 
-- O objetivo de estabelecer um Pylon é concluído.
+- O objetivo de estabelecer um Pilone é concluído.
 
 - As vagas de Soldados da Colmeia passam de quatro para seis.
 
@@ -74,7 +74,7 @@ Depois de [bold]20 minutos desde a chegada dos xenomorfos à partida[/bold], a c
 
 - A Central de Comando alerta a tripulação e envia os códigos de detonação nuclear aos consoles de comunicação. A estação passa a ter um motivo urgente para reagir.
 
-[bold]Defendam a conquista.[/bold] O Pylon não produz buffs ou geleia real. Aqui ele permite avançar nos objetivos e amplia a capacidade da colmeia.
+[bold]Defendam a conquista.[/bold] O Pilone não produz bônus ou geleia real. Aqui ele permite avançar nos objetivos e amplia a capacidade da colmeia.
 
 ## 3. Corrompa a mente-colmeia humana
 
@@ -83,7 +83,7 @@ Depois de [bold]20 minutos desde a chegada dos xenomorfos à partida[/bold], a c
 <GuideEntityEmbed Entity="ComputerComms" Caption="Console de comunicações da estação" Scale="2" Interactive="false"/>
 </Box>
 
-[bold]Só a Rainha inicia essa etapa, e um Pylon já deve ter sido estabelecido.[/bold] O alvo é um console de comunicações da estação, ancorado e capaz de chamar a nave de emergência. Não é um terminal de monitoramento, console de navegação ou console global da Central.
+[bold]Só a Rainha inicia essa etapa, e um Pilone já deve ter sido estabelecido.[/bold] O alvo é um console de comunicações da estação, ancorado e capaz de chamar a nave de emergência. Não é um terminal de monitoramento, console de navegação ou console global da Central.
 
 
 <Box>
@@ -100,7 +100,7 @@ Para cancelar, a Rainha pode clicar novamente no console durante a interferênci
 
 Se a canalização terminar com sucesso, a colmeia estabelece contato e alcança sua [bold]vitória maior[/bold].
 
-## Alternativa: Hijack e invasão da Central de Comando
+## Alternativa: Sequestro de nave e invasão da Central de Comando
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphCMUQueen" Caption="Proteja a Rainha" Scale="1.4" Interactive="false"/>
@@ -108,9 +108,9 @@ Se a canalização terminar com sucesso, a colmeia estabelece contato e alcança
 <GuideEntityEmbed Entity="XenomorphGuideOvipositor" Caption="Fixe o ovipositor a bordo" Scale="2" Interactive="false"/>
 </Box>
 
-Se a nave de emergência [bold]atracar na estação antes da interferência nas comunicações ser concluída[/bold], o objetivo da mente-colmeia humana é bloqueado. A Rainha anuncia a nova missão: reunir os xenos e alcançar a fortaleza humana distante. Essa rota alternativa [bold]não exige um Pylon[/bold].
+Se a nave de emergência [bold]atracar na estação antes da interferência nas comunicações ser concluída[/bold], o objetivo da mente-colmeia humana é bloqueado. A Rainha anuncia a nova missão: reunir os xenos e alcançar a fortaleza humana distante. Essa rota alternativa [bold]não exige um Pilone[/bold].
 
-### Como iniciar o Hijack
+### Como tomar a nave
 
 1. Reúnam os xenos em [bold]outra nave[/bold]. A própria nave de emergência não pode ser tomada.
 
@@ -120,7 +120,7 @@ Se a nave de emergência [bold]atracar na estação antes da interferência nas 
 
 4. Ao concluir, a nave parte para a Central de Comando. A viagem leva [bold]três minutos[/bold] e termina com uma colisão na entrada da instalação. Preparem-se para desembarcar e combater!
 
-[bold][color=#FFBF00]Iniciem a canalização antes que a evac chegue à Central de Comando.[/color][/bold] A evac leva apenas um minuto de viagem após partir da estação. Se ninguém começar o Hijack a tempo, a janela de invasão fecha. Uma tentativa já em andamento pode terminar depois da chegada da evac.
+[bold][color=#FFBF00]Iniciem a canalização antes que a evac chegue à Central de Comando.[/color][/bold] A evac leva apenas um minuto de viagem após partir da estação. Se ninguém começar o Sequestro de nave a tempo, a janela de invasão fecha. Uma tentativa já em andamento pode terminar depois da chegada da evac.
 
 ### Resultados da invasão
 
@@ -130,5 +130,5 @@ Se a nave de emergência [bold]atracar na estação antes da interferência nas 
 
 - [bold]Vitória maior da tripulação:[/bold] todos os xenos são eliminados, inclusive se isso acontecer depois da invasão.
 
-A chegada da evac à Central não encerra imediatamente a rodada quando o Hijack já está em andamento. A colmeia ainda pode chegar para o combate final. Fiquem atentos aos avisos vermelhos de explosão: eles aparecem cinco segundos antes da detonação, que espalha fogo pela área.
+A chegada da evac à Central não encerra imediatamente a rodada quando o Sequestro de nave já está em andamento. A colmeia ainda pode chegar para o combate final. Fiquem atentos aos avisos vermelhos de explosão: eles aparecem cinco segundos antes da detonação, que espalha fogo pela área.
 </Document>

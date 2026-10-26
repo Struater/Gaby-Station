@@ -3,7 +3,7 @@
 
 ## Quem constrói
 
-Drone e suas variantes, Hivelord e suas variantes, Carrier e Eggsac Carrier, Burrower, Reaper e Rainha possuem construção do ninho. Nem todo combatente secreta resina. Confira os botões da sua forma antes de prometer uma obra.
+Operário e suas variantes, Senhor da Colmeia e suas variantes, Carregador e Carregador de ovos, Escavador, Ceifador e Rainha possuem construção do ninho. Nem todo combatente secreta resina. Confira os botões da sua forma antes de prometer uma obra.
 
 ## Resina e construções comuns
 
@@ -33,7 +33,7 @@ Escolha a estrutura no menu e use [bold]Secretar resina[/bold] no local desejado
 <GuideEntityEmbed Entity="DumontXenomorphResinSpikes" Caption="Espinhos" Scale="2" Interactive="false"/>
 </Box>
 
-A pegajosa dificulta o avanço inimigo, a aceleradora favorece o deslocamento dos xenos e os espinhos punem quem atravessa uma área preparada. Hivelords erguem versões mais resistentes, o Designer usa projetos e reforços, e o Gardener cria resina resistente e efeitos temporários.
+A pegajosa dificulta o avanço inimigo, a aceleradora favorece o deslocamento dos xenos e os espinhos punem quem atravessa uma área preparada. Senhores da Colmeia erguem versões mais resistentes, o Arquiteto da Colmeia usa projetos e reforços, e o Operário jardineiro cria resina resistente e efeitos temporários.
 
 ## Ninhos e hospedeiros
 
@@ -68,7 +68,7 @@ Movimento e dano interrompem essas canalizações. Projetos inacabados já ocupa
 <GuideEntityEmbed Entity="DumontHiveCore" Caption="Núcleo" Scale="2" Interactive="false"/>
 </Box>
 
-É a base das estruturas maiores e espalha resina da colmeia em até sete tiles. Só pode haver [bold]um núcleo[/bold]. O projeto custa 400 para colocar e mais 1.000 de plasma para concluir. Sem um núcleo pronto, não é possível iniciar ou concluir obras que dependem dele.
+É a base das estruturas maiores e espalha resina da colmeia em até sete quadrados. Só pode haver [bold]um núcleo[/bold]. O projeto custa 400 para colocar e mais 1.000 de plasma para concluir. Sem um núcleo pronto, não é possível iniciar ou concluir obras que dependem dele.
 
 
 ## Nódulo de recuperação
@@ -77,7 +77,7 @@ Movimento e dano interrompem essas canalizações. Projetos inacabados já ocupa
 <GuideEntityEmbed Entity="DumontHiveRecovery" Caption="Recuperação" Scale="2" Interactive="false"/>
 </Box>
 
-Cura um xeno vivo e ferido que esteja [bold]descansando[/bold] perto da estrutura. Atende um alvo elegível por ciclo, com alcance de 1,5 tile. Não ressuscita xenos mortos. Limite de seis, incluindo projetos; custo de 400 para iniciar e mais 450 de plasma para concluir.
+Cura um xeno vivo e ferido que esteja [bold]descansando[/bold] perto da estrutura. Atende um alvo elegível por ciclo, com alcance de 1,5 quadrado. Não ressuscita xenos mortos. Limite de seis, incluindo projetos; custo de 400 para iniciar e mais 450 de plasma para concluir.
 
 ## Árvore de plasma
 
@@ -85,29 +85,29 @@ Cura um xeno vivo e ferido que esteja [bold]descansando[/bold] perto da estrutur
 <GuideEntityEmbed Entity="DumontHivePlasma" Caption="Árvore de plasma" Scale="2" Interactive="false"/>
 </Box>
 
-Restaura plasma de um xeno próximo que esteja descansando ou em ovipositor. Atende um alvo elegível por ciclo, com alcance de 1,5 tile. É útil perto da Rainha e das áreas de recuperação. Limite de três, incluindo projetos; custo de 400 mais 450 de plasma.
+Restaura plasma de um xeno próximo que esteja descansando ou em ovipositor. Atende um alvo elegível por ciclo, com alcance de 1,5 quadrado. É útil perto da Rainha e das áreas de recuperação. Limite de três, incluindo projetos; custo de 400 mais 450 de plasma.
 
 ## Morfador de ovos
 
 <Box>
 <GuideEntityEmbed Entity="DumontHiveEggMorpher" Caption="Morfador de ovos" Scale="2" Interactive="false"/>
-<GuideEntityEmbed Entity="MobXenomorphFaceHugger" Caption="Facehugger" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphFaceHugger" Caption="Parasita facial" Scale="2" Interactive="false"/>
 </Box>
 
-Produz facehuggers passivamente até um estoque de seis; a produção é mais rápida enquanto há uma Rainha em ovipositor. Pode armazenar até doze com depósitos de facehuggers vivos. Clique com uma mão livre para retirar um ou use um facehugger no morfador para guardar.
+Produz parasitas faciais passivamente até um estoque de seis; a produção é mais rápida enquanto há uma Rainha em ovipositor. Pode armazenar até doze com depósitos de parasitas faciais vivos. Clique com uma mão livre para retirar um ou use um parasita facial no morfador para guardar.
 
 É possível reservar parte do estoque; fantasmas podem assumir os excedentes. A estrutura também usa seu estoque contra uma vítima adequada que se aproxime. Limite de seis, incluindo projetos; custo de 400 mais 450 de plasma.
 
-## Cluster e Pylon
+## Aglomerado e Pilone
 
 <Box>
-<GuideEntityEmbed Entity="DumontHiveCluster" Caption="Cluster" Scale="2" Interactive="false"/>
-<GuideEntityEmbed Entity="DumontHivePylon" Caption="Pylon" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHiveCluster" Caption="Aglomerado" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHivePylon" Caption="Pilone" Scale="2" Interactive="false"/>
 </Box>
 
-O Cluster avança com resina especial para alcançar alvos de captura. Espalha resina em até cinco tiles e não precisa ser colocado sobre a resina do núcleo, mas exige que o núcleo exista para ser construído. Limite de quatro, incluindo projetos. Custa 400 para iniciar e mais 300 de plasma para concluir.
+O Aglomerado avança com resina especial para alcançar alvos de captura. Espalha resina em até cinco quadrados e não precisa ser colocado sobre a resina do núcleo, mas exige que o núcleo exista para ser construído. Limite de quatro, incluindo projetos. Custa 400 para iniciar e mais 300 de plasma para concluir.
 
-Ao capturar uma instalação válida, vira um Pylon. Só pode haver um Pylon. Ele cumpre o objetivo, amplia as vagas de castas e libera o contato pelo console; [bold]não produz geleia real nem concede buffs de combate[/bold] nesta versão.
+Ao capturar uma instalação válida, vira um Pilone. Só pode haver um Pilone. Ele cumpre o objetivo, amplia as vagas de castas e libera o contato pelo console; [bold]não produz geleia real nem concede bônus de combate[/bold] nesta versão.
 
 [textlink="Veja os três alvos, a liberação e como capturar." link="XenomorphObjectives"]
 
@@ -115,11 +115,11 @@ Ao capturar uma instalação válida, vira um Pylon. Só pode haver um Pylon. El
 
 Um construtor pode interagir com uma estrutura maior danificada para repará-la, contribuindo plasma. A canalização leva quatro segundos; o custo depende da estrutura e pode exigir várias contribuições. Examine e preste atenção às mensagens para não confundir uma obra incompleta com uma estrutura pronta.
 
-## Frutos do Gardener e do Healer
+## Frutos dos operários jardineiros e curandeiros
 
 <Box>
-<GuideEntityEmbed Entity="DumontXenomorphFruitLesser" Caption="Cura menor" Scale="2" Interactive="false"/>
-<GuideEntityEmbed Entity="DumontXenomorphFruitGreater" Caption="Cura maior" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontXenomorphFruitLesser" Caption="Cura simples" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontXenomorphFruitGreater" Caption="Cura reforçada" Scale="2" Interactive="false"/>
 <GuideEntityEmbed Entity="DumontXenomorphFruitPlasma" Caption="Plasma" Scale="2" Interactive="false"/>
 </Box>
 <Box>
@@ -128,7 +128,7 @@ Um construtor pode interagir com uma estrutura maior danificada para repará-la,
 <GuideEntityEmbed Entity="DumontXenomorphFruitUnstable" Caption="Instável" Scale="2" Interactive="false"/>
 </Box>
 
-- [bold]Menor e maior:[/bold] recuperação de vida em intensidades diferentes.
+- [bold]Comum e reforçado:[/bold] recuperação de vida em intensidades diferentes.
 
 - [bold]Plasma:[/bold] recuperação da reserva ao longo do tempo.
 

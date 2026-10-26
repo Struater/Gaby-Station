@@ -487,3 +487,5 @@ xenomorph-queen-gut-start = The Queen is starting to tear your body apart!
 xenomorph-queen-matured = You have matured. Your body is stronger; screech and acid volley are now available.
 
 xenomorph-queen-announcement-title = >> QUEEN <<
+
+ghost-role-information-xenomorph-description = Take control of this xenomorph, defend the hive and help the other xenos complete their objectives.

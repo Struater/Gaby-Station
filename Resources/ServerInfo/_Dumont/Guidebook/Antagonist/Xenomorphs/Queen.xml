@@ -23,7 +23,7 @@ Qualquer Guarda Real (T3) pode evoluir para Rainha, incluindo todas as variantes
 
 Use [bold]Desenvolver ovipositor[/bold] sobre a resina para se fixar e começar a produzir ovos. A fixação custa 500 de plasma e leva 20 segundos; soltar-se leva cinco segundos. Enquanto estiver fixada, você não pode andar. Escolha uma posição defendida e com espaço para os xenos circularem.
 
-Os ovos abastecem os ninhos e as frentes. Carriers e construtores ajudam a distribuí-los. O ovipositor também libera cura e doação de plasma e permite iniciar o objetivo do console de comunicações.
+Os ovos abastecem os ninhos e as frentes. Carregadores e construtores ajudam a distribuí-los. O ovipositor também libera cura e doação de plasma e permite iniciar o objetivo do console de comunicações.
 
 ## Comando, observação e líderes
 
@@ -35,7 +35,7 @@ Os ovos abastecem os ninhos e as frentes. Carriers e construtores ajudam a distr
 
 Abra [bold]Colmeia[/bold] para observar xenos, retornar à própria visão e nomear líderes. É possível observar e nomear sem estar em ovipositor. Você pode manter até três líderes: enquanto estiver fixada, eles propagam seus feromônios ativos ao redor das posições deles.
 
-Use [bold]Palavra da Rainha[/bold] para mandar instruções claras. As mensagens aparecem na interface com som e efeito de digitação. Diga onde reunir, qual passagem defender ou quem precisa de escolta. Os avisos sobre núcleo, Cluster e Pylon também chegam por esse canal visual.
+Use [bold]Palavra da Rainha[/bold] para mandar instruções claras. As mensagens aparecem na interface com som e efeito de digitação. Diga onde reunir, qual passagem defender ou quem precisa de escolta. Os avisos sobre núcleo, Aglomerado e Pilone também chegam por esse canal visual.
 
 ## Apoio e combate
 
@@ -52,22 +52,22 @@ Depois de [bold]dez minutos viva como Rainha[/bold], você amadurece, ganha resi
 ## A mente-colmeia humana
 
 <Box>
-<GuideEntityEmbed Entity="DumontHivePylon" Caption="Estabeleça o Pylon" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="DumontHivePylon" Caption="Estabeleça o Pilone" Scale="2" Interactive="false"/>
 <GuideEntityEmbed Entity="ComputerComms" Caption="Alcance o console" Scale="2" Interactive="false"/>
 </Box>
 
-O objetivo exige um Pylon já estabelecido. Fixe o ovipositor perto de um console de comunicações da estação e [bold]clique no console[/bold] para iniciar três minutos de interferência. Não é necessário procurar uma action separada de hijack. Protejam a Rainha durante toda a canalização.
+O objetivo exige um Pilone já estabelecido. Fixe o ovipositor perto de um console de comunicações da estação e [bold]clique no console[/bold] para iniciar três minutos de interferência. Não é preciso usar uma habilidade separada. Protejam a Rainha durante toda a canalização.
 
 [textlink="Consulte requisitos, interrupções e o resultado do objetivo." link="XenomorphObjectives"]
 
-## Hijack: alcance a fortaleza humana
+## Sequestro de nave: alcance a fortaleza humana
 
 <Box>
 <GuideEntityEmbed Entity="ComputerShuttle" Caption="Console de controle da nave" Scale="2" Interactive="false"/>
 <GuideEntityEmbed Entity="XenomorphGuideOvipositor" Caption="Ovipositor a bordo" Scale="2" Interactive="false"/>
 </Box>
 
-Se a evac atracar antes de você concluir a interferência nas comunicações, reúna a colmeia em outra nave. Fixe o ovipositor perto do console de controle e [bold]clique nele[/bold] para iniciar [bold]120 segundos de Hijack[/bold]. Inicie antes que a evac chegue à Central de Comando; a própria nave de emergência não pode ser tomada.
+Se a evac atracar antes de você concluir a interferência nas comunicações, reúna a colmeia em outra nave. Fixe o ovipositor perto do console de controle e [bold]clique nele[/bold] para iniciar [bold]120 segundos[/bold] para tomar a nave. Inicie antes que a evac chegue à Central de Comando; a própria nave de emergência não pode ser tomada.
 
 Ao concluir, sua nave viaja por três minutos e colide na entrada da Central. Chegar com xenos vivos a bordo garante uma [bold]vitória menor da colmeia[/bold]. Proteja os sobreviventes: se a tripulação eliminar todos os xenos, ela conquista a vitória maior mesmo após a invasão.
 

@@ -53,7 +53,7 @@
     allowSpeech: true
     makeSentient: true
     name: ghost-role-information-xenomorph-name
-    description: ghost-role-information-xenomorph-drone-description
+    description: ghost-role-information-xenomorph-description
     rules: ghost-role-information-rules-default-xeno
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist

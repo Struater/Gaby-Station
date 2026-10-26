@@ -7,6 +7,8 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Content.Shared._White.Xenomorphs.Caste;
 
 namespace Content.Client._Dumont.Xenomorphs;
 
@@ -75,10 +77,14 @@ public sealed class XenomorphQueenBoundUserInterface(EntityUid owner, Enum uiKey
         if (_pheromoneBox != null) _pheromoneBox.Visible = hive.Mode == "pheromones";
         foreach (var (name, button) in _pheromones) button.Pressed = name == hive.Pheromones;
         _members.RemoveAllChildren();
+        var prototypes = IoCManager.Resolve<IPrototypeManager>();
         foreach (var member in hive.Members)
         {
             var row = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal, SeparationOverride = 6 };
-            row.AddChild(new Label { Text = member.Name + " (" + member.Caste + (member.Tier is >= 1 and <= 3 ? " — " + Loc.GetString($"xenomorph-rank-{member.Tier}") : "") + ")", HorizontalExpand = true, ClipText = true });
+            var casteName = prototypes.TryIndex<XenomorphCastePrototype>(member.Caste, out var caste)
+                ? Loc.GetString(caste.Name)
+                : member.Caste;
+            row.AddChild(new Label { Text = member.Name + " (" + casteName + (member.Tier is >= 1 and <= 3 ? " — " + Loc.GetString($"xenomorph-rank-{member.Tier}") : "") + ")", HorizontalExpand = true, ClipText = true });
             var watch = new Button { Text = Loc.GetString("xenomorph-queen-watch") };
             watch.OnPressed += _ => SendMessage(new XenomorphQueenUiMessage("watch", member.Entity));
             row.AddChild(watch);

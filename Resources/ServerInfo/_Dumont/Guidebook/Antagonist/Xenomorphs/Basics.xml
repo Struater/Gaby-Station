@@ -45,7 +45,7 @@ Habilidades instantâneas são usadas ao apertar o botão; habilidades com alvo 
 <GuideEntityEmbed Entity="XenomorphGuideHide" Caption="Esconder-se" Scale="2" Interactive="false"/>
 </Box>
 
-[bold]Esconder-se[/bold], presente em formas como Runner e Acider Runner, permite passar sob mesas.
+[bold]Esconder-se[/bold], presente em formas como Corredor e Corredor ácido, permite passar sob mesas.
 
 ## Feromônios
 
@@ -58,20 +58,20 @@ Castas que emitem feromônios podem selecionar Frenesi, Proteção ou Recuperaç
 ## Interferência de rádio
 
 <Box>
-<GuideEntityEmbed Entity="XenomorphGuideJammer" Caption="Radio jammer" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="XenomorphGuideJammer" Caption="Interferência de rádio" Scale="2" Interactive="false"/>
 </Box>
 
-Castas [bold]T1 e T2 com reserva de plasma[/bold] recebem o jammer. Ele bloqueia transmissões de rádio num raio de seis tiles, custa 25 de plasma para ligar e cinco por segundo. Use novamente para desligar; a interferência também termina se faltar plasma ou o xeno ficar incapacitado.
+Castas [bold]T1 e T2 com reserva de plasma[/bold] recebem o interferência de rádio. Ele bloqueia transmissões de rádio num raio de seis quadrados, custa 25 de plasma para ligar e cinco por segundo. Use novamente para desligar; a interferência também termina se faltar plasma ou o xeno ficar incapacitado.
 
 ## Hospedeiros são recursos da colmeia
 
 <Box>
 <GuideEntityEmbed Entity="ResinNest" Caption="Ninho" Scale="2" Interactive="false"/>
 <GuideEntityEmbed Entity="XenomorphEgg" Caption="Ovo" Scale="2" Interactive="false"/>
-<GuideEntityEmbed Entity="MobXenomorphFaceHugger" Caption="Facehugger" Scale="2" Interactive="false"/>
+<GuideEntityEmbed Entity="MobXenomorphFaceHugger" Caption="Parasita facial" Scale="2" Interactive="false"/>
 </Box>
 
-Tragam vítimas para áreas protegidas e prendam-nas nos ninhos. Protejam os facehuggers e os hospedeiros já infectados. Matar um hospedeiro por engano pode custar um futuro xeno; capture e mantenha a vítima sob controle quando houver condições.
+Tragam vítimas para áreas protegidas e prendam-nas nos ninhos. Protejam os parasitas faciais e os hospedeiros já infectados. Matar um hospedeiro por engano pode custar um futuro xeno; capture e mantenha a vítima sob controle quando houver condições.
 
 ## Lute com uma rota de saída
 
