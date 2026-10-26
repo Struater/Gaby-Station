@@ -60,6 +60,7 @@ public sealed partial class XenomorphShuttleHijackSystem
         _quartersAt = null;
         _nextExplosion = null;
         _fireLocations.Clear();
+        _pendingExplosions.Clear();
     }
 
     private void InitializeInteraction()
@@ -239,6 +240,7 @@ public sealed partial class XenomorphShuttleHijackSystem
         // Reuse the nuclear droppod landing: tiles and children become part of CC, not overlapping grids.
         _dropPods.MergeIntoStation(ent, Comp<MapGridComponent>(ent), _centcomm!.Value,
             Comp<MapGridComponent>(_centcomm.Value), preserveMobs: true);
+        PlayLandingImpact(ent);
     }
 
     private (EntityCoordinates Coordinates, Angle Rotation) GetCrashLanding(EntityUid shuttle, EntityUid centcomm)
@@ -283,7 +285,7 @@ public sealed partial class XenomorphShuttleHijackSystem
     }
 
     private void AnnounceInvasion(string key)
-        => _chat.DispatchGlobalAnnouncement(Loc.GetString(key), "S.A.A.E.", colorOverride: Color.Red);
+        => _chat.DispatchGlobalAnnouncement(Loc.GetString(key), Loc.GetString("xenomorph-hive-pylon-cc-sender"), colorOverride: Color.Red);
 
     private void PrepareLandingEffects()
     {
@@ -309,18 +311,31 @@ public sealed partial class XenomorphShuttleHijackSystem
             _crashWarningAt = null;
             AnnounceInvasion("xenomorph-invasion-collision");
         }
-        if (_nextExplosion is not { } next || _timing.CurTime < next) return;
+        if (_nextExplosion == null) return;
         if (_finishing || _ticker.RunLevel != Content.Server.GameTicking.GameRunLevel.InRound || !Exists(_centcomm) || FinaleEndsAt is { } end && _timing.CurTime >= end)
         {
             _nextExplosion = null;
+            foreach (var pending in _pendingExplosions)
+                if (Exists(pending.Warning)) QueueDel(pending.Warning);
+            _pendingExplosions.Clear();
             return;
         }
-        // Keep the barrage running for the entire invasion, including when there are no pipes left.
+        DetonateWarnedExplosions();
+        if (_timing.CurTime < _nextExplosion) return;
         _nextExplosion = _timing.CurTime + TimeSpan.FromSeconds(6);
-        if (_fireLocations.Count == 0 || !TryComp<MapGridComponent>(_centcomm, out var grid)) return;
-        var location = _random.Pick(_fireLocations);
-        if (_turf.IsSpace(_map.GetTileRef(_centcomm.Value, grid, location))) return;
-        _explosions.QueueExplosion(_transform.ToMapCoordinates(location), "FireBombWeak", 20, 3, 4, cause: null, maxTileBreak: 3);
-        Spawn("CMUTileFire", location);
+        if (!TryComp<MapGridComponent>(_centcomm, out var grid)) return;
+        while (_fireLocations.Count > 0)
+        {
+            var location = _random.Pick(_fireLocations);
+            if (_turf.IsSpace(_map.GetTileRef(_centcomm.Value, grid, location)))
+            {
+                _fireLocations.Remove(location);
+                continue;
+            }
+            var warning = Spawn("CMUHijackExplosionWarning", location);
+            _audio.PlayPvs(new SoundPathSpecifier("/Audio/Ambience/Objects/gas_hiss.ogg"), location);
+            _pendingExplosions.Add((_timing.CurTime + TimeSpan.FromSeconds(5), location, warning));
+            break;
+        }
     }
 }

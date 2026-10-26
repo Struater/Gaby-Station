@@ -18,7 +18,9 @@ xenomorphs-xenomajor = Major xenomorph victory!
 xenomorphs-xenominor = Minor xenomorph victory!
 xenomorphs-neutral = Stalemate!
 xenomorphs-crewminor = Minor crew victory!
+    The crew survived the xenos or eliminated them.
 xenomorphs-crewmajor = Decisive crew victory!
+    The crew survived the xenos or eliminated them.
 
 xenomorphs-cond-nukeexplodedonstation = The crew destroyed the xenomorphs with the nuclear fission explosive.
 xenomorphs-cond-nukeactiveinstation = The crew left the armed nuclear fission explosive on the station.
