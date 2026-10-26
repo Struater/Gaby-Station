@@ -1,4 +1,7 @@
 using Content.Shared.Shuttles.Components;
+using Content.Shared.DoAfter;
+using Content.Server.ADT.Shuttles;
+using Robust.Shared.Random;
 using Content.Shared._CMU14.Xenomorphs;
 using System.Numerics;
 using System.Linq;
@@ -36,11 +39,35 @@ public sealed partial class XenomorphShuttleHijackSystem
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private ExplosionSystem _explosions = default!;
 
-    private readonly List<(TimeSpan At, EntityCoordinates Position)> _landingEffects = new();
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private DropPodConsoleSystem _dropPods = default!;
+    [Dependency] private IRobustRandom _random = default!;
+
+    public EntityUid? HijackingQueen { get; private set; }
+    private EntityUid? _hijackConsole;
+    private DoAfterId? _shuttleDoAfter;
+    private TimeSpan? _crashWarningAt;
+    private TimeSpan? _quartersAt;
+    private TimeSpan? _nextExplosion;
+    private readonly List<EntityCoordinates> _fireLocations = new();
+
+    private void ResetHijackInteraction()
+    {
+        HijackingQueen = null;
+        _hijackConsole = null;
+        _shuttleDoAfter = null;
+        _crashWarningAt = null;
+        _quartersAt = null;
+        _nextExplosion = null;
+        _fireLocations.Clear();
+    }
 
     private void InitializeInteraction()
     {
         SubscribeLocalEvent<XenomorphRoyalComponent, AttackAttemptEvent>(OnConsoleAttack);
+        SubscribeLocalEvent<XenomorphShuttleHijackingComponent, ComponentShutdown>(OnHijackingQueenRemoved);
+        SubscribeLocalEvent<XenomorphRoyalComponent, XenomorphShuttleHijackDoAfterEvent>(OnHijackFinished);
+        SubscribeLocalEvent<XenomorphRoyalComponent, DoAfterAttemptEvent<XenomorphShuttleHijackDoAfterEvent>>(OnHijackAttempt);
         SubscribeLocalEvent<ShuttleConsoleComponent, InteractHandEvent>(OnConsoleHand);
         SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(OnConsoleActivate, before: new[] { typeof(ActivatableUISystem) });
         SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<Verb>>(OnConsoleVerbs);
@@ -81,11 +108,16 @@ public sealed partial class XenomorphShuttleHijackSystem
 
     public bool TryHijack(EntityUid queen, Entity<ShuttleConsoleComponent> console)
     {
+        if (HijackingQueen == queen)
+        {
+            _doAfter.Cancel(_shuttleDoAfter);
+            return true;
+        }
         string? failure = null;
         var grid = Transform(console).GridUid;
         if (WindowClosed) failure = "xenomorph-shuttle-hijack-window-lost";
         else if (!CommsLocked || _objectives.CommsCorrupted) failure = "xenomorph-shuttle-hijack-unavailable";
-        else if (HijackedShuttle != null) failure = "xenomorph-shuttle-hijack-already-started";
+        else if (HijackedShuttle != null || HijackingQueen != null) failure = "xenomorph-shuttle-hijack-already-started";
         else if (!IsQueen(queen) || !_mobs.IsAlive(queen) || !_blocker.CanConsciouslyPerformAction(queen)
             || !TryComp<XenomorphOvipositorComponent>(queen, out var ovi) || !ovi.Attached
             || !_interaction.InRangeUnobstructed(queen, console.Owner, 3.5f)
@@ -101,7 +133,71 @@ public sealed partial class XenomorphShuttleHijackSystem
             return false;
         }
 
-        var shuttle = grid!.Value;
+        EnsureComp<XenomorphShuttleHijackingComponent>(queen);
+        var args = new DoAfterArgs(EntityManager, queen, TimeSpan.FromSeconds(120), new XenomorphShuttleHijackDoAfterEvent(), queen, target: console.Owner)
+        {
+            NeedHand = false, RequireCanInteract = false, DistanceThreshold = null,
+            BreakOnMove = true, BreakOnDamage = false, MultiplyDelay = false,
+            CancelDuplicate = false, BlockDuplicate = true, DuplicateCondition = DuplicateConditions.SameEvent,
+            AttemptFrequency = AttemptFrequency.EveryTick,
+        };
+        // TryStartDoAfter raises the first attempt check synchronously.
+        HijackingQueen = queen;
+        _hijackConsole = console;
+        if (!_doAfter.TryStartDoAfter(args, out _shuttleDoAfter))
+        {
+            HijackingQueen = null;
+            _hijackConsole = null;
+            return false;
+        }
+        _hive.AnnounceHive(Loc.GetString("xenomorph-shuttle-hijack-channel"));
+        return true;
+    }
+
+    private void OnHijackingQueenRemoved(Entity<XenomorphShuttleHijackingComponent> ent, ref ComponentShutdown args)
+    {
+        if (HijackingQueen != ent.Owner) return;
+        _doAfter.Cancel(_shuttleDoAfter);
+        HijackingQueen = null;
+        _hijackConsole = null;
+        _shuttleDoAfter = null;
+        if (CrewArrived && HijackedShuttle == null) FinaleEndsAt = _timing.CurTime;
+    }
+
+    private bool CanContinueHijack(EntityUid queen)
+        => Exists(queen) && IsQueen(queen) && _mobs.IsAlive(queen)
+        && TryComp<XenomorphOvipositorComponent>(queen, out var ovi) && ovi.Attached
+        && _hijackConsole is { } console && Exists(console) && Transform(console).Anchored
+        && Transform(queen).GridUid is { } grid && Transform(console).GridUid == grid
+        && HasComp<ShuttleComponent>(grid) && !HasComp<FTLComponent>(grid)
+        && _interaction.InRangeUnobstructed(queen, console, 3.5f)
+        && Exists(_centcomm) && Exists(_centcommMap);
+
+    private void OnHijackAttempt(Entity<XenomorphRoyalComponent> ent, ref DoAfterAttemptEvent<XenomorphShuttleHijackDoAfterEvent> args)
+    {
+        if (HijackingQueen != ent.Owner || !CanContinueHijack(ent)) args.Cancel();
+    }
+
+    private void OnHijackFinished(Entity<XenomorphRoyalComponent> ent, ref XenomorphShuttleHijackDoAfterEvent args)
+    {
+        if (args.Handled || HijackingQueen != ent.Owner) return;
+        args.Handled = true;
+        var valid = !args.Cancelled && CanContinueHijack(ent);
+        var shuttle = valid ? Transform(ent).GridUid : null;
+        HijackingQueen = null;
+        _hijackConsole = null;
+        _shuttleDoAfter = null;
+        if (shuttle == null || !LaunchHijackedShuttle(shuttle.Value))
+        {
+            _hive.AnnounceHive(Loc.GetString("xenomorph-shuttle-hijack-interrupted"));
+            // A cancelled reserved attempt must not leave the native round-end timer vetoed forever.
+            if (CrewArrived && HijackedShuttle == null) FinaleEndsAt = _timing.CurTime;
+        }
+    }
+
+    private bool LaunchHijackedShuttle(EntityUid shuttle)
+    {
+        // The window was reserved when the do-after began, before the crew reached CC.
         // Hijacking supplies the navigation link even for local shuttles without an FTL drive.
         EnsureComp<FTLDriveComponent>(shuttle);
         EnsureComp<FTLSmashImmuneComponent>(_centcomm!.Value);
@@ -111,6 +207,9 @@ public sealed partial class XenomorphShuttleHijackSystem
         if (!HasComp<FTLComponent>(shuttle)) return false;
         HijackedShuttle = shuttle;
         EnsureComp<XenomorphHijackedShuttleComponent>(shuttle);
+        _quartersAt = _timing.CurTime + TimeSpan.FromSeconds(10);
+        _crashWarningAt = _timing.CurTime + TimeSpan.FromSeconds(157);
+        AnnounceInvasion("xenomorph-invasion-unscheduled");
         _hive.AnnounceHive(Loc.GetString("xenomorph-shuttle-hijack-departing"));
         return true;
     }
@@ -135,7 +234,11 @@ public sealed partial class XenomorphShuttleHijackSystem
         var sound = new SoundPathSpecifier("/Audio/_RMC14/Hijack/GigaXO_we_lose.ogg", AudioParams.Default.WithVolume(-4));
         RaiseNetworkEvent(new StopStationEventMusic(StationEventMusicType.Xenomorph), Filter.Broadcast());
         RaiseNetworkEvent(new StationEventMusicEvent(_audio.ResolveSound(sound), StationEventMusicType.Xenomorph, sound.Params), Filter.Broadcast());
-        PrepareLandingEffects(ent);
+        PrepareLandingEffects();
+        AnnounceInvasion("xenomorph-invasion-impact");
+        // Reuse the nuclear droppod landing: tiles and children become part of CC, not overlapping grids.
+        _dropPods.MergeIntoStation(ent, Comp<MapGridComponent>(ent), _centcomm!.Value,
+            Comp<MapGridComponent>(_centcomm.Value), preserveMobs: true);
     }
 
     private (EntityCoordinates Coordinates, Angle Rotation) GetCrashLanding(EntityUid shuttle, EntityUid centcomm)
@@ -179,34 +282,45 @@ public sealed partial class XenomorphShuttleHijackSystem
         }
     }
 
-    private void PrepareLandingEffects(EntityUid shuttle)
+    private void AnnounceInvasion(string key)
+        => _chat.DispatchGlobalAnnouncement(Loc.GetString(key), "S.A.A.E.", colorOverride: Color.Red);
+
+    private void PrepareLandingEffects()
     {
         if (!TryComp<MapGridComponent>(_centcomm, out var grid)) return;
-        var origin = _transform.GetWorldPosition(shuttle);
-        var tiles = _map.GetAllTiles(_centcomm!.Value, grid);
-        foreach (var tile in tiles)
+        _fireLocations.Clear();
+        foreach (var tile in _map.GetAllTiles(_centcomm!.Value, grid))
         {
-            if (_turf.IsSpace(tile)) continue;
-            var pos = _map.GridTileToLocal(_centcomm.Value, grid, tile.GridIndices);
-            var distance = Vector2.DistanceSquared(_transform.ToMapCoordinates(pos).Position, origin);
-            if (distance < 36 || distance > 324) continue;
-            if (_landingEffects.Any(effect => Vector2.DistanceSquared(effect.Position.Position, pos.Position) < 16)) continue;
-            _landingEffects.Add((_timing.CurTime + TimeSpan.FromSeconds(2 + _landingEffects.Count * 3), pos));
-            if (_landingEffects.Count >= 6) break;
+            if (!_turf.IsSpace(tile))
+                _fireLocations.Add(_map.GridTileToLocal(_centcomm.Value, grid, tile.GridIndices));
         }
+        _nextExplosion = _timing.CurTime + TimeSpan.FromSeconds(2);
     }
 
     private void UpdateLandingEffects()
     {
-        for (var i = _landingEffects.Count - 1; i >= 0; i--)
+        if (_quartersAt is { } quarters && _timing.CurTime >= quarters)
         {
-            var effect = _landingEffects[i];
-            if (_timing.CurTime < effect.At) continue;
-            _landingEffects.RemoveAt(i);
-            if (!Exists(effect.Position.EntityId)) continue;
-            var position = _transform.ToMapCoordinates(effect.Position);
-            _explosions.QueueExplosion(position, "FireBombWeak", 20, 3, 4, cause: null, maxTileBreak: 3);
-            Spawn("MolotovFire", effect.Position);
+            _quartersAt = null;
+            AnnounceInvasion("xenomorph-invasion-general-quarters");
         }
+        if (!Invaded && _crashWarningAt is { } crash && _timing.CurTime >= crash)
+        {
+            _crashWarningAt = null;
+            AnnounceInvasion("xenomorph-invasion-collision");
+        }
+        if (_nextExplosion is not { } next || _timing.CurTime < next) return;
+        if (_finishing || _ticker.RunLevel != Content.Server.GameTicking.GameRunLevel.InRound || !Exists(_centcomm) || FinaleEndsAt is { } end && _timing.CurTime >= end)
+        {
+            _nextExplosion = null;
+            return;
+        }
+        // Keep the barrage running for the entire invasion, including when there are no pipes left.
+        _nextExplosion = _timing.CurTime + TimeSpan.FromSeconds(6);
+        if (_fireLocations.Count == 0 || !TryComp<MapGridComponent>(_centcomm, out var grid)) return;
+        var location = _random.Pick(_fireLocations);
+        if (_turf.IsSpace(_map.GetTileRef(_centcomm.Value, grid, location))) return;
+        _explosions.QueueExplosion(_transform.ToMapCoordinates(location), "FireBombWeak", 20, 3, 4, cause: null, maxTileBreak: 3);
+        Spawn("CMUTileFire", location);
     }
 }

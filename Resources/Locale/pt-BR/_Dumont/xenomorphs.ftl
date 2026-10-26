@@ -103,3 +103,12 @@ xenomorph-shuttle-hijack-departing = A nave é nossa! Em três minutos alcançar
 xenomorph-shuttle-hijack-arrived = Alcançamos a fortaleza humana! Avancem pela colmeia!
 ent-XenomorphHijackShuttleObjective = Invada a fortaleza humana distante.
     .desc = Ajude a Rainha a tomar uma shuttle antes que a nave de emergência alcance a Central de Comando.
+
+xenomorph-shuttle-hijack-channel = A Rainha está tomando o controle do pássaro de metal. Reúnam-se e protejam-na por dois minutos!
+xenomorph-shuttle-hijack-interrupted = O controle do pássaro de metal foi interrompido!
+xenomorph-invasion-unscheduled = Partida não programada de uma nave detectada na área de operações. Sequestro provável. Desativando o piloto automático.
+xenomorph-invasion-general-quarters = ATENÇÃO! ALERTA GERAL. Todo o pessoal da Central de Comando deve assumir suas posições de combate. Preparem-se para repelir invasores.
+xenomorph-invasion-collision = EMERGÊNCIA: NAVE EM ROTA DE COLISÃO COM A CENTRAL DE COMANDO. IMPACTO IMINENTE.
+xenomorph-invasion-impact = IMPACTO CONFIRMADO. Múltiplas brechas no perímetro da Central de Comando. Contatos hostis no interior da instalação. Todo o pessoal deve repelir os invasores!
+ent-CMUTileFire = fogo
+    .desc = Um fogo intenso.

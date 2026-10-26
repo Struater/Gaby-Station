@@ -19,3 +19,12 @@ xenomorph-shuttle-hijack-departing = The shuttle is ours! We will reach the huma
 xenomorph-shuttle-hijack-arrived = We have reached the human fortress! Advance for the hive!
 ent-XenomorphHijackShuttleObjective = Invade the distant human fortress.
     .desc = Help the Queen seize a shuttle before the emergency shuttle reaches Central Command.
+
+xenomorph-shuttle-hijack-channel = The Queen is taking control of the metal bird. Gather and protect her for two minutes!
+xenomorph-shuttle-hijack-interrupted = Control of the metal bird has been interrupted!
+xenomorph-invasion-unscheduled = Unscheduled shuttle departure detected from the operational area. Hijack likely. Shutting down autopilot.
+xenomorph-invasion-general-quarters = ATTENTION! GENERAL QUARTERS. All Central Command personnel, man your battle stations. Prepare to repel boarders.
+xenomorph-invasion-collision = EMERGENCY: SHUTTLE ON COLLISION COURSE WITH CENTRAL COMMAND. CRASH IMMINENT.
+xenomorph-invasion-impact = IMPACT CONFIRMED. Multiple breaches in Central Command's perimeter. Hostile contacts inside the facility. All personnel, repel the invaders!
+ent-CMUTileFire = fire
+    .desc = A roaring fire.

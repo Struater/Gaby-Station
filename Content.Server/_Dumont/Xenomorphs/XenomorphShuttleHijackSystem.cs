@@ -36,7 +36,7 @@ public sealed partial class XenomorphShuttleHijackSystem : EntitySystem
     public bool CrewArrived { get; private set; }
     public bool Invaded { get; private set; }
     public EntityUid? HijackedShuttle { get; private set; }
-    public bool WindowClosed => CrewArrived && HijackedShuttle == null;
+    public bool WindowClosed => CrewArrived && HijackedShuttle == null && HijackingQueen == null;
     public TimeSpan? FinaleEndsAt { get; private set; }
     private EntityUid? _evac;
     private EntityUid? _centcomm;
@@ -70,7 +70,7 @@ public sealed partial class XenomorphShuttleHijackSystem : EntitySystem
         _centcommMap = null;
         _expectedCrewArrival = null;
         _finishing = false;
-        _landingEffects.Clear();
+        ResetHijackInteraction();
         _evacuees.Clear();
     }
 
@@ -141,8 +141,8 @@ public sealed partial class XenomorphShuttleHijackSystem : EntitySystem
     {
         if (CrewArrived) return;
         CrewArrived = true;
-        if (HijackedShuttle != null)
-            ExtendFinale(_timing.CurTime + TimeSpan.FromMinutes(15));
+        if (HijackedShuttle != null || HijackingQueen != null)
+            ExtendFinale(_timing.CurTime + TimeSpan.FromMinutes(10));
         else
             _hive.AnnounceHive(Loc.GetString("xenomorph-shuttle-hijack-window-lost"));
     }
@@ -154,7 +154,7 @@ public sealed partial class XenomorphShuttleHijackSystem : EntitySystem
 
     private void OnRoundEndAttempt(ref RoundEndAttemptEvent args)
     {
-        if (_finishing || !CommsLocked || HijackedShuttle == null) return;
+        if (_finishing || !CommsLocked || HijackedShuttle == null && HijackingQueen == null) return;
         if (!Invaded && !HasLivingXenos()) return;
         args.Cancelled = !CrewArrived || FinaleEndsAt == null || _timing.CurTime < FinaleEndsAt;
     }
