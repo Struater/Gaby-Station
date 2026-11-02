@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Body.Systems;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.ActionBlocker;
+using Robust.Shared.Map;
 using Content.Server.DoAfter;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Jittering;
@@ -22,12 +25,17 @@ namespace Content.Server._White.Xenomorphs.Larva;
 
 public sealed partial class XenomorphLarvaSystem : EntitySystem
 {
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SleepingSystem _sleep = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private DoAfterSystem _doAfter = default!;
     [Dependency] private JitteringSystem _jitter = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!; // Omu
+
+    private readonly Queue<EntityUid> _readyToBurst = new();
 
     public override void Initialize()
     {
@@ -70,7 +78,9 @@ public sealed partial class XenomorphLarvaSystem : EntitySystem
             BreakOnDamage = false,
             BreakOnMove = false,
             Hidden = true,
-            CancelDuplicate = true,
+            RequireCanInteract = false,
+            DistanceThreshold = null,
+            CancelDuplicate = false,
             BlockDuplicate = true,
             DuplicateCondition = DuplicateConditions.SameEvent
         };
@@ -86,17 +96,37 @@ public sealed partial class XenomorphLarvaSystem : EntitySystem
 
     private void OnLarvaBurstDoAfter(EntityUid uid, XenomorphLarvaComponent component, LarvaBurstDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled
-            || !_container.TryGetContainingContainer((uid, null, null), out var container)
-            || component.Victim is not { } victim)
+        if (args.Cancelled || args.Handled || component.Victim == null)
             return;
 
-        // Dumont start
         args.Handled = true;
+        _readyToBurst.Enqueue(uid);
+    }
+
+    public override void Update(float frameTime)
+    {
+        while (_readyToBurst.TryDequeue(out var uid))
+        {
+            if (TryComp<XenomorphLarvaComponent>(uid, out var larva))
+                Burst(uid, larva);
+        }
+    }
+
+    private void Burst(EntityUid uid, XenomorphLarvaComponent component)
+    {
+        if (component.Victim is not { } victim || !Exists(victim)
+            || !_container.TryGetContainingContainer((uid, null, null), out var container))
+            return;
+
         EnsureComp<UnrevivableComponent>(victim);
-        // Dumont end
-        _container.Remove(uid, container);
-        var damage = new DamageSpecifier(); // Omu start
+        var coordinates = _transform.GetMoverCoordinates(victim);
+        if (!_container.Remove(uid, container)) return;
+        component.Victim = null;
+        _transform.SetCoordinates(uid, coordinates);
+        _transform.AttachToGridOrMap(uid);
+        _sleep.TryWaking(uid, force: true);
+        _blocker.UpdateCanMove(uid);
+        var damage = new DamageSpecifier();
         damage.DamageDict.Add("Blunt", 120);
         damage.DamageDict.Add("Piercing", 80);
         _damageableSystem.TryChangeDamage(uid: victim, damage: damage, ignoreResistances: true, interruptsDoAfters: false, targetPart: TargetBodyPart.Chest);

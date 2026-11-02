@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._CMU14.Xenomorphs;
+using Content.Server._Dumont.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Infection;
 using Content.Shared._White.Xenomorphs.Larva;
 using Content.Shared.Body.Events;
@@ -19,6 +21,8 @@ public sealed partial class XenomorphInfectionSystem : EntitySystem
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedEntityEffectSystem _effect = default!;
+
+    [Dependency] private XenomorphLineageSystem _lineage = default!;
 
     // Dumont start
     [Dependency] private SharedMindSystem _mind = default!;
@@ -47,6 +51,7 @@ public sealed partial class XenomorphInfectionSystem : EntitySystem
         Dirty(args.Body, xenomorphInfected);
 
         component.Infected = args.Body;
+        component.Lineage = _lineage.GetLineage(args.Body);
     }
 
     private void OnOrganRemovedFromBody(EntityUid uid, XenomorphInfectionComponent component, OrganRemovedFromBodyEvent args)
@@ -99,7 +104,8 @@ public sealed partial class XenomorphInfectionSystem : EntitySystem
                 continue;
             }
 
-            var larva = Spawn(infection.LarvaPrototype);
+            var larva = Spawn(infection.LarvaPrototype, Transform(infection.Infected.Value).Coordinates);
+            EnsureComp<XenomorphLineageComponent>(larva).Lineage = infection.Lineage;
 
             var larvaComponent = EnsureComp<XenomorphLarvaComponent>(larva);
             larvaComponent.Victim = infection.Infected.Value;
@@ -116,7 +122,13 @@ public sealed partial class XenomorphInfectionSystem : EntitySystem
 
             // Dumont start
             if (infection.SourceMindId is { } mindId && HasComp<MindComponent>(mindId))
+            {
                 _mind.TransferTo(mindId, larva);
+                _mind.UnVisit(mindId);
+                var mind = Comp<MindComponent>(mindId);
+                mind.OriginalOwnedEntity = GetNetEntity(larva);
+                Dirty(mindId, mind);
+            }
             // Dumont end
 
             QueueDel(uid);

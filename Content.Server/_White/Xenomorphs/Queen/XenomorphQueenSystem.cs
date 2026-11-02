@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._CMU14.Xenomorphs;
+using Content.Server._Dumont.Xenomorphs;
 using Content.Server._White.Xenomorphs.Evolution;
 using Content.Server._White.Xenomorphs.Plasma;
 using Content.Server.Actions;
-using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Shared._White.Actions;
 using Content.Shared._White.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Queen;
 using Content.Shared._White.Xenomorphs.Xenomorph;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 
@@ -20,9 +20,7 @@ public sealed partial class XenomorphQueenSystem : EntitySystem
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private PlasmaSystem _plasma = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private MindSystem _mind = default!;
     [Dependency] private XenomorphEvolutionSystem _xenomorphEvolution = default!;
-    [Dependency] private IEntityManager _entityManager = default!;
 
     [Dependency] private MobStateSystem _mobState = default!; // Dumont
 
@@ -35,8 +33,11 @@ public sealed partial class XenomorphQueenSystem : EntitySystem
         SubscribeLocalEvent<XenomorphQueenComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnMapInit(EntityUid uid, XenomorphQueenComponent component, MapInitEvent args) =>
-        _actions.AddAction(uid, ref component.PromotionAction, component.PromotionActionId);
+    private void OnMapInit(EntityUid uid, XenomorphQueenComponent component, MapInitEvent args)
+    {
+        if (!HasComp<Content.Shared._Dumont.Xenomorphs.XenomorphRoyalComponent>(uid))
+            _actions.AddAction(uid, ref component.PromotionAction, component.PromotionActionId);
+    }
 
     private void OnShutdown(EntityUid uid, XenomorphQueenComponent component, ComponentShutdown args) =>
         _actions.RemoveAction(uid, component.PromotionAction);
@@ -67,48 +68,21 @@ public sealed partial class XenomorphQueenSystem : EntitySystem
             return;
         }
 
-        // Try direct evolution with optional mind transfer
-        var target = args.Target;
-        var coordinates = Transform(target).Coordinates;
-        var newXeno = Spawn(component.PromoteTo, coordinates);
+        if (!_plasma.HasPlasma(uid, 500)
+            || !_xenomorphEvolution.Evolve(args.Target, component.PromoteTo, component.EvolutionDelay))
+            return;
 
-        // Transfer mind if it exists
-        if (_mind.TryGetMind(target, out var mindId, out var mind))
-            _mind.TransferTo(mindId, newXeno, mind: mind);
-
-        // Copy over any important components
-        if (TryComp<XenomorphComponent>(newXeno, out var newXenoComp) &&
-            TryComp<XenomorphComponent>(target, out var oldXenoComp))
-        {
-            newXenoComp.Caste = oldXenoComp.Caste;
-        }
-
-        // Update the caste to Praetorian for the new entity
-        if (TryComp<XenomorphComponent>(newXeno, out var xenomorphComp))
-        {
-            xenomorphComp.Caste = "Praetorian";
-            Dirty(newXeno, xenomorphComp);
-        }
-
-        // Get the target's name before deleting the entity
-        var targetName = Name(target);
-
-        // Clean up the old entity
-        Del(target);
-
-        // Deduct plasma cost if applicable
-        _plasma.ChangePlasmaAmount(uid, -500f); // Deduct 500 plasma for the promotion
-        _popup.PopupEntity(Loc.GetString("xenomorphs-queen-promotion-success", ("target", targetName)), uid, uid);
+        _plasma.ChangePlasmaAmount(uid, -500);
         args.Handled = true;
         // Goobstation end
     }
     // Dumont start
-    public bool IsQueenAlive()
+    public bool IsQueenAlive(bool lineageOnly = false)
     {
         var query = EntityQueryEnumerator<XenomorphQueenComponent>();
         while (query.MoveNext(out var uid, out _))
         {
-            if (!_mobState.IsDead(uid))
+            if ((!lineageOnly || HasComp<XenomorphLineageComponent>(uid)) && !_mobState.IsDead(uid))
                 return true;
         }
         return false;
