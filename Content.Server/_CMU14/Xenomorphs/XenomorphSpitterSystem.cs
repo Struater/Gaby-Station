@@ -54,6 +54,8 @@ public sealed partial class XenomorphSpitterSystem : EntitySystem
         public bool Strong;
         public bool Stacking;
         public float Range;
+        public float FirstDamage;
+        public float RepeatDamage;
         public EntityCoordinates Start;
         public readonly List<(EntityCoordinates Coordinates, TimeSpan At)> Tiles = new();
         public readonly List<(EntityUid Effect, TimeSpan Until)> Pools = new();
@@ -159,7 +161,7 @@ public sealed partial class XenomorphSpitterSystem : EntitySystem
         args.Handled = CreateSpray(ent, args.Target, ent.Comp.SprayRange, ent.Comp.StrongSpray, ent.Comp.StackingSpray);
     }
 
-    public bool CreateSpray(EntityUid user, EntityCoordinates targetCoordinates, float range, bool strong = false, bool stacking = false, double spreadDelay = .2)
+    public bool CreateSpray(EntityUid user, EntityCoordinates targetCoordinates, float range, bool strong = false, bool stacking = false, double spreadDelay = .2, float? firstDamage = null, float? repeatDamage = null)
     {
         if (Transform(user).GridUid is not { } grid) return false;
         var target = _transform.ToMapCoordinates(targetCoordinates);
@@ -174,7 +176,17 @@ public sealed partial class XenomorphSpitterSystem : EntitySystem
         if (!float.IsFinite(length) || length < 0.1f)
             return false;
         var direction = delta / length;
-        var spray = new Spray { User = user, Start = new EntityCoordinates(grid, from), Strong = strong, Stacking = stacking, Range = range };
+        var spitter = CompOrNull<XenomorphSpitterComponent>(user);
+        var spray = new Spray
+        {
+            User = user,
+            Start = new EntityCoordinates(grid, from),
+            Strong = strong,
+            Stacking = stacking,
+            Range = range,
+            FirstDamage = firstDamage ?? spitter?.SprayDamage ?? (strong ? 36 : stacking ? 24 : 30),
+            RepeatDamage = repeatDamage ?? spitter?.SprayRepeatDamage ?? 10,
+        };
         var previous = from;
         var barricades = new HashSet<Entity<XenomorphSprayAcidableComponent>>();
         for (var i = 1; i <= MathF.Ceiling(Math.Min(length, spray.Range)); i++)
@@ -209,7 +221,7 @@ public sealed partial class XenomorphSpitterSystem : EntitySystem
         _fire.Extinguish(target);
         if (HasComp<XenomorphComponent>(target) || HasComp<SiliconComponent>(target) || _mobs.IsDead(target))
             return;
-        _damage.TryChangeDamage(target, new DamageSpecifier { DamageDict = { ["Caustic"] = spray.Hit.Add(target) ? spray.Strong ? 36 : spray.Stacking ? 24 : 30 : 10 } }, origin: spray.User);
+        _damage.TryChangeDamage(target, new DamageSpecifier { DamageDict = { ["Caustic"] = spray.Hit.Add(target) ? spray.FirstDamage : spray.RepeatDamage } }, origin: spray.User);
         if (spray.Stacking) _praetorian.ApplyStacks(target, 2, spray.User);
         ShowAcidSplash(target);
         if (spray.Strong) _stun.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(2));
