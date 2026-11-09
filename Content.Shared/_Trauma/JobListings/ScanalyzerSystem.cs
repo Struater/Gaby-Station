@@ -3,6 +3,9 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
 using Content.Shared.DoAfter;
+using Content.Shared._Dumont.Scanning;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
@@ -19,6 +22,8 @@ namespace Content.Trauma.Shared.JobListings;
 /// </summary>
 public abstract partial class ScanalyzerSystem : EntitySystem
 {
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
@@ -30,7 +35,7 @@ public abstract partial class ScanalyzerSystem : EntitySystem
     /// </summary>
     public void StartScan(Entity<ScanalyzerComponent> ent, EntityUid user, EntityUid target)
     {
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.ScanDuration, new ScanalyzerScanDoAfterEvent(), ent.Owner, target, ent.Owner)
+        if (!_doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.ScanDuration, new ScanalyzerScanDoAfterEvent(), ent.Owner, target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -40,7 +45,15 @@ public abstract partial class ScanalyzerSystem : EntitySystem
             BreakOnWeightlessMove = true,
             BlockDuplicate = true,
             DuplicateCondition = DuplicateConditions.SameEvent
-        });
+        }))
+            return;
+
+        _audio.PlayPredicted(ent.Comp.ScanStartSound, ent, user);
+        var active = EnsureComp<ActiveScanComponent>(ent);
+        active.ScannedObject = target;
+        active.ScanStartTime = _timing.CurTime;
+        active.ScanEndTime = _timing.CurTime + ent.Comp.ScanDuration;
+        Dirty(ent.Owner, active);
     }
 
     /// <summary>
@@ -92,6 +105,7 @@ public abstract partial class ScanalyzerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnScan(Entity<ScanalyzerComponent> ent, ref ScanalyzerScanDoAfterEvent args)
     {
+        RemCompDeferred<ActiveScanComponent>(ent);
         if (args.Handled || args.Cancelled || args.Target is null)
             return;
         if (!TryComp<StealTargetComponent>(args.Target, out var steal))
@@ -113,6 +127,7 @@ public abstract partial class ScanalyzerSystem : EntitySystem
             return;
         }
 
+        _audio.PlayPredicted(ent.Comp.ScanEndSound, ent, args.User);
         ent.Comp.Used = true;
         Dirty(ent);
         _popup.PopupClient(Loc.GetString("scanalyzer-popup-used"), args.User, PopupType.Medium);
